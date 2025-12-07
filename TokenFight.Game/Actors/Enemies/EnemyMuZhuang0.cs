@@ -10,7 +10,6 @@ using TokenFight.Core.Interfaces.Entities;
 using TokenFight.Core.Models;
 using TokenFight.Core.Models.Effects;
 using TokenFight.Core.Models.Effects.Skills;
-using TokenFight.Core.Models.Entities;
 using TokenFight.Core.Models.Entities.Actors;
 using TokenFight.Core.ReflectionAttribute;
 

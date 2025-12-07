@@ -1,5 +1,4 @@
 using TokenFight.Core.Interfaces.Bases;
-using TokenFight.Core.Models;
 
 namespace TokenFight.Core.Interfaces.Factories;
 

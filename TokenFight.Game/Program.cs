@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using TokenFight.Core.Constants;
 using TokenFight.Core.Databases.Models.Profiles;
 using TokenFight.Core.Enums.Attrs;
@@ -10,10 +9,8 @@ using TokenFight.Core.Interfaces.Attrs;
 using TokenFight.Core.Interfaces.Entities;
 using TokenFight.Core.Interfaces.Events;
 using TokenFight.Core.Interfaces.Factories;
-using TokenFight.Core.Interfaces.Game;
 using TokenFight.Core.Models;
 using TokenFight.Core.Models.Attrs;
-using TokenFight.Core.Models.Entities;
 using TokenFight.Core.Models.Entities.Actors;
 using TokenFight.Core.Models.Events.Contexts;
 using TokenFight.DI;

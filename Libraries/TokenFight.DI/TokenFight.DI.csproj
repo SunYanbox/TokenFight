@@ -17,9 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Json5Core" Version="1.0.12" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.AutoActivation" Version="10.0.0" />
     </ItemGroup>
+
 </Project>

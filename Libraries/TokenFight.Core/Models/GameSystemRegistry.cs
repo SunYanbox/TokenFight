@@ -1,9 +1,7 @@
 using TokenFight.Core.Databases.Interfaces;
-using TokenFight.Core.Interfaces.Entities;
 using TokenFight.Core.Interfaces.Events;
 using TokenFight.Core.Interfaces.Factories;
 using TokenFight.Core.Interfaces.FStream;
-using TokenFight.Core.Interfaces.Game;
 using TokenFight.Core.Interfaces.Systems;
 using TokenFight.Core.Models.Utils.Systems;
 

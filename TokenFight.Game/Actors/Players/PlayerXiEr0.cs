@@ -16,7 +16,6 @@ using TokenFight.Core.Models;
 using TokenFight.Core.Models.Actions;
 using TokenFight.Core.Models.Effects.Effects;
 using TokenFight.Core.Models.Effects.Skills;
-using TokenFight.Core.Models.Entities;
 using TokenFight.Core.Models.Entities.Actors;
 using TokenFight.Core.Models.Events.Contexts;
 using TokenFight.Core.ReflectionAttribute;

@@ -1,17 +1,12 @@
 using TokenFight.Core.Constants;
-using TokenFight.Core.Databases.Models;
 using TokenFight.Core.Databases.Models.Dungeons;
 using TokenFight.Core.Enums.Events;
 using TokenFight.Core.Interfaces.Entities;
 using TokenFight.Core.Interfaces.Events;
 using TokenFight.Core.Models;
-using TokenFight.Core.Models.Effects;
-using TokenFight.Core.Models.Entities;
-using TokenFight.Core.Models.Entities.Actors;
 using TokenFight.Core.Models.Events.Contexts;
 using TokenFight.Core.Models.Game;
 using TokenFight.Core.ReflectionAttribute;
-using TokenFight.Game.Actors.Enemies;
 
 namespace TokenFight.Game.Dungeons;
 
