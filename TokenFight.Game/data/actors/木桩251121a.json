@@ -1,0 +1,53 @@
+{
+  "Id": "EnemyMuZhuang_木桩251121a",
+  "Name": "木桩",
+  "Desc": "一个只会自己治疗自己的木桩",
+  "DataString": {
+    "技能名称": "木桩-自疗",
+    "技能描述": "根据自身最大生命值的{0}治疗自身"
+  },
+  "AttrGrowth": {
+    "Health": {
+      "MinLevel": 1,
+      "MaxLevel": 120,
+      "BaseValue": 270,
+      "GrowthPerLevel": 180
+    },
+    "Defense": {
+      "MinLevel": 1,
+      "MaxLevel": 120,
+      "BaseValue": 200,
+      "GrowthPerLevel": 20
+    },
+    "Attack": {
+      "MinLevel": 1,
+      "MaxLevel": 120,
+      "BaseValue": 60,
+      "GrowthPerLevel": 5
+    },
+    "Speed": {
+      "MinLevel": 1,
+      "MaxLevel": 120,
+      "BaseValue": 100,
+      "GrowthPerLevel": 0
+    }
+  },
+  "SkillGrowth": {
+    "BasicAttack": {
+      "自疗": {
+        "Name": "木桩-自疗",
+        "Desc": "根据自身最大生命值的{0}治疗自身",
+        "Charge": 0,
+        "SkillPointDelta": 0,
+        "Growths": {
+          "治疗倍率": {
+            "MinLevel": 1,
+            "MaxLevel": 80,
+            "BaseValue": 0.05,
+            "GrowthPerLevel": 0.0005
+          }
+        }
+      }
+    }
+  }
+}

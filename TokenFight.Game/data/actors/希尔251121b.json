@@ -1,0 +1,129 @@
+{
+  "Id": "PlayerXiEr_希尔251121b",
+  "Name": "希尔",
+  "Desc": "巡猎主C",
+  "DataInt": {
+    "终结技弹射次数": 5,
+    "命中标记立即行动的层数": 5
+  },
+  "DataDouble": {
+    "击败敌人额外回能": 30
+  },
+  "AttrGrowth": {
+    "Health": {
+      "MinLevel": 1,
+      "MaxLevel": 80,
+      "BaseValue": 126,
+      "GrowthPerLevel": 10.20
+    },
+    "Defense": {
+      "MinLevel": 1,
+      "MaxLevel": 80,
+      "BaseValue": 49,
+      "GrowthPerLevel": 4
+    },
+    "Attack": {
+      "MinLevel": 1,
+      "MaxLevel": 80,
+      "BaseValue": 87,
+      "GrowthPerLevel": 7
+    },
+    "Speed": {
+      "MinLevel": 1,
+      "MaxLevel": 1,
+      "BaseValue": 115,
+      "GrowthPerLevel": 0
+    },
+    "MaxEnergy": {
+      "MinLevel": 1,
+      "MaxLevel": 1,
+      "BaseValue": 120,
+      "GrowthPerLevel": 0
+    }
+  },
+  "SkillGrowth": {
+    "BasicAttack": {
+      "普攻": {
+        "Name": "希尔普攻",
+        "Desc": "对指定敌方单体造成基于自身攻击力{0}的单段伤害, 随后使得自身行动提前{1}",
+        "Charge": 15,
+        "SkillPointDelta": 1,
+        "Growths": {
+          "伤害倍率": {
+            "MinLevel": 1,
+            "MaxLevel": 6,
+            "BaseValue": 0.5,
+            "GrowthPerLevel": 0.1
+          },
+          "推条倍率": {
+            "MinLevel": 1,
+            "MaxLevel": 1,
+            "BaseValue": -0.20,
+            "GrowthPerLevel": 0
+          }
+        }
+      }
+    },
+    "FightSkill": {
+      "战技": {
+        "Name": "希尔战技",
+        "Desc": "对指定敌方单体造成一共基于自身攻击力{0}的多段伤害, 对相邻目标造成一共基于自身攻击力{1}的多段伤害",
+        "Charge": 30,
+        "SkillPointDelta": -1,
+        "Growths": {
+          "伤害倍率0": {
+            "MinLevel": 1,
+            "MaxLevel": 10,
+            "BaseValue": 1.2,
+            "GrowthPerLevel": 0.2
+          },
+          "伤害倍率1": {
+            "MinLevel": 1,
+            "MaxLevel": 10,
+            "BaseValue": 0.8,
+            "GrowthPerLevel": 0.15
+          }
+        }
+      }
+    },
+    "UltimateSkill": {
+      "终结技": {
+        "Name": "随蝴蝶一起消散吧",
+        "Desc": "立刻获得两层自拐; 对指定敌方单体造成一共基于自身攻击力{0}的多段伤害, 对相邻目标造成基于自身攻击力{1}的多段伤害; 然后造成{2}次每次基于攻击力{3}的弹射伤害",
+        "Charge": 10,
+        "SkillPointDelta": 0,
+        "Growths": {
+          "伤害倍率0": {
+            "MinLevel": 1,
+            "MaxLevel": 10,
+            "BaseValue": 2.4,
+            "GrowthPerLevel": 0.3
+          },
+          "伤害倍率1": {
+            "MinLevel": 1,
+            "MaxLevel": 10,
+            "BaseValue": 1.2,
+            "GrowthPerLevel": 0.15
+          },
+          "伤害倍率2": {
+            "MinLevel": 1,
+            "MaxLevel": 6,
+            "BaseValue": 0.25,
+            "GrowthPerLevel": 0.05
+          }
+        }
+      }
+    },
+    "NaturalTalent": {
+      "天赋": {
+        "Name": "天赋",
+        "Desc": "击败敌人时, 恢复一个战技点, 额外恢复{0}能量, 获得一层自拐并获得一个额外回合; 额外回合期间无法触发天赋\n\t- 对敌人造成伤害时, 对敌人施加一层标记, 当施加后敌人标记达到{1}层时, 使得自身立即行动, 并清除{1}层标记, 并对敌人施加一层负面效果, 每层负面效果使得敌人受到的伤害提升10%\n\t- 击杀敌人时, 会把他身上所有负面效果与标记随机弹射到其他敌人身上",
+        "Charge": 0,
+        "SkillPointDelta": 0,
+        "Growths": {
+          
+        }
+      }
+    }
+  }
+}

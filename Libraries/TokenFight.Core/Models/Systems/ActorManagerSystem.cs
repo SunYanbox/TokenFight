@@ -1,0 +1,123 @@
+using TokenFight.Core.Enums.Entities;
+using TokenFight.Core.Enums.Events;
+using TokenFight.Core.Helpers;
+using TokenFight.Core.Interfaces.Entities;
+using TokenFight.Core.Interfaces.Events;
+using TokenFight.Core.Interfaces.FStream;
+using TokenFight.Core.Interfaces.Systems;
+using TokenFight.Core.Models.Events.Contexts;
+
+namespace TokenFight.Core.Models.Systems;
+
+public class ActorManagerSystem(
+    IEventSystem eventSystem, 
+    ILocalLog localLog,
+    IActorPositionSystem actorPositionSystem,
+    IActionListSystem actionListSystem): IActorManagerSystem
+{
+    private readonly Dictionary<string, IActor> Actors =  new();
+    private readonly HashSet<IActor> DeathActors = new();
+    
+    public void Init()
+    {
+        eventSystem.Subscribe(EventType.ActorLife, HandleActorLifeEvent);
+        eventSystem.Subscribe(EventType.RoundBegin, HandleActorDeath);
+        eventSystem.Subscribe(EventType.ActionStart, HandleActorDeath);
+        eventSystem.Subscribe(EventType.ActionEnd, HandleActorDeath);
+        eventSystem.Subscribe(EventType.ActorDeath, HandleActorDeath);
+    }
+    
+    public void Reset()
+    {
+        foreach (IActor actor in Actors.Values)
+        {
+            actor.Destroy();
+        }
+        Actors.Clear();
+    }
+
+    public Dictionary<string, IActor> AllActors => Actors.AsReadOnly().ToDictionary();
+    public Dictionary<string, IActor> AllPlayers =>
+        Actors.AsReadOnly().Where(x => x.Value.Team == TeamType.Player).ToDictionary();
+    public Dictionary<string, IActor> AllEnemies =>
+        Actors.AsReadOnly().Where(x => x.Value.Team == TeamType.Enemy).ToDictionary();
+    
+    /// <summary> 处理成员创建与删除 </summary>
+    /// <param name="source"></param>
+    /// <param name="data"></param>
+    private void HandleActorLifeEvent(IContext data)
+    {
+        if (data is ActorLifeContext actorLifeContext)
+        {
+            if (actorLifeContext.IsCreate)
+            {
+                localLog.Debug($"[成员管理系统] Actor {actorLifeContext.Actor.Name}({actorLifeContext.Actor.Id}) 已创建");
+                Actors.Add(actorLifeContext.Actor.Id, actorLifeContext.Actor);
+                actionListSystem.Append(actorLifeContext.Actor);
+                actorPositionSystem.Append(actorLifeContext.Actor.Id, actorLifeContext.Actor.Team);
+                actorLifeContext.Actor.OnEnterGame();
+                EventHelper.TriggerEnterGameContext(actorLifeContext.Actor);
+            }
+            else
+            {
+                localLog.Debug($"[成员管理系统] Actor {actorLifeContext.Actor.Name}({actorLifeContext.Actor.Id}) 已移除");
+                Actors.Remove(actorLifeContext.Actor.Id);
+            }
+        }
+    }
+
+    private void HandleActorDeath(IContext data)
+    {
+        // 击败时不会直接销毁, 等到行动完全结束或回合开始时统一销毁
+        if (data is DeathContext deathContext)
+        {
+            if (deathContext.Type == EventType.ActorDeath)
+            {
+                DeathActors.Add(deathContext.Actor);
+            }
+            return;
+        }
+
+        HashSet<IActor> delayDeathActors = new HashSet<IActor>();
+        // 移除该被销毁的成员
+        if (data is ActionContext or RoundContext)
+        {
+            if (DeathActors.Count == 0) return;
+            foreach (var actor in DeathActors)
+            {
+                if (actor.DelayDeath)
+                {
+                    delayDeathActors.Add(actor);
+                    continue;
+                }
+                // 移除行动
+                // TODO: 清理引用
+                // actionManagerSystem.RemoveWithActor(actor);
+                actionListSystem.Remove(actor);
+                // 去掉关系
+                if (actor?.RelationshipMaster?.ParentActor != null)
+                {
+                    // TODO: 清理引用
+                    // actor.RelationshipMaster.ParentActor.RelationshipMaster.ChildActors?.Remove(actor.RelationshipMaster.ParentActor.Id);
+                }
+                if (!string.IsNullOrEmpty(actor!.Id)) actorPositionSystem.Remove(actor.Id, actor.Team);
+                actorPositionSystem.UpdateActorRelationship(this);
+                foreach (IActor mem in AllActors.Values)
+                {
+                    // mem.RemoveWithActor(actor);
+                }
+                if (actor.Team == TeamType.Player && actor.RelationshipMaster?.ParentActor == null) // 召唤物可以被清除
+                {
+                    delayDeathActors.Add(actor);
+                    continue;
+                }
+                // 销毁成员
+                actor.Destroy();
+                Actors.Remove(actor.Id);
+                EventHelper.TriggerActorLifeContext(actor, false);
+            }
+            DeathActors.Clear();
+            DeathActors.UnionWith(delayDeathActors);
+        }
+    }
+}

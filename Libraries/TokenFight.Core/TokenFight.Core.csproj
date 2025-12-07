@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <PackageId>TokenFight.Core</PackageId>
+        <Authors>Suntion</Authors>
+        <Description>游戏核心战斗逻辑的实现</Description>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+    </PropertyGroup>
+    <ItemGroup>
+      <Folder Include="Models\Factories\" />
+    </ItemGroup>
+
+</Project>

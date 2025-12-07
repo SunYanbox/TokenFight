@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <PackageId>TokenFight.Reflection</PackageId>
+        <Authors>Suntion</Authors>
+        <Description>游戏反射相关实现</Description>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+    </PropertyGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\TokenFight.Core\TokenFight.Core.csproj" />
+    </ItemGroup>
+
+</Project>
