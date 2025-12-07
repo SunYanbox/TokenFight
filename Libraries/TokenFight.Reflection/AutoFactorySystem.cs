@@ -1,6 +1,7 @@
 using System.Reflection;
 using TokenFight.Core.Interfaces.Factories;
 using TokenFight.Core.Models;
+using TokenFight.Core.Models.Utils.Display;
 using TokenFight.Core.ReflectionAttribute;
 
 namespace TokenFight.Reflection;
@@ -64,11 +65,52 @@ public class AutoFactorySystem<TBase, TAttribute>: IFactorySystem<TBase, TAttrib
     // 根据ID创建实例
     public TBase CreateInstance(string id, object?[]? args)
     {
-        if (_registeredTypes.TryGetValue(id, out Type? type))
+        try
         {
-            return (TBase)Activator.CreateInstance(type, args: args)!;
+            if (_registeredTypes.TryGetValue(id, out Type? type))
+            {
+                return (TBase)Activator.CreateInstance(type, args: args)!;
+            }
+            throw new KeyNotFoundException($"未找到ID为 '{id}' 的注册类型");
         }
-        throw new KeyNotFoundException($"未找到ID为 '{id}' 的注册类型");
+        catch (Exception e)
+        {
+            ConsolePrinter consolePrinter = new();
+            consolePrinter.Add($"[{GetType().Name}] 创建实例时出错: {e.Message}\n\t{e.StackTrace}" +
+                               $"\n\t创建实例的ID: {id}\n\t创建实例的参数: {args} (Count={args?.Length ?? 0})\n"
+                , ConsoleColor.Red);
+            if (args != null)
+            {
+                consolePrinter.Add("参数列表: [ ", ConsoleColor.Blue);
+                foreach (var arg in args)
+                {
+                    if (arg != null)
+                    {
+                        if (arg is IEnumerable<object>)
+                        {
+                            consolePrinter.Add($"[ {string.Join(", ", arg)} ]", ConsoleColor.Blue);
+                        }
+                        else if (arg is IDictionary<object, object> dict)
+                        {
+                            consolePrinter.Add($"{{ {string.Join(", ", dict.Select(x => $"{x.Key}: {x.Value}"))} }}",
+                                ConsoleColor.Blue);
+                        }
+                        else
+                        {
+                            consolePrinter.Add(arg.ToString() ?? "null", ConsoleColor.Blue);
+                        }
+                    }
+                    else
+                    {
+                        consolePrinter.Add("null", ConsoleColor.Gray);
+                    }
+                    consolePrinter.Add(" | ", ConsoleColor.Red);
+                }
+                consolePrinter.Add(" ]\n", ConsoleColor.Blue);
+            }
+            consolePrinter.Display();
+            throw;
+        }
     }
 
     // 根据ID创建实例（泛型版本）

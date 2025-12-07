@@ -1,7 +1,14 @@
 using TokenFight.Core.Constants;
+using TokenFight.Core.Databases.Models;
+using TokenFight.Core.Databases.Models.Dungeons;
+using TokenFight.Core.Enums.Events;
 using TokenFight.Core.Interfaces.Entities;
+using TokenFight.Core.Interfaces.Events;
 using TokenFight.Core.Models;
+using TokenFight.Core.Models.Effects;
 using TokenFight.Core.Models.Entities;
+using TokenFight.Core.Models.Entities.Actors;
+using TokenFight.Core.Models.Events.Contexts;
 using TokenFight.Core.Models.Game;
 using TokenFight.Core.ReflectionAttribute;
 using TokenFight.Game.Actors.Enemies;
@@ -10,19 +17,27 @@ namespace TokenFight.Game.Dungeons;
 
 /// <summary> 主战斗流程控制器 </summary>
 [AutoDungeon(Id=GameIdTableConst.BattleFlow)]
-public class BattleFlow(GameSystemRegistry systemRegistry): BaseDungeon(gameSystemRegistry: systemRegistry)
+public class BattleFlow : BaseDungeon
 {
-    private readonly GameSystemRegistry _systemRegistry = systemRegistry;
+    private readonly GameSystemRegistry _systemRegistry;
+    private readonly DungeonInfo? _dungeonInfo;
+    private readonly Random _random = new();
 
-    /// <summary>
-    /// 加载完所有角色, 更新行动条前回调
-    /// </summary>
-    public override void OnEnterGame()
+    /// <summary> 主战斗流程控制器 </summary>
+    public BattleFlow(GameSystemRegistry systemRegistry, string dungeonInfoId) : base(gameSystemRegistry: systemRegistry)
     {
-        // foreach (var playerActor in ActorManagerSystem.AllPlayers.Values.OfType<PlayerActor>())
-        // {
-        //     playerActor.ActivateUltimateSkill();
-        // }
+        _systemRegistry = systemRegistry;
+        _dungeonInfo = systemRegistry.DatabaseServer.DungeonInfoTables.GetValueOrDefault(dungeonInfoId);
+        EnvironmentBuff!.Callbacks.Add(EventType.ActorDeath, HandleLoot);
+    }
+
+    protected void HandleLoot(IContext context)
+    {
+        if (context is not DeathContext { Actor: IEnemy }) return;
+        if (Profile != null && _dungeonInfo is { PerRandomToken.Max: > 0 })
+        {
+            Profile.Token += _random.Next(_dungeonInfo.PerRandomToken.Min, _dungeonInfo.PerRandomToken.Max);
+        }
     }
     
     public override void OnGameWin()
@@ -31,6 +46,11 @@ public class BattleFlow(GameSystemRegistry systemRegistry): BaseDungeon(gameSyst
             _systemRegistry.ActorPoolSystem.EnemyCount != 0) return;
         Console.WriteLine("你赢了");
         EndTag = true;
+        if (Profile != null && _dungeonInfo != null)
+        {
+            Profile.Token += _dungeonInfo.BaseToken;
+            Console.WriteLine($"你获得{_dungeonInfo.BaseToken}个Token");
+        }
     }
 
     public override void OnGameOver()
@@ -43,12 +63,13 @@ public class BattleFlow(GameSystemRegistry systemRegistry): BaseDungeon(gameSyst
 
     public override void InitActorPool()
     {
-        for (int i = 0; i < 50; i++)
+        if (_dungeonInfo == null) return;
+        foreach (EnemyEntry enemyEntry in _dungeonInfo.EnemyPool)
         {
-            int j = i;
             _systemRegistry .ActorPoolSystem.AddEnemy(
-                new Lazy<IActor>(() => _systemRegistry.ActorFactorySystem.CreateInstance(GameIdTableConst.EnemyMuZhuang0,
-                    [20, _systemRegistry])));
+                new Lazy<IActor>(() => 
+                    _systemRegistry.ActorFactorySystem
+                        .CreateInstance(enemyEntry.EnemyId, [enemyEntry.Level, _systemRegistry])));
         }
     }
 }

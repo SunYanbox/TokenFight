@@ -16,7 +16,7 @@ public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
 {
     #region 成员实例
     public double? ActionValueLimit { get; set; }
-    public required PassiveData EnvironmentBuff { get; set; }
+    public required PassiveData EnvironmentBuff { get; set; } = new(gameSystemRegistry.EventSystem, gameSystemRegistry.LocalLog);
     /// <summary> 关联的存档 </summary>
     public Profile? Profile { get; protected set; }
     /// <summary> 游戏是否结束 </summary>
@@ -47,10 +47,9 @@ public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
     /// </summary>
     public virtual void OnEnterGame()
     {
-        
+        EnvironmentBuff.Subscribe();
     }
     
-    /// <inheritdoc />
     public virtual void OnGameWin()
     {
         if (gameSystemRegistry.ActorManagerSystem.AllEnemies.Count == 0 && gameSystemRegistry.ActorPoolSystem.EnemyCount == 0)
@@ -60,7 +59,6 @@ public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
         }
     }
 
-    /// <inheritdoc />
     public virtual void OnGameOver()
     {
         if (gameSystemRegistry.ActorManagerSystem.AllPlayers.Values.Sum(x => x.IsLive() ? 1 : 0) == 0 && !gameSystemRegistry.ActorPoolSystem.HasPlayer)
@@ -81,13 +79,11 @@ public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
         
     }
 
-    /// <inheritdoc />
     public virtual void OnUpdate()
     {
         
     }
 
-    /// <inheritdoc />
     public virtual void Main()
     {
         gameSystemRegistry.ActorPoolSystem.FillActors();
@@ -151,9 +147,9 @@ public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
         
     }
 
-    /// <inheritdoc />
     public virtual void OnDestroy()
     {
+        EnvironmentBuff.Unsubscribe();
         Clear();
     }
 }

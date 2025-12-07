@@ -1,0 +1,52 @@
+{
+  "Id": "dungeon1",
+  "Name": "新手地牢",
+  "Desc": "适合初学者的简单地牢",
+  "BaseToken": 10,
+  "PerRandomToken": {
+    "Min": 1,
+    "Max": 5
+  },
+  "EnemyPool": [
+    {
+      "EnemyId": "EnemyMuZhuang_木桩251121a",
+      "Level": 1
+    },
+    {
+      "EnemyId": "EnemyMuZhuang_木桩251121a",
+      "Level": 1
+    },
+    {
+      "EnemyId": "EnemyMuZhuang_木桩251121a",
+      "Level": 1
+    },
+    {
+      "EnemyId": "EnemyMuZhuang_木桩251121a",
+      "Level": 1
+    },
+    {
+      "EnemyId": "EnemyMuZhuang_木桩251121a",
+      "Level": 1
+    },
+    {
+      "EnemyId": "EnemyMuZhuang_木桩251121a",
+      "Level": 1
+    },
+    {
+      "EnemyId": "EnemyMuZhuang_木桩251121a",
+      "Level": 1
+    },
+    {
+      "EnemyId": "EnemyMuZhuang_木桩251121a",
+      "Level": 1
+    },
+    {
+      "EnemyId": "EnemyMuZhuang_木桩251121a",
+      "Level": 1
+    },
+    {
+      "EnemyId": "EnemyMuZhuang_木桩251121a",
+      "Level": 1
+    }
+  ]
+}

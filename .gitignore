@@ -4,6 +4,9 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 
+**/*.7z
+**/*.zip
+**/*.tar
 **/*.xml
 **/*.user
 **/dist/

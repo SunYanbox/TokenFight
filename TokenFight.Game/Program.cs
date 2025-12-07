@@ -38,7 +38,7 @@ try
     GameSystemRegistry systemRegistry = serviceProvider.GetService<GameSystemRegistry>()!;
     
     var autoDungeon = serviceProvider.GetService<IDungeonFactorySystem>()!;
-    var battleFlow = autoDungeon.CreateInstance(GameIdTableConst.BattleFlow, [systemRegistry])!;
+    var battleFlow = autoDungeon.CreateInstance(GameIdTableConst.BattleFlow, [systemRegistry, "dungeon1"])!;
 
     battleFlow.OnLoad(new Profile
     {
