@@ -3,7 +3,7 @@ using TokenFight.Core.Helpers;
 using TokenFight.Core.Interfaces.Effects;
 using TokenFight.Core.Interfaces.Entities;
 
-namespace TokenFight.Core.Models.Utils;
+namespace TokenFight.Core.Consoles;
 
 /// <summary>
 /// 提供控制台列表选择的通用工具。

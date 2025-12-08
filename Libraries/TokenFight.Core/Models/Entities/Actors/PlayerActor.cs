@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using TokenFight.Core.Consoles.Display;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Effects;
 using TokenFight.Core.Enums.Entities;
@@ -7,7 +8,6 @@ using TokenFight.Core.Interfaces.Effects;
 using TokenFight.Core.Interfaces.Entities;
 using TokenFight.Core.Models.Attrs;
 using TokenFight.Core.Models.Effects.Effects;
-using TokenFight.Core.Models.Utils.Display;
 
 namespace TokenFight.Core.Models.Entities.Actors;
 

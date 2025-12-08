@@ -1,7 +1,7 @@
+using TokenFight.Core.Consoles.Display;
 using TokenFight.Core.Enums.Events;
 using TokenFight.Core.Interfaces.Events;
 using TokenFight.Core.Interfaces.FStream;
-using TokenFight.Core.Models.Utils.Display;
 
 namespace TokenFight.Core.Models.Events;
 

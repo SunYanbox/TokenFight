@@ -14,9 +14,11 @@ using TokenFight.Core.Models.Attrs;
 using TokenFight.Core.Models.Entities.Actors;
 using TokenFight.Core.Models.Events.Contexts;
 using TokenFight.DI;
+using Terminal.Gui;
+using TokenFight.UI.Core;
+using Attribute = Terminal.Gui.Attribute;
 
 var services = new ServiceCollection();
-
 
 
 
@@ -26,6 +28,50 @@ ServiceRegistry.RegisterAllServices(services);
 ServiceProvider serviceProvider = services.BuildServiceProvider();
 
 ServiceRegistry.InitAllSystems(serviceProvider);
+
+try
+{
+    Application.Init();
+    
+    // 创建自定义颜色方案 - 黑色背景
+    var blackBackgroundScheme = new ColorScheme
+    {
+        Normal = new Attribute(Color.White, Color.Black),     // 白字黑底
+        HotNormal = new Attribute(Color.BrightYellow, Color.Black),
+        Focus = new Attribute(Color.Black, Color.Gray),
+        HotFocus = new Attribute(Color.BrightRed, Color.Gray),
+        Disabled = new Attribute(Color.Gray, Color.Black)
+    };
+        
+    // 设置Application.Top的颜色方案（影响所有子控件）
+    Application.Top.ColorScheme = blackBackgroundScheme;
+        
+    // 创建主窗口
+    var window = new Window("我的应用")
+    {
+        X = 0,
+        Y = 1, // 给菜单栏留出空间
+        Width = Dim.Fill(),
+        Height = Dim.Fill(),
+        ColorScheme = ColorSchemePreset.WhiteBackgroundScheme
+    };
+        
+    Application.Top.Add(window);
+    Application.Top.Add();
+        
+    Application.Run();
+    Application.Shutdown();
+}
+catch (Exception e)
+{
+    Console.WriteLine(e);
+    throw;
+}
+
+
+
+
+
 
 try
 {
@@ -40,6 +86,7 @@ try
     battleFlow.OnLoad(new Profile
     {
         Account = "null",
+        Password = "null",
         Token = 0,
         Items = []
     });

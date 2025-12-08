@@ -1,6 +1,6 @@
 using System.Reflection;
+using TokenFight.Core.Consoles.Display;
 using TokenFight.Core.Interfaces.Factories;
-using TokenFight.Core.Models.Utils.Display;
 using TokenFight.Core.ReflectionAttribute;
 
 namespace TokenFight.Reflection;

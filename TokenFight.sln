@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenFight.Reflection", "Li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenFight.DI", "Libraries\TokenFight.DI\TokenFight.DI.csproj", "{BB71C0FB-B302-4853-B67B-A44F1D25BDD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenFight.UI", "Libraries\TokenFight.UI\TokenFight.UI.csproj", "{A681A47C-95C0-4C9A-9A3F-B535037774B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{BB71C0FB-B302-4853-B67B-A44F1D25BDD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB71C0FB-B302-4853-B67B-A44F1D25BDD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB71C0FB-B302-4853-B67B-A44F1D25BDD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A681A47C-95C0-4C9A-9A3F-B535037774B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A681A47C-95C0-4C9A-9A3F-B535037774B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A681A47C-95C0-4C9A-9A3F-B535037774B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A681A47C-95C0-4C9A-9A3F-B535037774B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

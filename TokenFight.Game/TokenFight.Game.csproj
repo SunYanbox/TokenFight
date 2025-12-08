@@ -23,6 +23,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Libraries\TokenFight.Core\TokenFight.Core.csproj" />
         <ProjectReference Include="..\Libraries\TokenFight.DI\TokenFight.DI.csproj" />
+        <ProjectReference Include="..\Libraries\TokenFight.UI\TokenFight.UI.csproj" />
         <ProjectReference Include="..\Libraries\TokenFight.Reflection\TokenFight.Reflection.csproj" />
     </ItemGroup>
 

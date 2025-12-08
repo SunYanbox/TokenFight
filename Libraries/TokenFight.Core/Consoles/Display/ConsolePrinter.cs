@@ -1,4 +1,4 @@
-namespace TokenFight.Core.Models.Utils.Display;
+namespace TokenFight.Core.Consoles.Display;
 
 /// <summary> 控制台输出助手 </summary>
 public class ConsolePrinter

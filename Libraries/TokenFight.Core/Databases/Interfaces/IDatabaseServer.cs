@@ -10,4 +10,14 @@ public interface IDatabaseServer : ISystem
     Dictionary<string, DataActor> ActorTables { get; init; }
     Dictionary<string, Profile> ProfileTables { get; init; }
     public Dictionary<string, DungeonInfo> DungeonInfoTables { get; init; }
+    public Profile? CurrentProfile { get; set; }
+    /// <summary>
+    /// 尝试登录
+    /// </summary>
+    /// <returns>登录是否成功</returns>
+    bool TryLogin(string account, string password);
+    /// <summary>
+    /// 注册新账户
+    /// </summary>
+    bool Register(string account, string password);
 }

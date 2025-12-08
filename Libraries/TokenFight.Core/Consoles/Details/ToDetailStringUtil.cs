@@ -1,8 +1,8 @@
 using System.Text;
+using TokenFight.Core.Consoles.Display;
 using TokenFight.Core.Enums.Actions;
 using TokenFight.Core.Interfaces.Systems;
 using TokenFight.Core.Models.Actions;
-using TokenFight.Core.Models.Utils.Display;
 
 namespace TokenFight.Core.Consoles.Details;
 

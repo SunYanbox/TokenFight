@@ -1,4 +1,4 @@
-namespace TokenFight.Core.Models.Utils.Display;
+namespace TokenFight.Core.Consoles.Display;
 
 /// <summary> 这是封装控制台输出的记录 </summary>
 public record OutputItem

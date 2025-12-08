@@ -1,3 +1,4 @@
+using TokenFight.Core.Consoles;
 using TokenFight.Core.Enums.Entities;
 using TokenFight.Core.Interfaces.Controls;
 using TokenFight.Core.Interfaces.Effects;

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.Identity;
 using TokenFight.Core.Constants;
 using TokenFight.Core.Databases.Interfaces;
 using TokenFight.Core.Databases.Models;
@@ -110,6 +111,39 @@ public class DatabaseServer: IDatabaseServer
     public Dictionary<string, DataActor> ActorTables { get; init; } = new();
     public Dictionary<string, Profile> ProfileTables { get; init; } = new();
     public Dictionary<string, DungeonInfo> DungeonInfoTables { get; init; } = new();
+    public Profile? CurrentProfile { get; set; }
+    
+    private readonly PasswordHasher<string> _passwordHasher = new();
+    public bool TryLogin(string account, string password)
+    {
+        if (ProfileTables.TryGetValue(account, out Profile? profile))
+        {
+            if (_passwordHasher.VerifyHashedPassword(account, profile.Password, password) ==
+                PasswordVerificationResult.Success)
+            {
+                CurrentProfile = profile;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool Register(string account, string password)
+    {
+        if (ProfileTables.ContainsKey(account))
+        {
+            return false;
+        }
+        ProfileTables.Add(account, new Profile
+        {
+            Account = account,
+            Password = _passwordHasher.HashPassword(account, password),
+            Token = 1600,
+            Items = []
+        });
+        return true;
+    }
 
 
     public void Init()
