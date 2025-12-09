@@ -9,6 +9,14 @@ riderModule.iml
 **/*.tar
 **/*.xml
 **/*.user
+*.DotSettings
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
 **/dist/
 **/bin/
 **/obj/
+
+# Terminal.Gui的教程示例
+Libraries/TokenFight.UI/Examples
