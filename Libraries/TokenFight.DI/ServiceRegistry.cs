@@ -13,8 +13,7 @@ using TokenFight.Core.Models.FStream;
 using TokenFight.Core.Models.Systems;
 using TokenFight.Core.Models.Utils.Systems;
 using TokenFight.Reflection;
-using TokenFight.Reflection.AutoActor;
-using TokenFight.Reflection.AutoDungeon;
+using TokenFight.Reflection.AutoRegister;
 
 namespace TokenFight.DI;
 
@@ -36,8 +35,10 @@ public static class ServiceRegistry
         services.AddSingleton<IActorPositionSystem, ActorPositionSystem>();
         services.AddSingleton<IEventOutputSystem, EventOutputSystem>();
         
+        // 工厂系统注册
         services.AddSingleton<IActorFactorySystem, ActorFactorySystem>();
         services.AddSingleton<IDungeonFactorySystem, DungeonFactorySystem>();
+        services.AddSingleton<ISkillFactorySystem, SkillFactorySystem>();
         
         // 单例上下文注册
         services.AddSingleton<IdGenerateSystem>();
@@ -73,6 +74,7 @@ public static class ServiceRegistry
         // 反射工厂系统
         serviceProvider.GetService<IActorFactorySystem>()?.Init();
         serviceProvider.GetService<IDungeonFactorySystem>()?.Init();
+        serviceProvider.GetService<ISkillFactorySystem>()?.Init();
         
         var systemRegistry  = serviceProvider.GetService<GameSystemRegistry>();
 

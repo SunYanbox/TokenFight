@@ -10,6 +10,7 @@ public interface IDatabaseServer : ISystem
     Dictionary<string, DataActor> ActorTables { get; init; }
     Dictionary<string, Profile> ProfileTables { get; init; }
     public Dictionary<string, DungeonInfo> DungeonInfoTables { get; init; }
+    public Dictionary<string, Properties> TemplateTables { get; init; }
     public Profile? CurrentProfile { get; set; }
     /// <summary>
     /// 尝试登录

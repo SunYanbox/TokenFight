@@ -48,7 +48,7 @@ public class PlayerXiEr0 : PlayerActor
         Name = DataActor.Name;
         Level = level;
 
-        InitAttrSet(DataActor);
+        ActorHelper.InitAttrSet(this, DataActor);
 
         double basicAttackRate = DataActorHelper.GetGrowthValue(BasicAttackData0!, "伤害倍率", Level, 0D);
         double pushRate = DataActorHelper.GetGrowthValue(BasicAttackData0!, "推条倍率", Level, 0D);

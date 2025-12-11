@@ -1,8 +1,12 @@
 using TokenFight.Core.Constants;
+using TokenFight.Core.Databases.Models;
+using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Entities;
+using TokenFight.Core.Interfaces.Attrs;
 using TokenFight.Core.Interfaces.Effects;
 using TokenFight.Core.Interfaces.Entities;
 using TokenFight.Core.Models;
+using TokenFight.Core.Models.Attrs;
 using TokenFight.Core.Models.Effects.Skills;
 using TokenFight.Core.Models.Entities.Actors;
 using TokenFight.Core.ReflectionAttribute;
@@ -15,6 +19,26 @@ public static class ActorHelper
 {
     private static readonly Random Random = new();
     public static GameSystemRegistry? GameSystemRegistry { private get; set; }
+    
+    /// <summary> 根据传入的养成数据, 自动初始化生命值, 攻击力, 防御力, 速度 </summary>
+    public static void InitAttrSet(IActor actor, DataActor dataActor)
+    {
+        Dictionary<int, double> modify = new Dictionary<int, double>();
+        foreach ((AttrType type, GrowthBase value) in dataActor.AttrGrowth)
+        {
+            double v = value.Calculate(actor.Level);
+            if (type == AttrType.Health)
+                v = Math.Max(v, 1);
+            modify.TryAdd(IAttrSet.ToInt(type), v);
+        }
+        actor.AttrSet?.SetAttr(new AttrModifyData
+        {
+            IsTemp = false,
+            ModifyData = modify,
+            Type = AttrModifyType.Base,
+            Id = "base"
+        });
+    }
 
     /// <summary> 获取一个列表中的随意单位 </summary>
     public static IActor? GetRandomActor(IActor[] actors)

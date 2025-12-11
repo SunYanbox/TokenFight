@@ -1,5 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.DependencyInjection;
+using Terminal.Gui.App;
+using Terminal.Gui.Configuration;
+using Terminal.Gui.Input;
+using Terminal.Gui.ViewBase;
+using Terminal.Gui.Views;
 using TokenFight.Core.Constants;
+using TokenFight.Core.Databases;
+using TokenFight.Core.Databases.Interfaces;
 using TokenFight.Core.Databases.Models.Profiles;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Entities;
@@ -14,6 +22,10 @@ using TokenFight.Core.Models.Attrs;
 using TokenFight.Core.Models.Entities.Actors;
 using TokenFight.Core.Models.Events.Contexts;
 using TokenFight.DI;
+using TokenFight.UI.Core;
+using Attribute = Terminal.Gui.Drawing.Attribute;
+
+
 
 var services = new ServiceCollection();
 
@@ -26,9 +38,18 @@ ServiceProvider serviceProvider = services.BuildServiceProvider();
 
 ServiceRegistry.InitAllSystems(serviceProvider);
 
+GameSystemRegistry systemRegistryGlobal = serviceProvider.GetService<GameSystemRegistry>()!;
+
+
 try
 {
+    ConfigurationManager.RuntimeConfig = """{ "Theme": "Amber Phosphor" }""";
+    ConfigurationManager.Enable (ConfigLocations.All);
     
+    // With using statement for automatic disposal
+    using IApplication app = Application.Create().Init();
+    using var window = new GameWindow();
+    app.Run(window);
 }
 catch (Exception e)
 {
@@ -44,7 +65,6 @@ catch (Exception e)
 try
 {
     var autoActorManageSystem = serviceProvider.GetService<IActorFactorySystem>();
-    Console.WriteLine(string.Join(", ", autoActorManageSystem?.GetAllIds() ?? []));
     
     GameSystemRegistry systemRegistry = serviceProvider.GetService<GameSystemRegistry>()!;
     
@@ -56,7 +76,10 @@ try
         Account = "null",
         Password = "null",
         Token = 0,
-        Items = []
+        Items =
+        [
+        ],
+        GiftInfos = new Dictionary<string, int>()
     });
     
     battleFlow.InitActorPool();

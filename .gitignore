@@ -17,6 +17,7 @@ riderModule.iml
 **/dist/
 **/bin/
 **/obj/
+**/lib/
 
 # Terminal.Gui的教程示例
 Libraries/TokenFight.UI/Examples

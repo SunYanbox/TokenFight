@@ -62,7 +62,7 @@ public static class AutoSysRegistryInitUtil
                 !property.CanWrite)
             {
                 throw new InvalidOperationException(
-                    $"类型 {type.FullName} 必须具有 'public static GameSystemRegistry? GameSystemRegistry {{ protected get; set; }}' 属性");
+                    $"[游戏系统注册表初始化] 类型 {type.Name} 必须具有 'public static GameSystemRegistry? GameSystemRegistry {{ protected get; set; }}' 属性");
             }
             
             // 获取受保护的 setter 并调用
@@ -70,16 +70,16 @@ public static class AutoSysRegistryInitUtil
             if (setMethod == null)
             {
                 throw new InvalidOperationException(
-                    $"类型 {type.FullName} 的属性 'GameSystemRegistry' 必须具有 setter 方法");
+                    $"[游戏系统注册表初始化] 类型 {type.Name} 的属性 'GameSystemRegistry' 必须具有 setter 方法");
             }
             
             setMethod.Invoke(null, [registry]);
             
-            Console.WriteLine($"已为 {type.FullName} 初始化 GameSystemRegistry");
+            Console.WriteLine($"[游戏系统注册表初始化] 已为 {type.Name} 初始化 GameSystemRegistry");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"初始化 {type.FullName} 失败: {ex.Message}");
+            Console.WriteLine($"[游戏系统注册表初始化] 初始化 {type.Name} 失败: {ex.Message}");
             throw;
         }
     }

@@ -32,6 +32,10 @@
         <ProjectReference Include="..\Libraries\TokenFight.Reflection\TokenFight.Reflection.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="data\templates\" />
+    </ItemGroup>
+
     
 
 </Project>

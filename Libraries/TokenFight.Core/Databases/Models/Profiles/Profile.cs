@@ -10,4 +10,6 @@ public class Profile
     public required long Token { get; set; }
     /// <summary> 角色 / 武器 / 光锥 </summary>
     public required List<Item> Items { get; set; }
+    /// <summary> 已兑换礼物信息 </summary>
+    public required Dictionary<string, int> GiftInfos { get; set; }
 }

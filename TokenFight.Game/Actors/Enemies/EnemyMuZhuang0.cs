@@ -33,7 +33,7 @@ public class EnemyMuZhuang0 : EnemyActor
         Name = DataActor.Name;
         Level = level;
         
-        InitAttrSet(DataActor);
+        ActorHelper.InitAttrSet(this, DataActor);
         
         double healRate = DataActorHelper.GetGrowthValue(BasicAttackData0!, "治疗倍率", Level, 0D);
         SkillMaster!.Add(new HealSelf(id: BasicAttackId, name: BasicAttackData0!.Name,

@@ -26,26 +26,6 @@ public abstract class BaseActor: IActor
         GameSystemRegistry?.IdGenerateSystem.ReleaseId(Id);
     }
 
-    /// <summary> 根据传入的养成数据, 自动初始化生命值, 攻击力, 防御力, 速度 </summary>
-    protected void InitAttrSet(DataActor dataActor)
-    {
-        Dictionary<int, double> modify = new Dictionary<int, double>();
-        foreach ((AttrType type, GrowthBase value) in dataActor.AttrGrowth)
-        {
-            double v = value.Calculate(Level);
-            if (type == AttrType.Health)
-                v = Math.Max(v, 1);
-            modify.TryAdd(IAttrSet.ToInt(type), v);
-        }
-        AttrSet!.SetAttr(new AttrModifyData
-        {
-            IsTemp = false,
-            ModifyData = modify,
-            Type = AttrModifyType.Base,
-            Id = "base"
-        });
-    }
-
     [SetsRequiredMembers]
     protected BaseActor(TeamType team, GameSystemRegistry gameSystemRegistry)
     {
