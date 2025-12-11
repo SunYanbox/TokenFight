@@ -18,9 +18,6 @@
       <PackageReference Include="Terminal.Gui" Version="2.0.0-alpha.3865" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Core\" />
-    </ItemGroup>
-    <ItemGroup>
         <!-- 排除整个示例文件夹及其子文件夹 -->
         <Compile Remove="Examples\**\*.cs" />
     </ItemGroup>

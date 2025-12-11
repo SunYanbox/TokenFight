@@ -9,22 +9,27 @@ using TokenFight.Core.Databases.Models.Profiles;
 namespace TokenFight.Core.Databases;
 
 
-public class DatabaseServer: IDatabaseServer
+public sealed class DatabaseServer: IDatabaseServer
 {
     private const string LogLoadPrefix = "[DatabaseServer Load]";
+    private const string DataFolder = GameConst.DataFolder;
+    private string ActorFolder => Path.Combine(DataFolder, "actors");
+    private string ProfileFolder => Path.Combine(DataFolder, "profiles");
+    private string DungeonFolder => Path.Combine(DataFolder, "dungeons");
+    private readonly JsonSerializerOptions _jsonSaveOption = new()
+    {
+        WriteIndented = true,
+        IndentSize = 2
+    };
     
     public DatabaseServer()
     {
-        var dataFolder = GameConst.DataFolder;
-        var actorFolder = Path.Combine(dataFolder, "actors");
-        var profilesFolder = Path.Combine(dataFolder, "profiles");
-        var dungeonFolder = Path.Combine(dataFolder, "dungeons");
-        Directory.CreateDirectory(dataFolder);
-        Directory.CreateDirectory(actorFolder);
-        Directory.CreateDirectory(profilesFolder);
-        Directory.CreateDirectory(dungeonFolder);
+        Directory.CreateDirectory(DataFolder);
+        Directory.CreateDirectory(ActorFolder);
+        Directory.CreateDirectory(ProfileFolder);
+        Directory.CreateDirectory(DungeonFolder);
         
-        foreach (var file in Directory.GetFiles(actorFolder).Where(x => x.EndsWith(".json")))
+        foreach (var file in Directory.GetFiles(ActorFolder).Where(x => x.EndsWith(".json")))
         {
             try
             {
@@ -51,7 +56,7 @@ public class DatabaseServer: IDatabaseServer
             }
         }
 
-        foreach (var file in Directory.GetFiles(profilesFolder).Where(x => x.EndsWith(".json")))
+        foreach (var file in Directory.GetFiles(ProfileFolder).Where(x => x.EndsWith(".json")))
         {
             try
             {
@@ -78,7 +83,7 @@ public class DatabaseServer: IDatabaseServer
             }
         }
         
-        foreach (var file in Directory.GetFiles(dungeonFolder).Where(x => x.EndsWith(".json")))
+        foreach (var file in Directory.GetFiles(DungeonFolder).Where(x => x.EndsWith(".json")))
         {
             try
             {
@@ -143,6 +148,30 @@ public class DatabaseServer: IDatabaseServer
             Items = []
         });
         return true;
+    }
+
+    public bool Save<T>(T data)
+    {
+        if (data is Profile profile)
+        {
+            return Save(profile);
+        }
+        return false;
+    }
+
+    private bool Save(Profile profile)
+    {
+        try
+        {
+            var path = Path.Combine(ProfileFolder, $"{profile.Account}.json");
+            File.WriteAllText(path, JsonSerializer.Serialize(profile, _jsonSaveOption));
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"[{GetType().Name} Save Error] {e.Message} {e.StackTrace}");
+            return false;
+        }
     }
 
 

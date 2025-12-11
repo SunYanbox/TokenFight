@@ -11,6 +11,11 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+        <!--发布配置-->
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     </PropertyGroup>
 
     <ItemGroup>
@@ -27,9 +32,6 @@
         <ProjectReference Include="..\Libraries\TokenFight.Reflection\TokenFight.Reflection.csproj" />
     </ItemGroup>
 
-<!--    &lt;!&ndash;  编译为本机代码  &ndash;&gt;-->
-<!--    <PropertyGroup>-->
-<!--        <PublishAot>true</PublishAot>-->
-<!--    </PropertyGroup>-->
+    
 
 </Project>

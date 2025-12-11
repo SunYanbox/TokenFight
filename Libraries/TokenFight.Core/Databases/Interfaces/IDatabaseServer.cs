@@ -20,4 +20,8 @@ public interface IDatabaseServer : ISystem
     /// 注册新账户
     /// </summary>
     bool Register(string account, string password);
+    /// <summary>
+    /// 保存数据库信息的接口
+    /// </summary>
+    public bool Save<T>(T data);
 }
