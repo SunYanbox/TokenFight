@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using TokenFight.Core.Databases.Models;
+using TokenFight.Core.Databases.Models.Growth;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Effects;
 

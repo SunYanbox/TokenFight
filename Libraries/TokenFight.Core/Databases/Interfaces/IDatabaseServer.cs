@@ -1,5 +1,7 @@
 using TokenFight.Core.Databases.Models;
+using TokenFight.Core.Databases.Models.DataTables;
 using TokenFight.Core.Databases.Models.Dungeons;
+using TokenFight.Core.Databases.Models.Growth;
 using TokenFight.Core.Databases.Models.Profiles;
 using TokenFight.Core.Interfaces.Bases;
 
@@ -7,10 +9,10 @@ namespace TokenFight.Core.Databases.Interfaces;
 
 public interface IDatabaseServer : ISystem
 {
-    Dictionary<string, DataActor> ActorTables { get; init; }
-    Dictionary<string, Profile> ProfileTables { get; init; }
-    public Dictionary<string, DungeonInfo> DungeonInfoTables { get; init; }
-    public Dictionary<string, Properties> TemplateTables { get; init; }
+    public DataTable<DataActor> ActorTables { get; init; }
+    public DataTable<Profile> ProfileTables { get; init; }
+    public DataTable<DungeonInfo> DungeonInfoTables { get; init; }
+    public DataTable<Properties> TemplateTables { get; init; }
     public Profile? CurrentProfile { get; set; }
     /// <summary>
     /// 尝试登录

@@ -1,5 +1,8 @@
+using System.Text.Json.Serialization;
+
 namespace TokenFight.Core.Databases.Models.Profiles;
 
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum ItemType
 {
     /// <summary> 礼物 </summary>

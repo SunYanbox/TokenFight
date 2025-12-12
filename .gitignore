@@ -20,4 +20,5 @@ riderModule.iml
 **/lib/
 
 # Terminal.Gui的教程示例
+Libraries/Terminal.Gui
 Libraries/TokenFight.UI/Examples

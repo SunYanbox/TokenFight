@@ -18,11 +18,14 @@ public class LoginView: View
         _databaseServer = databaseServer;
         CanFocus = true;
         
+        Width = Dim.Fill();
+        Height = Dim.Fill();
+        
         var usernameLabel = new Label { Text = "账号:" };
 
         _accountTextField = new TextField()
         {
-            Text = "",
+            Text = "admin",
             X = Pos.Right(usernameLabel) + 1,
             Width = Dim.Absolute(20),
             CanFocus=true
@@ -35,7 +38,7 @@ public class LoginView: View
 
         _passwordTextField = new TextField()
         {
-            Text = "",
+            Text = "123456",
             Secret = true,
             X = Pos.Left(_accountTextField),
             Y = Pos.Top(passwordLabel),
@@ -75,40 +78,42 @@ public class LoginView: View
         };
 
         // When login button is clicked display a message popup
-        _loginButton.MouseClick += (s, args) =>
-        {
-            object oLock = new object();
-            App!.Invoke(()=>{
-                lock(oLock)    
+        _loginButton.Accepting += (s, args) =>
+            {
+                object oLock = new object();
+                App!.Invoke(() =>
                 {
-                    if (_databaseServer.TryLogin(_accountTextField.Text, _passwordTextField.Text))
+                    lock (oLock)
                     {
-                        UIUtil.QueryAtMainLoop(this, "登录", $"登录成功: {_accountTextField.Text}", "确认");
+                        if (_databaseServer.TryLogin(_accountTextField.Text, _passwordTextField.Text))
+                        {
+                            UIUtil.QueryAtMainLoop(this, "登录", $"登录成功: {_accountTextField.Text}", "确认");
+                        }
+                        else
+                        {
+                            OutputLoginOrRegisterError("登录");
+                        }
                     }
-                    else
-                    {
-                        OutputLoginOrRegisterError("登录");
-                    }
+                });
+                SetTableView();
+                args.Handled = true;
+            };
+
+        _registerButton.Accepting += (s, args) =>
+            {
+                if (_databaseServer.Register(_accountTextField.Text, _passwordTextField.Text))
+                {
+                    _databaseServer.Save(_databaseServer.ProfileTables[_accountTextField.Text]);
+                    UIUtil.QueryAtMainLoop(this, "注册", $"注册成功: {_accountTextField.Text}", "确认");
                 }
-            });
-            SetTableView();
-            args.Handled = true;
-        };
-        
-        _registerButton.MouseClick += (s, args) =>
-        {
-            if (_databaseServer.Register(_accountTextField.Text, _passwordTextField.Text))
-            {
-                _databaseServer.Save(_databaseServer.ProfileTables[_accountTextField.Text]);
-                UIUtil.QueryAtMainLoop(this, "注册", $"注册成功: {_accountTextField.Text}", "确认");
-            }
-            else
-            {
-                OutputLoginOrRegisterError("注册");
-            }
-            SetTableView();
-            args.Handled = true;
-        };
+                else
+                {
+                    OutputLoginOrRegisterError("注册");
+                }
+
+                SetTableView();
+                args.Handled = true;
+            };
 
         // Add the views to the Window
         Add (usernameLabel, _accountTextField, passwordLabel, 

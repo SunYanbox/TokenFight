@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using TokenFight.Core.Databases.Models;
+using TokenFight.Core.Databases.Models.Growth;
 
 namespace TokenFight.Core.Databases.Interfaces;
 

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using TokenFight.Core.Databases.Interfaces;
 
-namespace TokenFight.Core.Databases.Models;
+namespace TokenFight.Core.Databases.Models.Growth;
 
 /// <summary>角色/技能的成长方式</summary>
 public class GrowthBase: IGrowthBase

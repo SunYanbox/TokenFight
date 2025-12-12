@@ -16,7 +16,6 @@ public static class UIUtil
             app?.Invoke(() =>
             {
                 result = MessageBox.Query(app, title, message, buttons);
-                app.LayoutAndDraw();
             });
         }
         catch (Exception e)
@@ -36,7 +35,6 @@ public static class UIUtil
             app?.Invoke(() =>
             {
                 result = MessageBox.ErrorQuery(app, title, errorMessage, buttons);
-                app.LayoutAndDraw();
             });
         }
         catch (Exception e)

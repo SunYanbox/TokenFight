@@ -26,9 +26,9 @@ public class Properties
     /// <summary> 遗器等级 </summary>
     public LevelProgress? RelicsLevel { get; set; }
     /// <summary> 遗器主词条 </summary>
-    public AttrType? MainEntry { get; set; }
+    public EntryValue? MainEntry { get; set; }
     /// <summary> 遗器副词条与其随机数值 </summary>
-    public List<(AttrType, double)>? SubEntries { get; set; }
+    public List<EntryValue>? SubEntries { get; set; }
     
     /// <summary> 角色Id </summary>
     public string? ActorId { get; set; }
@@ -49,6 +49,8 @@ public class Properties
     
     /// <summary> 使用物品回调 </summary>
     public string? UseCallback { get; set; }
+    
+    public Properties() { }
     
     /// <summary>
     /// 复制构造函数 - 创建当前实例的深拷贝
@@ -82,12 +84,12 @@ public class Properties
         ActorLevel = new LevelProgress(source.ActorLevel);
         
         // 复制枚举类型
-        MainEntry = source.MainEntry;
+        MainEntry = new EntryValue(source.MainEntry);
         
         // 深拷贝列表
         if (source.SubEntries != null)
         {
-            SubEntries = new List<(AttrType, double)>(source.SubEntries);
+            SubEntries = new List<EntryValue>(source.SubEntries);
         }
         
         // 深拷贝字典

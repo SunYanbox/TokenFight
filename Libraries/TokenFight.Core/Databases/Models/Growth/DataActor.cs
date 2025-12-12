@@ -2,7 +2,7 @@ using TokenFight.Core.Databases.Interfaces;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Effects;
 
-namespace TokenFight.Core.Databases.Models;
+namespace TokenFight.Core.Databases.Models.Growth;
 
 public class DataActor: IDataActor
 {

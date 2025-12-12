@@ -1,5 +1,6 @@
 using TokenFight.Core.Constants;
 using TokenFight.Core.Databases.Models;
+using TokenFight.Core.Databases.Models.Growth;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Entities;
 using TokenFight.Core.Interfaces.Attrs;

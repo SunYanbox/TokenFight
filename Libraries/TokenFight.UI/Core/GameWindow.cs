@@ -1,6 +1,7 @@
 using Terminal.Gui.ViewBase;
 using Terminal.Gui.Views;
 using TokenFight.Core.Models;
+using TokenFight.Core.Models.Entities.Masters;
 using TokenFight.Core.ReflectionAttribute;
 using TokenFight.UI.Core.Profile;
 
@@ -10,18 +11,18 @@ namespace TokenFight.UI.Core;
 public sealed class GameWindow: Window
 {
     public static GameSystemRegistry? GameSystemRegistry { protected get; set; }
-    private LoginView _loginView;
-    private Tab _loginTab;
-    private ProfileView _profileView;
-    private Tab _profileTab;
+    private readonly Tab _loginTab;
+    private readonly Tab _profileTab;
+    private readonly Tab _gachaTab;
     private TabView _tabView;
     private string _currentProfileIdCache;
     private bool _currentProfileIdChange;
     
-    private GameWindowState _gameWindowState = GameWindowState.NotLogin;
+    private EnumTypeMaster<GameWindowState> _gameWindowState = new([GameWindowState.NotLogin]);
     
     public GameWindow()
     {
+        Title = "TokenFight - 未登录";
         _currentProfileIdCache = string.Empty;
         _tabView = new TabView
         {
@@ -29,35 +30,30 @@ public sealed class GameWindow: Window
             Height = Dim.Fill()
         };
         // 登录页面
-        _loginView = new LoginView(GameSystemRegistry!.DatabaseServer)
-        {
-            Width = Dim.Fill(),
-            Height = Dim.Fill(),
-        };
         _loginTab = new Tab
         {
-            View = _loginView,
+            View = new LoginView(GameSystemRegistry!.DatabaseServer),
             DisplayText = "登录"
         };
         _tabView.AddTab(_loginTab, true);
         // 存档信息页面
-        _profileView = new ProfileView(GameSystemRegistry!.DatabaseServer)
-        {
-            Width = Dim.Fill(),
-            Height = Dim.Fill(),
-        };
         _profileTab = new Tab
         {
-            View = _profileView,
+            View = new ProfileView(GameSystemRegistry!.DatabaseServer),
             DisplayText = "账号信息"
         };
         Add(_tabView);
+        // 抽卡界面
+        _gachaTab = new Tab
+        {
+            View = new GachaView(GameSystemRegistry!.DatabaseServer),
+            DisplayText = "抽卡"
+        };
         
         SubViewLayout += (_, _) =>
         {
             UpdateState();
             UpdateTabView();
-            UpdateTitle();
         };
     }
 
@@ -72,11 +68,13 @@ public sealed class GameWindow: Window
         {
             if (string.IsNullOrEmpty(_currentProfileIdCache))
             {
-                _gameWindowState = GameWindowState.NotLogin;
+                _gameWindowState.Clear();
+                _gameWindowState.Add(GameWindowState.NotLogin);
             }
             else
             {
-                _gameWindowState = GameWindowState.Login;
+                _gameWindowState.Remove(GameWindowState.NotLogin);
+                _gameWindowState.Add(GameWindowState.Login);
             }
             _currentProfileIdChange = true;
         }
@@ -85,36 +83,25 @@ public sealed class GameWindow: Window
     private void UpdateTabView()
     {
         if (!_currentProfileIdChange) return;
-        switch (_gameWindowState)
+        if (_gameWindowState.Contains(GameWindowState.NotLogin))
         {
-            case GameWindowState.NotLogin:
-                _tabView.RemoveTab(_profileTab);
-                _loginTab.SetNeedsDraw();
-                _tabView.AddTab(_loginTab, true);
-                break;
-            case GameWindowState.Login:
-                _tabView.RemoveTab(_loginTab);
-                _profileTab.SetNeedsDraw();
-                _tabView.AddTab(_profileTab, true);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            _tabView.RemoveTab(_profileTab);
+            _tabView.RemoveTab(_gachaTab);
+            
+            _tabView.AddTab(_loginTab, true);
+            _loginTab.SetNeedsDraw();
+            Title = "TokenFight - 未登录";
+        }
+
+        if (_gameWindowState.Contains(GameWindowState.Login))
+        {
+            _tabView.RemoveTab(_loginTab);
+            
+            _tabView.AddTab(_profileTab, true);
+            _tabView.AddTab(_gachaTab, false);
+            _profileTab.SetNeedsDraw();
+            Title = $"TokenFight - {_currentProfileIdCache}";
         }
         _currentProfileIdChange = false;
-    }
-
-    private void UpdateTitle()
-    {
-        switch (_gameWindowState)
-        {
-            case GameWindowState.NotLogin:
-                Title = "TokenFight - 未登录";
-                break;
-            case GameWindowState.Login:
-                Title = $"TokenFight - {_currentProfileIdCache}";
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
     }
 }

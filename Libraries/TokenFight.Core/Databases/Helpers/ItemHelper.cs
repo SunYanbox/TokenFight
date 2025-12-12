@@ -12,44 +12,49 @@ public static class ItemHelper
     public static bool VerifyItem(Item item)
     {
         if (item.Id == null || item.Name == null || item.Properties == null) return false;
-        switch (item.Type)
+        return VerifyProperties(item.Properties, item.Type);
+    }
+
+    public static bool VerifyProperties(Properties properties, ItemType itemType)
+    { 
+        switch (itemType)
         {
             case ItemType.Gift:
-                if (item.Properties?.GiftCode == null
-                    || item.Properties?.GiftMaxExchangeTimes == null
-                    || item.Properties?.UseCallback == null)
+                if (properties.GiftCode == null
+                    || properties.GiftMaxExchangeTimes == null
+                    || properties.UseCallback == null)
                     return false;
                 break;
             case ItemType.Weapon:
-                if (item.Properties?.SkillId == null 
-                    || item.Properties?.WeaponLayers == null
-                    || item.Properties?.WeaponLevel == null)
+                if (properties.SkillId == null 
+                    || properties.WeaponLayers == null
+                    || properties.WeaponLevel == null)
                     return false;
                 break;
             case ItemType.Relics:
-                if (item.Properties?.RelicsTypeId == null
-                    || item.Properties?.RelicsLevel == null
-                    || item.Properties?.MainEntry == null
-                    || item.Properties?.SubEntries == null)
+                if (properties.RelicsTypeId == null
+                    || properties.RelicsLevel == null
+                    || properties.MainEntry == null
+                    || properties.SubEntries == null)
                     return false;
                 break;
             case ItemType.Actor:
-                if (item.Properties?.ActorId == null
-                    || item.Properties?.ActorLevel == null
-                    || item.Properties?.SkillLevel == null)
+                if (properties.ActorId == null
+                    || properties.ActorLevel == null
+                    || properties.SkillLevel == null)
                     return false;
                 break;
             case ItemType.Resource:
-                if (item.Properties?.CurrentResources == null
-                    || item.Properties?.MaxResources == null)
+                if (properties.CurrentResources == null
+                    || properties.MaxResources == null)
                     return false;
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(item.Type), item.Type, null);
+                throw new ArgumentOutOfRangeException(nameof(itemType), itemType, null);
         }
         return true;
     }
-
+    
     public static void InitItem(ItemType itemType, Properties properties, string? parentId = null)
     {
         string uuid = Guid.NewGuid().ToString();
@@ -62,5 +67,13 @@ public static class ItemHelper
             TemplateId = properties.Id,
             Properties = new Properties(properties)
         };
+    }
+
+    /// <summary>
+    /// 获取已验证的指定类型的ITEMS
+    /// </summary>
+    public static Item[] GetVerifyItems(Item[] items, ItemType itemType)
+    {
+        return items.Where(item => item.Type == itemType && VerifyItem(item)).ToArray();
     }
 }

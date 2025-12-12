@@ -1,3 +1,5 @@
+using TokenFight.Core.Databases.Models.DataTables;
+
 namespace TokenFight.Core.Databases.Models.Profiles;
 
 public class Profile
@@ -9,7 +11,7 @@ public class Profile
     /// <summary> 账户养成资源 </summary>
     public required long Token { get; set; }
     /// <summary> 角色 / 武器 / 光锥 </summary>
-    public required List<Item> Items { get; set; }
+    public required Inventory Inventory { get; set; }
     /// <summary> 已兑换礼物信息 </summary>
     public required Dictionary<string, int> GiftInfos { get; set; }
 }

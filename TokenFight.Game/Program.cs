@@ -8,6 +8,7 @@ using Terminal.Gui.Views;
 using TokenFight.Core.Constants;
 using TokenFight.Core.Databases;
 using TokenFight.Core.Databases.Interfaces;
+using TokenFight.Core.Databases.Models.DataTables;
 using TokenFight.Core.Databases.Models.Profiles;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Entities;
@@ -76,9 +77,7 @@ try
         Account = "null",
         Password = "null",
         Token = 0,
-        Items =
-        [
-        ],
+        Inventory = new Inventory(),
         GiftInfos = new Dictionary<string, int>()
     });
     

@@ -1,6 +1,6 @@
 namespace TokenFight.Core.Databases.Models.Profiles;
 
-public struct Item
+public class Item
 {
     public string? Id { get; set; }
     public string? Name { get; set; }

@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using TokenFight.Core.Constants;
 using TokenFight.Core.Databases.Interfaces;
 using TokenFight.Core.Databases.Models;
+using TokenFight.Core.Databases.Models.DataTables;
 using TokenFight.Core.Databases.Models.Dungeons;
+using TokenFight.Core.Databases.Models.Growth;
 using TokenFight.Core.Databases.Models.Profiles;
 
 namespace TokenFight.Core.Databases;
@@ -40,7 +42,7 @@ public sealed class DatabaseServer: IDatabaseServer
         LoadDataFromFolder(ProfileFolder, ProfileTables, (profileData, dict) => 
         {
             dict.Add(profileData.Account, profileData);
-            Console.WriteLine($"{LogLoadPrefix}: {profileData.Account} 资源: {profileData.Items.Count}");
+            Console.WriteLine($"{LogLoadPrefix}: {profileData.Account} 资源: {profileData.Inventory.Count}");
         });
         
         LoadDataFromFolder(DungeonFolder, DungeonInfoTables, (dungeonInfo, dict) => 
@@ -58,10 +60,10 @@ public sealed class DatabaseServer: IDatabaseServer
         });
     }
     
-    public Dictionary<string, DataActor> ActorTables { get; init; } = new();
-    public Dictionary<string, Profile> ProfileTables { get; init; } = new();
-    public Dictionary<string, DungeonInfo> DungeonInfoTables { get; init; } = new();
-    public Dictionary<string, Properties> TemplateTables { get; init; } = new();
+    public DataTable<DataActor> ActorTables { get; init; } = new();
+    public DataTable<Profile> ProfileTables { get; init; } = new();
+    public DataTable<DungeonInfo> DungeonInfoTables { get; init; } = new();
+    public DataTable<Properties> TemplateTables { get; init; } = new();
     public Profile? CurrentProfile { get; set; }
     
     private readonly PasswordHasher<string> _passwordHasher = new();
@@ -97,7 +99,7 @@ public sealed class DatabaseServer: IDatabaseServer
             Account = account,
             Password = _passwordHasher.HashPassword(account, password),
             Token = 1600,
-            Items = [],
+            Inventory = new Inventory(),
             GiftInfos = new Dictionary<string, int>()
         });
         return true;
@@ -134,7 +136,7 @@ public sealed class DatabaseServer: IDatabaseServer
     /// <param name="folderPath">文件夹路径</param>
     /// <param name="dictionary">目标字典</param>
     /// <param name="onSuccess">数据成功加载后的回调</param>
-    private void LoadDataFromFolder<T>(string folderPath, Dictionary<string, T> dictionary, Action<T, Dictionary<string, T>> onSuccess) 
+    private void LoadDataFromFolder<T>(string folderPath, DataTable<T> dictionary, Action<T, DataTable<T>> onSuccess) 
         where T : class
     {
         if (!Directory.Exists(folderPath))

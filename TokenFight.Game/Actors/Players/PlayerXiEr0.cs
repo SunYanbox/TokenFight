@@ -3,6 +3,7 @@ using TokenFight.Core.Constants;
 using TokenFight.Core.Databases.Helpers;
 using TokenFight.Core.Databases.Interfaces;
 using TokenFight.Core.Databases.Models;
+using TokenFight.Core.Databases.Models.Growth;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Effects;
 using TokenFight.Core.Enums.Entities;
