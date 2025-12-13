@@ -1,5 +1,4 @@
 using TokenFight.Core.Databases.Models.Dungeons;
-using TokenFight.Core.Databases.Models.Profiles;
 
 namespace TokenFight.Core.Constants;
 

@@ -89,8 +89,9 @@ public class GachaSystem(IDatabaseServer databaseServer): IGachaSystem
     }
 
     // rate = 4 | 5   hadGachaCount 为已抽卡次数
-    private double CalculateGachaRate(int rate, int hadGachaCount)
+    public double CalculateGachaRate(int rate, int hadGachaCount)
     {
+        hadGachaCount++; // 当前抽卡次数
         if (rate == 4)
         {
             return hadGachaCount < GameConst.GachaStar4Guarantee.Min

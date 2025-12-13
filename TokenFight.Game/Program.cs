@@ -2,7 +2,6 @@
 using Terminal.Gui.App;
 using Terminal.Gui.Configuration;
 using TokenFight.Core.Constants;
-using TokenFight.Core.Databases.Models.DataTables;
 using TokenFight.Core.Databases.Models.Profiles;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Entities;

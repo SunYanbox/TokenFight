@@ -11,4 +11,7 @@ public interface IGachaSystem: ISystem
 
     /// <summary> 抽奖count次, 并记录历史记录 </summary>
     public IEnumerable<GachaResult> Gacha(Profile profile, GachaReward reward, int count);
+    
+    /// <summary> 计算概率 </summary>
+    public double CalculateGachaRate(int rate, int hadGachaCount);
 }

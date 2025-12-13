@@ -73,13 +73,13 @@ public sealed class GachaView: TabView
             };
             _gachaTen = new Button
             {
-                X = Pos.Right(_gachaOnce),
+                X = Pos.Right(_gachaOnce) + 1,
                 Y = Pos.Y(_gachaOnce),
                 Text = "十连抽"
             };
             label = new Label
             {
-                X = Pos.Right(_gachaTen),
+                X = Pos.Right(_gachaTen) + 1,
                 Y = Pos.Y(_gachaOnce),
                 Text = $"N连抽的抽数: "
             };
@@ -88,12 +88,12 @@ public sealed class GachaView: TabView
                 Text = "20",
                 Width = Dim.Auto(minimumContentDim: 5),
                 CanFocus = true,
-                X = Pos.Right(label),
+                X = Pos.Right(label) + 1,
                 Y = Pos.Y(_gachaOnce)
             };
             _gachaN = new Button
             {
-                X = Pos.Right(gachaCount),
+                X = Pos.Right(gachaCount) + 1,
                 Y = Pos.Y(_gachaOnce),
                 Text = "N连抽"
             };
