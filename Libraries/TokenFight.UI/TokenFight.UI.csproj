@@ -15,10 +15,13 @@
         <ProjectReference Include="..\TokenFight.Core\TokenFight.Core.csproj" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.4725" />
+<!--      <PackageReference Include="Terminal.Gui" Version="2.0.0-develop.4725" />-->
     </ItemGroup>
     <ItemGroup>
         <!-- 排除整个示例文件夹及其子文件夹 -->
         <Compile Remove="Examples\**\*.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Terminal.Gui" Version="2.0.0" />
     </ItemGroup>
 </Project>
