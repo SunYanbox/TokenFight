@@ -7,17 +7,17 @@ public enum EventType
 {
     /// <summary> 空事件 </summary>
     Null,
-    
+
     /// <summary> 游戏开始 </summary>
     GameStart,
     /// <summary> 游戏结束 </summary>
     GameEnd,
-    
+
     /// <summary> 成员生命周期 </summary>
     ActorLife,
     /// <summary> 成员死亡 </summary>
     ActorDeath,
-    
+
     /// <summary> 血量发生变化 </summary>
     HealthChange,
     /// <summary> 进入对局时触发 </summary>

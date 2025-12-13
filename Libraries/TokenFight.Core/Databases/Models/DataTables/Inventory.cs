@@ -7,7 +7,7 @@ namespace TokenFight.Core.Databases.Models.DataTables;
 public class Inventory
 {
     public Inventory() { }
-    
+
     [JsonPropertyName("Items")]
     public Item[]? Items
     {
@@ -32,7 +32,6 @@ public class Inventory
         );
 
     #region 批量获取
-
     /// <summary>
     /// 获取物品
     /// </summary>
@@ -40,29 +39,27 @@ public class Inventory
 
     [JsonIgnore]
     public DataTable<Item> AllItems => _allItems;
-    
+
     [JsonIgnore]
     public DataTable<Item> AllWeapons => GetItemsByType(ItemType.Weapon);
-    
+
     [JsonIgnore]
     public DataTable<Item> AllRelics => GetItemsByType(ItemType.Relics);
-    
+
     [JsonIgnore]
     public DataTable<Item> AllActors => GetItemsByType(ItemType.Actor);
-    
+
     [JsonIgnore]
     public DataTable<Item> AllGifts => GetItemsByType(ItemType.Gift);
-    
+
     [JsonIgnore]
     public DataTable<Item> AllResources => GetItemsByType(ItemType.Resource);
 
     [JsonIgnore]
     public int Count => _allItems.Count;
-    
     #endregion
 
     #region 增删改查
-    
     public Item this[string key]
     {
         get
@@ -76,10 +73,7 @@ public class Inventory
     /// <summary>
     /// 获取物品
     /// </summary>
-    public Item? Get(string id)
-    {
-        return _allItems.GetValueOrDefault(id);
-    }
+    public Item? Get(string id) => _allItems.GetValueOrDefault(id);
 
     /// <summary>
     /// 添加物品
@@ -88,11 +82,11 @@ public class Inventory
     {
         bool tag = false;
         if (!ItemHelper.VerifyItem(item)) return tag;
-        
+
         tag = _allItems.TryAdd(item.Id!, item);
 
         if (!tag) return false;
-            
+
         tag = tag && _itemTypeTables[item.Type].TryAdd(item.Id!, item);
 
         if (tag) return tag;
@@ -108,7 +102,6 @@ public class Inventory
         if (!_allItems.TryGetValue(id, out Item? item)) return false;
         return _itemTypeTables[item.Type].Remove(id) && _allItems.Remove(id);
     }
-
     #endregion
-    
+
 }

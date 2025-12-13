@@ -2,14 +2,12 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Identity;
 using TokenFight.Core.Constants;
 using TokenFight.Core.Databases.Interfaces;
-using TokenFight.Core.Databases.Models;
 using TokenFight.Core.Databases.Models.DataTables;
 using TokenFight.Core.Databases.Models.Dungeons;
 using TokenFight.Core.Databases.Models.Growth;
 using TokenFight.Core.Databases.Models.Profiles;
 
 namespace TokenFight.Core.Databases;
-
 
 public sealed class DatabaseServer: IDatabaseServer
 {
@@ -24,7 +22,7 @@ public sealed class DatabaseServer: IDatabaseServer
         WriteIndented = true,
         IndentSize = 2
     };
-    
+
     public DatabaseServer()
     {
         Directory.CreateDirectory(DataFolder);
@@ -32,40 +30,40 @@ public sealed class DatabaseServer: IDatabaseServer
         Directory.CreateDirectory(ProfileFolder);
         Directory.CreateDirectory(DungeonFolder);
         Directory.CreateDirectory(TemplateFolder);
-        
-        LoadDataFromFolder(ActorFolder, ActorTables, (actorData, dict) => 
+
+        LoadDataFromFolder(ActorFolder, ActorTables, (actorData, dict) =>
         {
             dict.Add(actorData.Id, actorData);
             Console.WriteLine($"{LogLoadPrefix}: {actorData.Id} {actorData.Name}");
         });
-        
-        LoadDataFromFolder(ProfileFolder, ProfileTables, (profileData, dict) => 
+
+        LoadDataFromFolder(ProfileFolder, ProfileTables, (profileData, dict) =>
         {
             dict.Add(profileData.Account, profileData);
             Console.WriteLine($"{LogLoadPrefix}: {profileData.Account} 资源: {profileData.Inventory.Count}");
         });
-        
-        LoadDataFromFolder(DungeonFolder, DungeonInfoTables, (dungeonInfo, dict) => 
+
+        LoadDataFromFolder(DungeonFolder, DungeonInfoTables, (dungeonInfo, dict) =>
         {
             dict.Add(dungeonInfo.Id, dungeonInfo);
             Console.WriteLine($"{LogLoadPrefix}: {dungeonInfo.Name}({dungeonInfo.Id}) {dungeonInfo.Desc} " +
                               $"收益: {dungeonInfo.BaseToken}+{dungeonInfo.PerRandomToken}/敌人 " +
                               $"敌人数量: {dungeonInfo.EnemyPool.Length}");
         });
-        
-        LoadDataFromFolder(TemplateFolder, TemplateTables, (templateData, dict) => 
+
+        LoadDataFromFolder(TemplateFolder, TemplateTables, (templateData, dict) =>
         {
             dict.Add(templateData.Id, templateData);
             Console.WriteLine($"{LogLoadPrefix}: 加载物品模板: {templateData.Id} {templateData.Name}");
         });
     }
-    
+
     public DataTable<DataActor> ActorTables { get; init; } = new();
     public DataTable<Profile> ProfileTables { get; init; } = new();
     public DataTable<DungeonInfo> DungeonInfoTables { get; init; } = new();
     public DataTable<Properties> TemplateTables { get; init; } = new();
     public Profile? CurrentProfile { get; set; }
-    
+
     private readonly PasswordHasher<string> _passwordHasher = new();
     public bool TryLogin(string account, string password)
     {
@@ -85,8 +83,8 @@ public sealed class DatabaseServer: IDatabaseServer
     public bool Register(string account, string password)
     {
         if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(password)
-            || !account.All(char.IsLetterOrDigit) || !password.All(char.IsAsciiLetterOrDigit)
-            || account.Length < 4 || account.Length > 16 || password.Length < 4 || password.Length > 16)
+                                               || !account.All(char.IsLetterOrDigit) || !password.All(char.IsAsciiLetterOrDigit)
+                                               || account.Length < 4 || account.Length > 16 || password.Length < 4 || password.Length > 16)
         {
             return false;
         }
@@ -118,7 +116,7 @@ public sealed class DatabaseServer: IDatabaseServer
     {
         try
         {
-            var path = Path.Combine(ProfileFolder, $"{profile.Account}.json");
+            string path = Path.Combine(ProfileFolder, $"{profile.Account}.json");
             File.WriteAllText(path, JsonSerializer.Serialize(profile, _jsonSaveOption));
             return true;
         }
@@ -136,19 +134,19 @@ public sealed class DatabaseServer: IDatabaseServer
     /// <param name="folderPath">文件夹路径</param>
     /// <param name="dictionary">目标字典</param>
     /// <param name="onSuccess">数据成功加载后的回调</param>
-    private void LoadDataFromFolder<T>(string folderPath, DataTable<T> dictionary, Action<T, DataTable<T>> onSuccess) 
+    private void LoadDataFromFolder<T>(string folderPath, DataTable<T> dictionary, Action<T, DataTable<T>> onSuccess)
         where T : class
     {
         if (!Directory.Exists(folderPath))
             return;
-            
-        foreach (var file in Directory.GetFiles(folderPath).Where(x => x.EndsWith(".json")))
+
+        foreach (string file in Directory.GetFiles(folderPath).Where(x => x.EndsWith(".json")))
         {
             try
             {
-                var jsonContent = File.ReadAllText(file);
+                string jsonContent = File.ReadAllText(file);
                 var data = JsonSerializer.Deserialize<T>(jsonContent);
-                
+
                 if (data != null)
                 {
                     onSuccess(data, dictionary);
@@ -173,11 +171,11 @@ public sealed class DatabaseServer: IDatabaseServer
 
     public void Init()
     {
-        
+
     }
 
     public void Reset()
     {
-        
+
     }
 }

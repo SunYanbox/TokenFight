@@ -23,7 +23,7 @@ public class ActorPoolSystem(IActorManagerSystem actorManagerSystem): IActorPool
     public int Wave { get; set; } = 0;
     /// <summary> 最大波次 </summary>
     public int WaveMax { get; set; } = 1;
-    
+
     public void Init()
     {
         _enemyPool.Add(new Queue<Lazy<IActor>>());
@@ -51,18 +51,18 @@ public class ActorPoolSystem(IActorManagerSystem actorManagerSystem): IActorPool
         }
     }
 
-    public void AddPlayer(Lazy<IActor> Actor)
+    public void AddPlayer(Lazy<IActor> actor)
     {
-        _playerPool.Enqueue(Actor);
+        _playerPool.Enqueue(actor);
     }
 
-    public void AddEnemy(Lazy<IActor> Actor)
+    public void AddEnemy(Lazy<IActor> actor)
     {
-        if (_enemyPool[WaveMax-1].Count >= GameConst.EnemyWaveCountLimit)
+        if (_enemyPool[WaveMax - 1].Count >= GameConst.EnemyWaveCountLimit)
         {
             AddNewWave();
         }
-        _enemyPool[WaveMax-1].Enqueue(Actor);
+        _enemyPool[WaveMax - 1].Enqueue(actor);
         UpdateWareAndCoundInfo();
     }
 
@@ -73,7 +73,7 @@ public class ActorPoolSystem(IActorManagerSystem actorManagerSystem): IActorPool
         Wave++;
         if (Wave == WaveMax) Wave = WaveMax - 1;
     }
-    
+
     public Lazy<IActor> EnemyNext()
     {
         if (EnemyCurrentCount <= 0) EnterNextWave();
@@ -84,7 +84,7 @@ public class ActorPoolSystem(IActorManagerSystem actorManagerSystem): IActorPool
         _enemyPool.Add(new Queue<Lazy<IActor>>());
         UpdateWareAndCoundInfo();
     }
-    
+
     private void UpdateWareAndCoundInfo()
     {
         WaveMax = Math.Max(WaveMax, _enemyPool.Count);

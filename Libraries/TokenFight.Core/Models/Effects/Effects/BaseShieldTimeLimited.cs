@@ -16,7 +16,7 @@ public class BaseShieldTimeLimited: BaseEffect
     public double Shield { get; set; }
     /// <summary> 是否可叠加 </summary>
     public bool Stackable { get; protected set; }
-    
+
     [SetsRequiredMembers]
     public BaseShieldTimeLimited(IActor source, IActor target, string id, double shield, int duration, bool stackable,
         GameSystemRegistry gameSystemRegistry)
@@ -41,7 +41,7 @@ public class BaseShieldTimeLimited: BaseEffect
         double shield = Shield;
         if (Target.TryGetTarget(out IActor? target) && source != null)
         {
-            BeforeExcuteContext? beforeExcuteContext 
+            BeforeExcuteContext? beforeExcuteContext
                 = EventHelper.TriggerBeforeExcuteContext(EventType.ShieldBefore, source, target, shield, null);
             shield = beforeExcuteContext?.ValueCtx ?? shield;
             if (Stackable)
@@ -52,7 +52,7 @@ public class BaseShieldTimeLimited: BaseEffect
             EventHelper.TriggerShieldContext(source, target, shield);
         }
     }
-    
+
     public override void OnRemove()
     {
         if (Target.TryGetTarget(out IActor? target))

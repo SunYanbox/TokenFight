@@ -27,7 +27,7 @@ public class ActionValueMaster: IActionValueMaster
         get
         {
             Speed = AttrSet?.GetAttr(AttrType.Speed) ?? 1;
-            if (Speed < 1) return Double.MaxValue;
+            if (Speed < 1) return double.MaxValue;
             return ActionDistance / Speed;
         }
     }
@@ -45,11 +45,14 @@ public class ActionValueMaster: IActionValueMaster
         ActionDistance -= actionValue * Speed;
         ActionDistance = Math.Max(0, ActionDistance);
     }
-    
+
     /// <summary> 按照percent拉条或推条, percent>0时推条, percent小于0时拉条 </summary>
     public void Push(double percent)
     {
-        if (percent > 0) ActionDistance *= 1 + percent;
+        if (percent > 0)
+        {
+            ActionDistance *= 1 + percent;
+        }
         else if (percent < 0)
         {
             ActionDistance *= 1 + Math.Max(-1, percent);

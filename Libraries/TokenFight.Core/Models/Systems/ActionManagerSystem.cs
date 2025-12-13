@@ -11,10 +11,7 @@ namespace TokenFight.Core.Models.Systems;
 
 public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
 {
-    public void Init()
-    {
-        
-    }
+    public void Init() { }
 
     public void Reset()
     {
@@ -31,12 +28,12 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
 
     public bool CreateAction(ActionPriority priority, IActor? actor = null, ISkill? skill = null)
     {
-        string Id = actor?.Id ?? skill!.Source.Id;
-        if (!_actionsByActorId.ContainsKey(Id)) _actionsByActorId.Add(Id, []);
+        string id = actor?.Id ?? skill!.Source.Id;
+        if (!_actionsByActorId.ContainsKey(id)) _actionsByActorId.Add(id, []);
         switch (priority)
         {
             case ActionPriority.FollowUpAttack:
-                _actionsByActorId[Id].Add(ActionPriority.FollowUpAttack);
+                _actionsByActorId[id].Add(ActionPriority.FollowUpAttack);
                 _actionsByPriority[ActionPriority.FollowUpAttack].Add(new ActionUnit
                 {
                     ActionEnd = false,
@@ -46,7 +43,7 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
                 });
                 return true;
             case ActionPriority.ExtraTurn:
-                _actionsByActorId[Id].Add(ActionPriority.ExtraTurn);
+                _actionsByActorId[id].Add(ActionPriority.ExtraTurn);
                 _actionsByPriority[ActionPriority.ExtraTurn].Add(new ActionUnit
                 {
                     ActionEnd = false,
@@ -56,7 +53,7 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
                 });
                 return true;
             case ActionPriority.Ultimate:
-                _actionsByActorId[Id].Add(ActionPriority.Ultimate);
+                _actionsByActorId[id].Add(ActionPriority.Ultimate);
                 _actionsByPriority[ActionPriority.Ultimate].Add(new ActionUnit
                 {
                     ActionEnd = false,
@@ -66,7 +63,7 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
                 });
                 return true;
             case ActionPriority.NormalOperations:
-                if (_actionsByActorId[Id].Add(ActionPriority.NormalOperations))
+                if (_actionsByActorId[id].Add(ActionPriority.NormalOperations))
                 {
                     _actionsByPriority[ActionPriority.NormalOperations].Add(new ActionUnit
                     {
@@ -82,18 +79,18 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
             default:
                 throw new ArgumentOutOfRangeException(nameof(priority), priority, null);
         }
-        
+
         return false;
     }
 
     #region 内部数据
-
-    private readonly Dictionary<ActionPriority, List<ActionUnit>> _actionsByPriority 
-        = new Dictionary<ActionPriority, List<ActionUnit>> {
+    private readonly Dictionary<ActionPriority, List<ActionUnit>> _actionsByPriority
+        = new()
+        {
             { ActionPriority.FollowUpAttack, [] },
             { ActionPriority.ExtraTurn, [] },
             { ActionPriority.Ultimate, [] },
-            { ActionPriority.NormalOperations, [] },
+            { ActionPriority.NormalOperations, [] }
         };
     private readonly Dictionary<string, HashSet<ActionPriority>> _actionsByActorId = new();
     private readonly HashSet<ActionUnit> _handledRoundStart = [];
@@ -101,11 +98,13 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
     private ActionUnit? _newestAction = null;
     private int _actionNextIndex = 0;
     #endregion
-    
-    
+
+
     public bool Empty => _actionsByPriority.Values.Select(x => x.Count).Sum() == 0;
-    public ActionUnit? NewestAction {
-        get {
+    public ActionUnit? NewestAction
+    {
+        get
+        {
             if (_newestAction == null)
             {
                 UpdateNewestAction();
@@ -125,7 +124,7 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
     }
     public List<ActionUnit> GetActionList()
     {
-        List<ActionUnit> result = new List<ActionUnit>();
+        List<ActionUnit> result = [];
         result.AddRange(_actionsByPriority[ActionPriority.FollowUpAttack]);
         result.AddRange(MergeByCreateId(_actionsByPriority[ActionPriority.ExtraTurn], _actionsByPriority[ActionPriority.Ultimate]));
         result.AddRange(_actionsByPriority[ActionPriority.NormalOperations]);
@@ -166,15 +165,15 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
         if (actor == null)
         {
             localLog.Warn($"[ActionManagerSystem.ExecuteAction] 无法找到执行本次行动的成员" +
-                                   $"\n\tactor: {actionUnit?.Actor}" +
-                                   $"\n\tskill: {actionUnit?.Skill}");
+                          $"\n\tactor: {actionUnit?.Actor}" +
+                          $"\n\tskill: {actionUnit?.Skill}");
         }
-        
-        if (actionUnit!.IsNormal) 
+
+        if (actionUnit!.IsNormal)
             actor?.ActionValueMaster?.Reset();
 
         RemoveFromPriId();
-        
+
         EventHelper.TriggerActionContext(EventType.ActionStart, actor, skill, actionUnit.IsExtraTurn,
             actionUnit.IsUltimate);
         return new ValueTuple<IActor?, ISkill?>(actor, skill);
@@ -186,20 +185,19 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
         {
             _alreadyTakenActions.Add(_newestAction);
         }
-        
+
         (IActor? actor, ISkill? skill) = GetActorAndSkillFromNewestAction();
-        
+
         if (actor == null) return;
-        
+
         EventHelper.TriggerActionContext(EventType.ActionEnd, actor, skill, _newestAction!.IsExtraTurn, _newestAction.IsUltimate);
         _newestAction = null;
     }
-    
+
     #region 内部工具函数
-    
     // 当前最新角色是否可以触发回合开始/结束事件
     private static bool CanSettleRound(ActionUnit? actionUnit) => (actionUnit?.IsNormal ?? false) && actionUnit?.Actor != null;
-    
+
     private void UpdateNewestAction()
     {
         if (_actionsByPriority[ActionPriority.FollowUpAttack].Count != 0)
@@ -215,8 +213,14 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
             ActionUnit? extra = _actionsByPriority[ActionPriority.ExtraTurn].FirstOrDefault();
             if (ultimate != null || extra != null)
             {
-                if (extra == null) _newestAction = ultimate;
-                else if (ultimate == null) _newestAction = extra;
+                if (extra == null)
+                {
+                    _newestAction = ultimate;
+                }
+                else if (ultimate == null)
+                {
+                    _newestAction = extra;
+                }
                 else
                 {
                     _newestAction = ultimate.CreateId < extra.CreateId ? ultimate : extra;
@@ -271,7 +275,7 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
         }
         return (actor, actionSkill);
     }
-    
+
     /// <summary>
     /// 归并排序
     /// </summary>
@@ -279,11 +283,11 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
     {
         // 处理空列表的情况
         if (a.Count == 0)
-            return b?.ToList() ?? new List<ActionUnit>();
+            return b?.ToList() ?? [];
         if (b.Count == 0)
             return a.ToList();
 
-        var result = new List<ActionUnit>();
+        List<ActionUnit> result = [];
         int i = 0, j = 0;
 
         // 归并过程：逐个比较 CreateId
@@ -315,6 +319,5 @@ public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
 
         return result;
     }
-    
     #endregion
 }

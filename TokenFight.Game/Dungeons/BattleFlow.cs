@@ -11,15 +11,15 @@ using TokenFight.Core.ReflectionAttribute;
 namespace TokenFight.Game.Dungeons;
 
 /// <summary> 主战斗流程控制器 </summary>
-[AutoDungeon(Id=GameIdTableConst.BattleFlow)]
-public class BattleFlow : BaseDungeon
+[AutoDungeon(Id = GameIdTableConst.BattleFlow)]
+public class BattleFlow: BaseDungeon
 {
     private readonly GameSystemRegistry _systemRegistry;
     private readonly DungeonInfo? _dungeonInfo;
     private readonly Random _random = new();
 
     /// <summary> 主战斗流程控制器 </summary>
-    public BattleFlow(GameSystemRegistry systemRegistry, string dungeonInfoId) : base(gameSystemRegistry: systemRegistry)
+    public BattleFlow(GameSystemRegistry systemRegistry, string dungeonInfoId): base(gameSystemRegistry: systemRegistry)
     {
         _systemRegistry = systemRegistry;
         _dungeonInfo = systemRegistry.DatabaseServer.DungeonInfoTables.GetValueOrDefault(dungeonInfoId);
@@ -34,7 +34,7 @@ public class BattleFlow : BaseDungeon
             Profile.Token += _random.Next(_dungeonInfo.PerRandomToken.Min, _dungeonInfo.PerRandomToken.Max);
         }
     }
-    
+
     public override void OnGameWin()
     {
         if (_systemRegistry.ActorManagerSystem.AllEnemies.Count != 0 ||
@@ -61,8 +61,8 @@ public class BattleFlow : BaseDungeon
         if (_dungeonInfo == null) return;
         foreach (EnemyEntry enemyEntry in _dungeonInfo.EnemyPool)
         {
-            _systemRegistry .ActorPoolSystem.AddEnemy(
-                new Lazy<IActor>(() => 
+            _systemRegistry.ActorPoolSystem.AddEnemy(
+                new Lazy<IActor>(() =>
                     _systemRegistry.ActorFactorySystem
                         .CreateInstance(enemyEntry.EnemyId, [enemyEntry.Level, _systemRegistry])));
         }

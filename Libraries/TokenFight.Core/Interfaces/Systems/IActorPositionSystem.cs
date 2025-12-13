@@ -16,16 +16,16 @@ public interface IActorPositionSystem: ISystem
     public List<string> EnemyPosition { get; }
 
     /// <summary> 将一个成员添加到站位末尾 </summary>
-    public void Append(string Id, TeamType team);
+    public void Append(string id, TeamType team);
 
     /// <summary> 将一个成员添加到给定索引位置 </summary>
-    public void Insert(int position, string Id, TeamType team);
+    public void Insert(int position, string id, TeamType team);
 
     /// <summary> 获取指定成员的位置 </summary>
-    public int GetPosition(string Id, TeamType team);
+    public int GetPosition(string id, TeamType team);
 
     /// <summary> 移除指定成员的位置 </summary>
-    public void Remove(string Id, TeamType team);
+    public void Remove(string id, TeamType team);
 
     /// <summary> 根据站位信息更新成员的左右关系 </summary>
     public void UpdateActorRelationship(IActorManagerSystem actorManagerSystem);

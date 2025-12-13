@@ -1,5 +1,4 @@
 using TokenFight.Core.Constants;
-using TokenFight.Core.Databases.Models;
 using TokenFight.Core.Databases.Models.Growth;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Entities;
@@ -20,11 +19,11 @@ public static class ActorHelper
 {
     private static readonly Random Random = new();
     public static GameSystemRegistry? GameSystemRegistry { private get; set; }
-    
+
     /// <summary> 根据传入的养成数据, 自动初始化生命值, 攻击力, 防御力, 速度 </summary>
     public static void InitAttrSet(IActor actor, DataActor dataActor)
     {
-        Dictionary<int, double> modify = new Dictionary<int, double>();
+        Dictionary<int, double> modify = new();
         foreach ((AttrType type, GrowthBase value) in dataActor.AttrGrowth)
         {
             double v = value.Calculate(actor.Level);
@@ -47,7 +46,7 @@ public static class ActorHelper
         if (actors.Length == 0) return null;
         return actors[Random.Next(actors.Length)];
     }
-    
+
     /// <summary> 连接父角色与召唤物的关系 </summary>
     public static void LinkParentAndChild(IActor parent, IActor child)
     {
@@ -55,13 +54,10 @@ public static class ActorHelper
         parent.RelationshipMaster.ChildActors.Add(child.Id, new WeakReference<IActor>(child));
         child.RelationshipMaster.ParentActor = new WeakReference<IActor>(parent);
     }
-    
+
     /// <summary> 从弱引用中提取值 </summary>
-    public static IActor? GetActorFromWeakRef(WeakReference<IActor>? actor)
-    {
-        return (actor?.TryGetTarget(out IActor? target) ?? false) ? target : null;
-    }
-    
+    public static IActor? GetActorFromWeakRef(WeakReference<IActor>? actor) => actor?.TryGetTarget(out IActor? target) ?? false ? target : null;
+
     /// <summary>
     /// 判断成员是否有效, 是否可以计算属性集
     /// </summary>
@@ -70,7 +66,7 @@ public static class ActorHelper
         if (actor == null) return false;
         return DamageHelper.CanActorCalculateAttribute(actor);
     }
-    
+
     /// <summary>
     /// 如果成员已经死亡, 触发一次OnDeath
     /// </summary>
@@ -127,7 +123,7 @@ public static class ActorHelper
         }
         return sortedActors.ToArray();
     }
-    
+
     /// <summary>
     /// 获取指定阵营的通过验证的全体成员(如果获取不到, 会返回获取指定阵营的全体成员)
     /// <remarks>适合群攻</remarks>
@@ -146,11 +142,11 @@ public static class ActorHelper
                 break;
         }
         IActor[] actorsArray = actors.ToArray();
-        return actorsArray.Length == 0 
-            ? GetActorsByTeam(team) 
+        return actorsArray.Length == 0
+            ? GetActorsByTeam(team)
             : actorsArray;
     }
-    
+
     /// <summary>
     /// 获取指定阵营的通过验证的全体存活成员(如果获取不到, 会返回获取指定阵营的全体成员)
     /// <remarks>适合弹射选择</remarks>
@@ -171,18 +167,18 @@ public static class ActorHelper
 
         IActor[] actorsArray = actors.ToArray();
 
-        return actorsArray.Length == 0 
-            ? GetActorsByTeam(team) 
+        return actorsArray.Length == 0
+            ? GetActorsByTeam(team)
             : actorsArray;
     }
-    
+
     /// <summary> 玩家阵营占场人员是否已满 </summary>
     public static bool IsPlayerFieldFull()
     {
         if (GameSystemRegistry == null) return false;
         return GameSystemRegistry.ActorManagerSystem.AllPlayers.Count >= GameConst.PlayerInFieldLimit;
     }
-    
+
     /// <summary> 敌人阵营占场人员是否已满 </summary>
     public static bool IsEnemyFieldFull()
     {
@@ -196,11 +192,10 @@ public static class ActorHelper
     public static IActor[] GetRelativeAllies(IActor actor, bool exclusion = false)
     {
         IActor[] result = GetActorsByTeamWithLifeAndValid(actor.Team);
-        if (exclusion) 
-            return result.Where(x => x != actor).ToArray();
-        return result;
+        if (!exclusion) return result;
+        return result.Where(x => x != actor).ToArray();
     }
-    
+
     /// <summary>
     /// 获取相对指定成员的所有敌人
     /// </summary>
@@ -209,7 +204,7 @@ public static class ActorHelper
     {
         switch (actor.Team)
         {
-            case TeamType.Player: 
+            case TeamType.Player:
                 return GetActorsByTeamWithLifeAndValid(TeamType.Enemy);
             case TeamType.Enemy:
                 return GetActorsByTeamWithLifeAndValid(TeamType.Player);
@@ -227,20 +222,18 @@ public static class ActorHelper
         List<PlayerActor> readyActors = GameSystemRegistry.ActorManagerSystem.AllPlayers.Values
             .OfType<PlayerActor>()
             .Where(x => x.HasUltimateSkill() && x.GetUltimateSkill().CanUse()).ToList();
-        
+
         List<IUltimateSkill> readyList = [];
         foreach (PlayerActor actor in readyActors)
         {
-            if (actor is { } playerActor)
+            if (actor is not { } playerActor) continue;
+            ISkill skill = playerActor.GetUltimateSkill();
+            if (skill is BaseUltimateSkill { IsUsing: false } ultimateSkill && ultimateSkill.CanUse())
             {
-                ISkill skill = playerActor.GetUltimateSkill();
-                if (skill is BaseUltimateSkill { IsUsing: false } ultimateSkill && ultimateSkill.CanUse())
-                {
-                    readyList.Add(ultimateSkill);
-                }
+                readyList.Add(ultimateSkill);
             }
         }
-        
+
         return readyList;
     }
 }

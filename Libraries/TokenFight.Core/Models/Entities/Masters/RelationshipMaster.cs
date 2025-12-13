@@ -4,11 +4,11 @@ using TokenFight.Core.Interfaces.Entities.Masters;
 
 namespace TokenFight.Core.Models.Entities.Masters;
 
-public class RelationshipMaster(IActor owner) : IRelationshipMaster
+public class RelationshipMaster(IActor owner): IRelationshipMaster
 {
     public WeakReference<IActor> Owner { get; set; } = new(owner);
 
-    private static readonly Random Random = new Random();
+    private static readonly Random Random = new();
     /// <summary> 队伍左侧目标 </summary>
     public WeakReference<IActor>? LeftActor { get; set; }
     /// <summary> 队伍右侧目标 </summary>
@@ -60,13 +60,13 @@ public class RelationshipMaster(IActor owner) : IRelationshipMaster
         IActor[] targets = GetSingleTargets().ToArray();
         List<IActor> sample = [];
         if (targets.Length == 0) return sample;
-        
+
         for (int i = 0; i < count; i++)
         {
             int randomIndex = Random.Next(targets.Length);
             sample.Add(targets[randomIndex]);
         }
-        
+
         return sample;
     }
     /// <summary> 清理引用 </summary>
@@ -74,9 +74,9 @@ public class RelationshipMaster(IActor owner) : IRelationshipMaster
     {
         if (ChildActors != null)
         {
-            foreach (WeakReference<IActor> Actor in ChildActors.Values.ToArray())
+            foreach (WeakReference<IActor> weakReferenceActor in ChildActors.Values.ToArray())
             {
-                if (Actor.TryGetTarget(out IActor? actor))
+                if (weakReferenceActor.TryGetTarget(out IActor? actor))
                     actor.OnDeath();
             }
         }

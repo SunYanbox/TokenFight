@@ -23,8 +23,8 @@ public class HealthMaster: IHealthMaster
     {
         Owner = new WeakReference<IActor>(owner);
         AttrSet = owner.AttrSet;
-        MaxHealth = (AttrSet?.GetBaseAttr(AttrType.Health) ?? 0) 
-                     + (AttrSet?.GetGainAttr(AttrType.Health) ?? 0);
+        MaxHealth = (AttrSet?.GetBaseAttr(AttrType.Health) ?? 0)
+                    + (AttrSet?.GetGainAttr(AttrType.Health) ?? 0);
         MaxHealth = Math.Max(MaxHealth, 1);
         CurrentHealth = MaxHealth;
     }
@@ -47,20 +47,20 @@ public class HealthMaster: IHealthMaster
             return MaxHealth;
         }
     }
-    
+
     private void UpdateMaxHealth()
     {
-        double maxHealth = (AttrSet?.GetBaseAttr(AttrType.Health) ?? 0) 
+        double maxHealth = (AttrSet?.GetBaseAttr(AttrType.Health) ?? 0)
                            + (AttrSet?.GetGainAttr(AttrType.Health) ?? 0);
         // 最大生命值变化
-        if (Math.Abs(maxHealth - MaxHealth) >= Double.Epsilon)
+        if (Math.Abs(maxHealth - MaxHealth) >= double.Epsilon)
         {
             double change = maxHealth / Math.Max(MaxHealth, 1);
             CurrentHealth *= change;
             MaxHealth = maxHealth;
         }
     }
-    
+
     public void TakeDamage(double damage, out double overflowDamage)
     {
         UpdateMaxHealth();
@@ -76,7 +76,7 @@ public class HealthMaster: IHealthMaster
             CurrentHealth = 0;
         }
     }
-    
+
     public void TakeHeal(double heal, out double overflowHeal)
     {
         UpdateMaxHealth();

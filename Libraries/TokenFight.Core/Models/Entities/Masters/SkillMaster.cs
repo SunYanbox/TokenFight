@@ -9,9 +9,9 @@ public class SkillMaster: ISkillMaster
     public required WeakReference<IActor> Owner { get; set; }
     private readonly Dictionary<string, ISkill> _skills = new();
     private IActor? _defaultTarget;
-    
+
     public bool ContainsKey(string id) => _skills.ContainsKey(id);
-    
+
     public void UnsubscriptAll()
     {
         foreach (ISkill skill in _skills.Values)
@@ -47,7 +47,7 @@ public class SkillMaster: ISkillMaster
         {
             skill.PassiveData?.Unsubscribe();
         }
-        
+
         _skills.Remove(id);
     }
 
@@ -56,9 +56,9 @@ public class SkillMaster: ISkillMaster
         ISkillMaster.SetSkillTarget(_skills[id], _defaultTarget);
         return _skills[id];
     }
-    
+
     public bool HasSkill(string id) => _skills.ContainsKey(id);
-    
+
     public IEnumerable<ISkill> GetActiveSkills()
     {
         List<ISkill> result = [];
@@ -72,7 +72,7 @@ public class SkillMaster: ISkillMaster
         }
         return result;
     }
-    
+
     public IEnumerable<ISkill> GetActiveSkillsApartFromUltimate()
     {
         List<ISkill> result = [];
@@ -87,7 +87,7 @@ public class SkillMaster: ISkillMaster
         }
         return result;
     }
-    
+
     public IEnumerable<ISkill> GetPassiveSkills()
     {
         List<ISkill> result = [];

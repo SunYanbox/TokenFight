@@ -13,7 +13,7 @@ namespace TokenFight.Core.Helpers;
 public static class CreateActionHelper
 {
     public static GameSystemRegistry? GameSystemRegistry { private get; set; }
-    
+
     /// <summary>
     /// 获得一个普通回合
     /// </summary>
@@ -21,10 +21,10 @@ public static class CreateActionHelper
     {
         if (GameSystemRegistry == null) return;
         if (!ActorHelper.IsValidActor(actor)) return;
-        
-        GameSystemRegistry.ActionManagerSystem.CreateAction(ActionPriority.NormalOperations, actor: actor);
+
+        GameSystemRegistry.ActionManagerSystem.CreateAction(ActionPriority.NormalOperations, actor);
     }
-    
+
     /// <summary>
     /// 获得一个额外回合
     /// </summary>
@@ -32,8 +32,8 @@ public static class CreateActionHelper
     {
         if (GameSystemRegistry == null) return;
         if (!ActorHelper.IsValidActor(actor)) return;
-        
-        GameSystemRegistry.ActionManagerSystem.CreateAction(ActionPriority.ExtraTurn, actor: actor);
+
+        GameSystemRegistry.ActionManagerSystem.CreateAction(ActionPriority.ExtraTurn, actor);
     }
 
     /// <summary>
@@ -43,10 +43,10 @@ public static class CreateActionHelper
     {
         if (GameSystemRegistry == null) return;
         if (!ActorHelper.IsValidActor(skill.Source)) return;
-        
+
         GameSystemRegistry.ActionManagerSystem.CreateAction(ActionPriority.FollowUpAttack, skill: skill);
     }
-    
+
     /// <summary>
     /// 释放一次终结技
     /// </summary>
@@ -54,7 +54,7 @@ public static class CreateActionHelper
     {
         if (GameSystemRegistry == null) return;
         if (!ActorHelper.IsValidActor(skill.Source)) return;
-        
+
         GameSystemRegistry.ActionManagerSystem.CreateAction(ActionPriority.Ultimate, skill: skill);
     }
 }

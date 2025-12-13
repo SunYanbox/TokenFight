@@ -18,7 +18,7 @@ public abstract class BaseEffect: IEffect
     {
         PassiveCallbackData.Subscribe();
     }
-    
+
     public virtual void OnReapply(IEffect newEffect)
     {
         if ((LifeCycle?.HasDuration ?? false) && (newEffect.LifeCycle?.HasDuration ?? false))
@@ -45,6 +45,6 @@ public abstract class BaseEffect: IEffect
     }
     public virtual void OnRoundEnd()
     {
-        
+
     }
 }

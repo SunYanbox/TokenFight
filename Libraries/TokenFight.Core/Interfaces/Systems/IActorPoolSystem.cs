@@ -10,17 +10,17 @@ public interface IActorPoolSystem: ISystem
     public void FillActors();
 
     /// <summary> 添加新的成员到池子中 </summary>
-    public void AddPlayer(Lazy<IActor> Actor);
+    public void AddPlayer(Lazy<IActor> actor);
 
     /// <summary> 添加新的成员到池子中 </summary>
-    public void AddEnemy(Lazy<IActor> Actor);
+    public void AddEnemy(Lazy<IActor> actor);
 
     /// <summary> 获取下一个玩家 </summary>
     public Lazy<IActor> PlayerNext();
 
     /// <summary> 获取下一个敌人 </summary>
     public Lazy<IActor> EnemyNext();
-    
+
     /// <summary> 判断是否有任何玩家 </summary>
     public bool HasPlayer { get; }
     /// <summary> 判断当前波次是否有任何敌人 </summary>
@@ -29,7 +29,7 @@ public interface IActorPoolSystem: ISystem
     public void EnterNextWave();
     /// <summary> 为敌人添加新的波次 </summary>
     public void AddNewWave();
-    
+
     /// <summary> 当前波次剩余敌人数量 </summary>
     public int EnemyCurrentCount { get; }
     /// <summary> 剩余玩家数量 </summary>

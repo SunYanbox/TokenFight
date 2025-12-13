@@ -19,8 +19,7 @@ public enum AttrType
     CriticalRate,
     /// <summary> 暴击伤害 </summary>
     CriticalDamage,
-    
-    
+
     /// <summary> 施加的伤害提升 </summary>
     DamageIncrease,
     /// <summary> 受到的伤害减少 </summary>
@@ -33,12 +32,12 @@ public enum AttrType
     DamageResistance,
     /// <summary> 减防 </summary>
     DefenseReduce,
-    
+
     /// <summary> 提供的治疗提升 </summary>
     HealIncrease,
     /// <summary> 提供的护盾提升 </summary>
     ShieldIncrease,
-    
+
     /// <summary> 结束标记 | 非属性 </summary>
     EndTag
 }

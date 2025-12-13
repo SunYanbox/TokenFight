@@ -11,7 +11,7 @@ namespace TokenFight.Core.Helpers;
 public static class EffectCreateHelper
 {
     public static GameSystemRegistry? GameSystemRegistry { private get; set; }
-    
+
     /// <summary>
     /// 创建一个基于百分比增益的基础效果实例
     /// </summary>
@@ -26,10 +26,10 @@ public static class EffectCreateHelper
     /// <param name="mark">效果标记，-1表示无标记</param>
     /// <returns>创建的BaseEffectPctGain效果实例</returns>
     public static BaseEffectPctGain CreatePctGain(
-        string id, IActor source, IActor target, Dictionary<int,double> modifyData,
+        string id, IActor source, IActor target, Dictionary<int, double> modifyData,
         int duration = -1, int initStack = -1, int maxStack = -1, int deltaStack = -1, int mark = -1)
     {
-        BaseEffectPctGain effect = new BaseEffectPctGain(source, target, id, modifyData, GameSystemRegistry!);
+        var effect = new BaseEffectPctGain(source, target, id, modifyData, GameSystemRegistry!);
 
         if (duration >= 1)
         {
@@ -40,7 +40,7 @@ public static class EffectCreateHelper
         {
             effect.InitStack(initStack, maxStack, deltaStack);
         }
-        
+
         if (mark >= 1)
         {
             effect.InitMark(mark);
@@ -63,14 +63,14 @@ public static class EffectCreateHelper
     public static BaseEffectMark CreateMark(string id, IActor source, IActor target,
         int mark = 1, int duration = -1, int initStack = -1, int maxStack = -1, int deltaStack = -1)
     {
-        BaseEffectMark effect = new BaseEffectMark(source, target, id, GameSystemRegistry!);
-        
+        var effect = new BaseEffectMark(source, target, id, GameSystemRegistry!);
+
         if (mark >= 1)
         {
             effect.LifeCycle!.InitMark(mark);
             effect.Type = EffectType.Mark;
         }
-        
+
         if (duration >= 1)
         {
             effect.LifeCycle!.InitDuration(duration);
@@ -80,8 +80,8 @@ public static class EffectCreateHelper
         {
             effect.LifeCycle!.InitStack(initStack, maxStack, deltaStack);
         }
-        
-        
+
+
         return effect;
     }
 }

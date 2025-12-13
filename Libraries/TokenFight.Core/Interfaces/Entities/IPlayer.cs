@@ -18,7 +18,7 @@ public interface IPlayer
 
     /// <summary> 获取追加攻击技能 </summary>
     public ISkill GetFollowUpAttack();
-    
+
     /// <summary> 激活终结技 </summary>
     public void ActivateUltimateSkill();
 }

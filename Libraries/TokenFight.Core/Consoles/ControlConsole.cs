@@ -3,7 +3,6 @@ using TokenFight.Core.Helpers;
 using TokenFight.Core.Interfaces.Effects;
 using TokenFight.Core.Models;
 using TokenFight.Core.Models.Effects.Skills;
-using TokenFight.Core.Models.Utils;
 using TokenFight.Core.ReflectionAttribute;
 
 namespace TokenFight.Core.Consoles;
@@ -13,7 +12,7 @@ namespace TokenFight.Core.Consoles;
 public static class ControlConsole
 {
     public static GameSystemRegistry? GameSystemRegistry { private get; set; }
-    
+
     /// <summary>
     /// 轮询可用的终结技,
     /// 如果玩家放弃释放终结技或者没有可用的终结技, 则会返回false;
@@ -26,9 +25,9 @@ public static class ControlConsole
 
         if (!string.IsNullOrEmpty(title))
             Console.Write($"\n{title}:");
-        ISkill? choiceSkill =
+        var choiceSkill =
             SelectionUtil.SelectFromList<ISkill>(readyList, x => $"{x.Name} {x.Desc}", allowQuit: true);
-        
+
         if (choiceSkill is BaseUltimateSkill baseUltimateSkill)
         {
             baseUltimateSkill.IsUsing = true;

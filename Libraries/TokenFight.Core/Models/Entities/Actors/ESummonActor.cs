@@ -11,21 +11,21 @@ namespace TokenFight.Core.Models.Entities.Actors;
 public class ESummonActor: EnemyActor
 {
     [SetsRequiredMembers]
-    public ESummonActor(IActor owner, GameSystemRegistry gameSystemRegistry) : base(gameSystemRegistry)
+    public ESummonActor(IActor owner, GameSystemRegistry gameSystemRegistry): base(gameSystemRegistry)
     {
         IdentityMaster.Remove(IdentityType.EnemyCommon);
         IdentityMaster.Add(IdentityType.EnemySummon);
         RelationshipMaster.ParentActor = new WeakReference<IActor>(owner);
         owner.RelationshipMaster.ChildActors ??= new Dictionary<string, WeakReference<IActor>>();
         owner.RelationshipMaster.ChildActors.Add(Id, new WeakReference<IActor>(this));
-        
+
         SkillMaster.Add(new DeathCallback(Id + "死亡回调", this, gameSystemRegistry));
     }
 
-    class DeathCallback : BaseTalentSkill
+    private class DeathCallback: BaseTalentSkill
     {
         [SetsRequiredMembers]
-        public DeathCallback(string id, ESummonActor source, GameSystemRegistry gameSystemRegistry) : base(id, source, gameSystemRegistry)
+        public DeathCallback(string id, ESummonActor source, GameSystemRegistry gameSystemRegistry): base(id, source, gameSystemRegistry)
         {
             PassiveData!.Callbacks.Add(EventType.ActorDeath, source.OnParentDeath);
         }

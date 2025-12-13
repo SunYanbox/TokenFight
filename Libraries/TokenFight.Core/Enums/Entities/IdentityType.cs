@@ -6,8 +6,8 @@ public enum IdentityType
     Player,
     /// <summary> 玩家召唤物 </summary>
     PlayerSummon,
-    
-    
+
+
     /// <summary> 普通敌人 </summary>
     EnemyCommon,
     /// <summary> 精英敌人 </summary>
@@ -15,5 +15,5 @@ public enum IdentityType
     /// <summary> 首领敌人 </summary>
     EnemyBoss,
     /// <summary> 敌人召唤物 </summary>
-    EnemySummon,
+    EnemySummon
 }

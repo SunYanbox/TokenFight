@@ -17,7 +17,7 @@ public enum Element
     Lightning,
     /// <summary> 风属性 </summary>
     Wind,
-    
+
     /// <summary> 结束标记 | 非属性 </summary>
     EndTag
 }

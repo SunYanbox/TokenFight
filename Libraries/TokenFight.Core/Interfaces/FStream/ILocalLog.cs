@@ -40,12 +40,12 @@ public interface ILocalLog: ISystem
     private static string SplitToLinesWithWords(string input, int maxLength = 140)
     {
         if (string.IsNullOrEmpty(input)) return input;
-    
-        var lines = new List<string>();
-        var words = input.Split(' ');
+
+        List<string> lines = [];
+        string[] words = input.Split(' ');
         var currentLine = new StringBuilder();
-    
-        foreach (var word in words)
+
+        foreach (string word in words)
         {
             if (currentLine.Length + word.Length + 1 <= maxLength) // +1 是空格
             {
@@ -57,14 +57,14 @@ public interface ILocalLog: ISystem
             {
                 if (currentLine.Length > 0)
                     lines.Add(currentLine.ToString());
-            
+
                 currentLine = new StringBuilder(word);
             }
         }
-    
+
         if (currentLine.Length > 0)
             lines.Add(currentLine.ToString());
-    
+
         return string.Join(Environment.NewLine + "  ", lines);
     }
 }

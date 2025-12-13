@@ -8,11 +8,8 @@ public class ActorPositionSystem: IActorPositionSystem
 {
     private readonly List<string> _players = [];
     private readonly List<string> _enemies = [];
-    
-    public void Init()
-    {
-        
-    }
+
+    public void Init() { }
 
     public void Reset()
     {
@@ -90,7 +87,7 @@ public class ActorPositionSystem: IActorPositionSystem
         SetupActorRelationships(players, playerPositions);
         SetupActorRelationships(enemies, enemyPosition);
     }
-    
+
     private void SetupActorRelationships(Dictionary<string, IActor> actors, List<string> positions)
     {
         foreach (KeyValuePair<string, IActor> actorEntry in actors)
@@ -98,9 +95,9 @@ public class ActorPositionSystem: IActorPositionSystem
             IActor actor = actorEntry.Value;
             actor.RelationshipMaster.LeftActor = null;
             actor.RelationshipMaster.RightActor = null;
-        
+
             int position = positions.IndexOf(actorEntry.Key);
-        
+
             if (position > 0)
             {
                 actor.RelationshipMaster.LeftActor = new WeakReference<IActor>(actors[positions[position - 1]]);

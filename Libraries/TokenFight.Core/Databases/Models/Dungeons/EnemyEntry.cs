@@ -7,8 +7,5 @@ public class EnemyEntry
 {
     public required string EnemyId { get; set; }
     public required int Level { get; set; }
-    public override string ToString()
-    {
-        return $"{{ EnemyId: {EnemyId}, Level: {Level} }}";
-    }
+    public override string ToString() => $"{{ EnemyId: {EnemyId}, Level: {Level} }}";
 }

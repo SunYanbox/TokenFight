@@ -1,13 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Terminal.Gui.App;
 using Terminal.Gui.Configuration;
-using Terminal.Gui.Input;
-using Terminal.Gui.ViewBase;
-using Terminal.Gui.Views;
 using TokenFight.Core.Constants;
-using TokenFight.Core.Databases;
-using TokenFight.Core.Databases.Interfaces;
 using TokenFight.Core.Databases.Models.DataTables;
 using TokenFight.Core.Databases.Models.Profiles;
 using TokenFight.Core.Enums.Attrs;
@@ -22,9 +16,9 @@ using TokenFight.Core.Models;
 using TokenFight.Core.Models.Attrs;
 using TokenFight.Core.Models.Entities.Actors;
 using TokenFight.Core.Models.Events.Contexts;
+using TokenFight.Core.Models.Game;
 using TokenFight.DI;
 using TokenFight.UI.Core;
-using Attribute = Terminal.Gui.Drawing.Attribute;
 
 
 
@@ -39,14 +33,14 @@ ServiceProvider serviceProvider = services.BuildServiceProvider();
 
 ServiceRegistry.InitAllSystems(serviceProvider);
 
-GameSystemRegistry systemRegistryGlobal = serviceProvider.GetService<GameSystemRegistry>()!;
+var systemRegistryGlobal = serviceProvider.GetService<GameSystemRegistry>()!;
 
 
 try
 {
     ConfigurationManager.RuntimeConfig = """{ "Theme": "Amber Phosphor" }""";
-    ConfigurationManager.Enable (ConfigLocations.All);
-    
+    ConfigurationManager.Enable(ConfigLocations.All);
+
     // With using statement for automatic disposal
     using IApplication app = Application.Create().Init();
     using var window = new GameWindow();
@@ -66,11 +60,11 @@ catch (Exception e)
 try
 {
     var autoActorManageSystem = serviceProvider.GetService<IActorFactorySystem>();
-    
-    GameSystemRegistry systemRegistry = serviceProvider.GetService<GameSystemRegistry>()!;
-    
+
+    var systemRegistry = serviceProvider.GetService<GameSystemRegistry>()!;
+
     var autoDungeon = serviceProvider.GetService<IDungeonFactorySystem>()!;
-    var battleFlow = autoDungeon.CreateInstance(GameIdTableConst.BattleFlow, [systemRegistry, "dungeon1"])!;
+    BaseDungeon battleFlow = autoDungeon.CreateInstance(GameIdTableConst.BattleFlow, [systemRegistry, "dungeon1"])!;
 
     battleFlow.OnLoad(new Profile
     {
@@ -80,10 +74,10 @@ try
         Inventory = new Inventory(),
         GiftInfos = new Dictionary<string, int>()
     });
-    
+
     battleFlow.InitActorPool();
-    
-    systemRegistry.ActorPoolSystem.AddPlayer(new Lazy<IActor>(() => 
+
+    systemRegistry.ActorPoolSystem.AddPlayer(new Lazy<IActor>(() =>
         autoActorManageSystem!.CreateInstance(GameIdTableConst.PlayerXiEr0, [20, systemRegistry])));
 
     void HandleGameStart(IContext context)
@@ -113,7 +107,7 @@ try
     systemRegistry.EventSystem.Subscribe(EventType.EnterGame, HandleGameStart);
 
     battleFlow.Main();
-    
+
     Console.WriteLine("服务解析成功。");
 }
 catch (Exception ex)

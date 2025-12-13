@@ -4,7 +4,7 @@ namespace TokenFight.Core.Interfaces.Bases;
 /// 表示一个可变的枚举类型集合，支持增、删、查与遍历。
 /// </summary>
 /// <typeparam name="T">必须是 struct 且为 Enum 类型</typeparam>
-public interface IEnumSet<T> : IEnumerable<T>
+public interface IEnumSet<T>: IEnumerable<T>
     where T : struct, Enum
 {
     // ———————— 增 ————————
@@ -20,7 +20,7 @@ public interface IEnumSet<T> : IEnumerable<T>
     /// </summary>
     /// <param name="types">要添加的枚举值数组</param>
     void AddRange(params T[] types);
-    
+
     // ———————— 删 ————————
     /// <summary>
     /// 移除一个枚举值。
@@ -33,7 +33,7 @@ public interface IEnumSet<T> : IEnumerable<T>
     /// 清空所有枚举值。
     /// </summary>
     void Clear();
-    
+
     // ———————— 查 ————————
     /// <summary>
     /// 判断是否包含指定枚举值。
@@ -41,7 +41,7 @@ public interface IEnumSet<T> : IEnumerable<T>
     /// <param name="type">要检查的枚举值</param>
     /// <returns>若包含，返回 true；否则 false</returns>
     bool Contains(T type);
-    
+
     /// <summary>
     /// 判断是否包含任意一个指定的枚举值。
     /// </summary>

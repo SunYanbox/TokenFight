@@ -11,22 +11,22 @@
         <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
     </PropertyGroup>
     <ItemGroup>
-      <Folder Include="Models\Factories\" />
+        <Folder Include="Models\Factories\"/>
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1"/>
     </ItemGroup>
     <ItemGroup>
-      <Compile Remove="Databases\Models\Inventory\**" />
-      <Compile Remove="Databases\Models\DataTable\**" />
+        <Compile Remove="Databases\Models\Inventory\**"/>
+        <Compile Remove="Databases\Models\DataTable\**"/>
     </ItemGroup>
     <ItemGroup>
-      <EmbeddedResource Remove="Databases\Models\Inventory\**" />
-      <EmbeddedResource Remove="Databases\Models\DataTable\**" />
+        <EmbeddedResource Remove="Databases\Models\Inventory\**"/>
+        <EmbeddedResource Remove="Databases\Models\DataTable\**"/>
     </ItemGroup>
     <ItemGroup>
-      <None Remove="Databases\Models\Inventory\**" />
-      <None Remove="Databases\Models\DataTable\**" />
+        <None Remove="Databases\Models\Inventory\**"/>
+        <None Remove="Databases\Models\DataTable\**"/>
     </ItemGroup>
 
 </Project>

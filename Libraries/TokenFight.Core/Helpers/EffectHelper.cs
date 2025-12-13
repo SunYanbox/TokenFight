@@ -12,9 +12,9 @@ namespace TokenFight.Core.Helpers;
 [AutoSysRegistryInit]
 public static class EffectHelper
 {
-    public static readonly Random Random = new Random();
+    public static readonly Random Random = new();
     public static GameSystemRegistry? GameSystemRegistry { private get; set; }
-    
+
     /// <summary> 向指定目标释放效果 </summary>
     public static void TakeEffectSingle(IEffect effect)
     {
@@ -36,12 +36,12 @@ public static class EffectHelper
         }
         else if (count > 0)
         {
-            var removeCount = Math.Min(effects.Count, count);
-            var effectsToRemove = new HashSet<string>();
+            int removeCount = Math.Min(effects.Count, count);
+            HashSet<string> effectsToRemove = [];
             List<string> effectList = effects.ToList();
-            for (var i = 0; i < removeCount; i++)
+            for (int i = 0; i < removeCount; i++)
             {
-                var index = Random.Next(effectList.Count);
+                int index = Random.Next(effectList.Count);
                 effectsToRemove.Add(effectList[index]);
                 effectList.RemoveAt(index);
             }

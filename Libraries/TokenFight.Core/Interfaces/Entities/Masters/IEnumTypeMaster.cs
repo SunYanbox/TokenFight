@@ -9,5 +9,5 @@ namespace TokenFight.Core.Interfaces.Entities.Masters;
 public interface IEnumTypeMaster<T>: IEnumSet<T>
     where T : struct, Enum
 {
-    
+
 }

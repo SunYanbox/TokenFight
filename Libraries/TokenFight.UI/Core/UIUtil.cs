@@ -1,7 +1,6 @@
 using Terminal.Gui.App;
 using Terminal.Gui.ViewBase;
 using Terminal.Gui.Views;
-using Timeout = Terminal.Gui.App.Timeout;
 
 namespace TokenFight.UI.Core;
 
@@ -24,8 +23,8 @@ public static class UIUtil
         }
         return result;
     }
-    
-    
+
+
     public static int? ErrorQueryAtMainLoop(View view, string title, string errorMessage, params string[] buttons)
     {
         int? result = null;

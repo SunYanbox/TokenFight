@@ -11,7 +11,7 @@ public interface ISkillMaster: IMaster
 
     /// <summary> 清理所有回调 </summary>
     public void UnsubscriptAll();
-    
+
     /// <summary> 设置技能组目标, 并返回技能系统自身 </summary>
     public ISkillMaster SetTarget(IActor target);
 
@@ -35,10 +35,10 @@ public interface ISkillMaster: IMaster
 
     /// <summary> 获取所有可用的被动技能 </summary>
     public IEnumerable<ISkill> GetPassiveSkills();
-    
+
     /// <summary> 获取所有技能 </summary>
     public IEnumerable<ISkill> GetSkillAll();
-    
+
     protected static void SetSkillTarget(ISkill skill, IActor? target)
     {
         skill.Target ??= new WeakReference<IActor>(null!);

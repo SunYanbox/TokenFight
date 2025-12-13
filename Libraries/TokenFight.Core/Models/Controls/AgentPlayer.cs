@@ -9,7 +9,6 @@ using TokenFight.Core.Interfaces.FStream;
 using TokenFight.Core.Interfaces.Systems;
 using TokenFight.Core.Models.Actions;
 using TokenFight.Core.Models.Entities.Actors;
-using TokenFight.Core.Models.Utils;
 
 namespace TokenFight.Core.Models.Controls;
 
@@ -20,14 +19,11 @@ public class AgentPlayer(
     IActorManagerSystem actorManagerSystem,
     IActorPositionSystem actorPositionSystem): IAgent
 {
-    public Random Random { get; init; } = new Random();
-    
-    public bool CanHandle(IActor actor)
-    {
-        return actor.Team == TeamType.Player && actor is PlayerActor;
-    }
+    public Random Random { get; init; } = new();
 
-    
+    public bool CanHandle(IActor actor) => actor.Team == TeamType.Player && actor is PlayerActor;
+
+
     public bool HandleSkillChoice(IActor actor, ActionUnit actionUnit)
     {
         if (!CanHandle(actor)) return false;
@@ -36,8 +32,8 @@ public class AgentPlayer(
         if (actionUnit.Skill == null)
         {
             IAgent.OutputTalentData(playerActor);
-            
-            List<ISkill> canChoiceSkill = new List<ISkill>();
+
+            List<ISkill> canChoiceSkill = [];
             canChoiceSkill.AddRange(playerActor.SkillMaster.GetActiveSkillsApartFromUltimate());
             canChoiceSkill.AddRange(ActorHelper.GetAllUltimateSkillCanUse());
             try
@@ -45,7 +41,7 @@ public class AgentPlayer(
                 skill = SelectionUtil.SelectFromList(
                     canChoiceSkill.ToArray(),
                     x => $"{x.Name} {x.Desc}",
-                    prompt: "请选择你的技能: ",
+                    "请选择你的技能: ",
                     quitValue: null
                 );
             }
@@ -63,17 +59,17 @@ public class AgentPlayer(
             }
             actionUnit.Skill = skill;
         }
-        
+
         return false;
     }
-    
-    
+
+
     public void HandleTargetChoice(IActor actor, ActionUnit actionUnit)
     {
         if (!CanHandle(actor)) return;
         if (actionUnit.Skill == null) return;
         ISkill skill = actionUnit.Skill;
-        
+
         IActor[] canChoiceActor = SelectionUtil.GetActorWhereSkillChoice(skill);
         actorPositionSystem.UpdateActorRelationship(actorManagerSystem);
         if (canChoiceActor.Length == 0) return;
@@ -83,11 +79,11 @@ public class AgentPlayer(
             skill.Target = new WeakReference<IActor>(canChoiceActor[0]);
             return;
         }
-            
+
         skill.Target = new WeakReference<IActor>(SelectionUtil.SelectFromList(
             ActorHelper.SortActorsByPosition(canChoiceActor),
             x => $"{x.Name}({x.Id}) {x.HealthMaster?.Health:F2}/{x.HealthMaster?.HealthMax:F2}",
-            prompt: "请选择你的技能目标: ",
+            "请选择你的技能目标: ",
             quitValue: null)!);
     }
 }

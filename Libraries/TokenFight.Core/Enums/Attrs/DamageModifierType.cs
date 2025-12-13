@@ -28,5 +28,5 @@ public enum DamageModifierType
     /// <summary>
     /// 抗性 - 提升自身对元素或属性伤害的抵抗能力
     /// </summary>
-    Resistance = 50000,
+    Resistance = 50000
 }

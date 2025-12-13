@@ -1,15 +1,14 @@
-using System.Data;
-using TokenFight.Core.Databases.Models.Profiles;
 using Terminal.Gui.ViewBase;
 using Terminal.Gui.Views;
 using TokenFight.Core.Databases.Helpers;
 using TokenFight.Core.Databases.Interfaces;
+using TokenFight.Core.Databases.Models.Profiles;
 
 namespace TokenFight.UI.Core.Profile;
 
 public sealed class ProfileView: View
 {
-    
+
     public ProfileView(IDatabaseServer databaseServer)
     {
         var profileInfo = new ProfileInfoView(databaseServer);
@@ -17,34 +16,34 @@ public sealed class ProfileView: View
 
         Width = Dim.Fill();
         Height = Dim.Fill();
-        
+
         itemsTab.X = Pos.Right(profileInfo);
-        
+
         Add(profileInfo, itemsTab);
     }
 }
 
-internal sealed class ProfileInfoView : FrameView
+internal sealed class ProfileInfoView: FrameView
 {
     private readonly IDatabaseServer _databaseServer;
     private bool _queryLogout;
     private readonly Label _accountLabel;
     private readonly Label _tokenLabel;
-    
+
     public ProfileInfoView(IDatabaseServer databaseServer)
     {
         _databaseServer = databaseServer;
         Title = "账号信息";
         Width = Dim.Auto(minimumContentDim: 45);
         Height = Dim.Auto(minimumContentDim: 4, maximumContentDim: 6);
-        
-        var accountLabel = new Label{ Text = "账号: " };
+
+        var accountLabel = new Label { Text = "账号: " };
         _accountLabel = new Label
         {
             X = Pos.Right(accountLabel),
             Y = Pos.Y(accountLabel)
         };
-        var tokenLabel = new Label()
+        var tokenLabel = new Label
         {
             Text = "Token: ",
             X = Pos.X(accountLabel),
@@ -60,25 +59,25 @@ internal sealed class ProfileInfoView : FrameView
         {
             Text = "登出",
             X = Pos.X(_accountLabel),
-            Y = Pos.Bottom(_accountLabel) + 1,
+            Y = Pos.Bottom(_accountLabel) + 1
         };
         logout.Accepting += (sender, args) =>
+        {
+            if (_queryLogout) return;
+            _queryLogout = true;
+            string account = _databaseServer.CurrentProfile?.Account ?? string.Empty;
+            if (string.IsNullOrEmpty(account)) return;
+            int? choice = UIUtil.QueryAtMainLoop(this, "登出",
+                $"确认登出账号: \"{account}\"吗", ["确认登出", "取消登出"]);
+            if (choice == 0)
             {
-                if (_queryLogout) return;
-                _queryLogout = true;
-                string account = _databaseServer.CurrentProfile?.Account ?? string.Empty;
-                if (string.IsNullOrEmpty(account)) return;
-                int? choice = UIUtil.QueryAtMainLoop(this, "登出",
-                    $"确认登出账号: \"{account}\"吗", ["确认登出", "取消登出"]);
-                if (choice == 0)
-                {
-                    _databaseServer.CurrentProfile = null;
-                }
+                _databaseServer.CurrentProfile = null;
+            }
 
-                _queryLogout = false;
-                SetNeedsDraw();
-                args.Handled = true;
-            };
+            _queryLogout = false;
+            SetNeedsDraw();
+            args.Handled = true;
+        };
         Add(accountLabel, _accountLabel, tokenLabel, _tokenLabel, logout);
         SubViewLayout += (_, _) => UpdateData();
     }
@@ -93,21 +92,21 @@ internal sealed class ProfileInfoView : FrameView
 internal sealed class ItemsTabView: FrameView
 {
     private static IDatabaseServer? _databaseServer;
-    
+
     public ItemsTabView(IDatabaseServer databaseServer)
     {
         _databaseServer ??= databaseServer;
-        Title = "背包";
+        Title = "背包概览";
         Width = Dim.Auto(minimumContentDim: 45);
         // Height = Dim.Auto(minimumContentDim: 6, maximumContentDim: 10);
         Height = Dim.Fill();
-        
-        var tabView = new TabView()
+
+        var tabView = new TabView
         {
             Width = Dim.Fill(),
             Height = Dim.Fill()
         };
-        
+
         tabView.AddTab(new WeaponTab(), true);
         tabView.AddTab(new RelicsTab(), false);
         tabView.AddTab(new ActorTab(), false);
@@ -116,7 +115,7 @@ internal sealed class ItemsTabView: FrameView
 
         Add(tabView);
     }
-    
+
     private abstract class ItemTableTab: Tab
     {
         private readonly TableView _tableView = new()
@@ -124,9 +123,9 @@ internal sealed class ItemsTabView: FrameView
             Width = Dim.Fill(),
             Height = Dim.Fill()
         };
-        
+
         public ItemType ItemType { get; protected set; }
-        
+
         protected Item[] Items => ItemHelper.GetVerifyItems(
             _databaseServer?.CurrentProfile?.Inventory.GetItemsByType(ItemType).Values.ToArray() ?? [], ItemType);
 
@@ -136,20 +135,20 @@ internal sealed class ItemsTabView: FrameView
             ItemType = itemType;
             Width = Dim.Fill();
             Height = Dim.Fill();
-            
+
             View = _tableView;
             SubViewLayout += (_, _) => UpdateData();
         }
-        
+
         public abstract Dictionary<string, Func<Item, object>> GetColumns();
-        
+
         private void UpdateData()
         {
             _tableView.Table = new EnumerableTableSource<Item>(Items, GetColumns());
         }
     }
 
-    private sealed class WeaponTab() : ItemTableTab("武器", ItemType.Weapon)
+    private sealed class WeaponTab(): ItemTableTab("武器", ItemType.Weapon)
     {
         public override Dictionary<string, Func<Item, object>> GetColumns()
         {
@@ -163,8 +162,8 @@ internal sealed class ItemsTabView: FrameView
             };
         }
     }
-    
-    private sealed class RelicsTab() : ItemTableTab("遗器", ItemType.Relics)
+
+    private sealed class RelicsTab(): ItemTableTab("遗器", ItemType.Relics)
     {
         public override Dictionary<string, Func<Item, object>> GetColumns()
         {
@@ -179,9 +178,9 @@ internal sealed class ItemsTabView: FrameView
             };
         }
     }
-    
-    private sealed class ActorTab() : ItemTableTab("角色", ItemType.Actor)
-    { 
+
+    private sealed class ActorTab(): ItemTableTab("角色", ItemType.Actor)
+    {
         public override Dictionary<string, Func<Item, object>> GetColumns()
         {
             return new Dictionary<string, Func<Item, object>>
@@ -195,7 +194,7 @@ internal sealed class ItemsTabView: FrameView
         }
     }
 
-    private sealed class ResourceTab() : ItemTableTab("资源", ItemType.Resource)
+    private sealed class ResourceTab(): ItemTableTab("资源", ItemType.Resource)
     {
         public override Dictionary<string, Func<Item, object>> GetColumns()
         {
@@ -209,7 +208,7 @@ internal sealed class ItemsTabView: FrameView
         }
     }
 
-    private sealed class GiftTab() : ItemTableTab("礼物", ItemType.Gift)
+    private sealed class GiftTab(): ItemTableTab("礼物", ItemType.Gift)
     {
         public override Dictionary<string, Func<Item, object>> GetColumns()
         {

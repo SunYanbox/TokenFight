@@ -28,9 +28,8 @@ public interface IActionManagerSystem: ISystem
 
     /// <summary> 获取所有优先行动队列和普通行动 </summary>
     public List<ActionUnit> GetActionList();
-    
-    #region 行动相关逻辑
 
+    #region 行动相关逻辑
     /// <summary>
     /// 使得首个角色回合开始
     /// </summary>
@@ -53,6 +52,5 @@ public interface IActionManagerSystem: ISystem
     /// 行动结束, 清理最新成员属性
     /// </summary>
     public void ActionEnd();
-
     #endregion
 }

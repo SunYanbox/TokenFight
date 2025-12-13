@@ -14,9 +14,9 @@ namespace TokenFight.Core.Helpers;
 [AutoSysRegistryInit]
 public static class PushHelper
 {
-    private static readonly Random Random = new Random();
+    private static readonly Random Random = new();
     public static GameSystemRegistry? GameSystemRegistry { private get; set; }
-    
+
     /// <summary>
     /// 使得指定目标行动提前或延后
     /// rate>0时推条, rate小于0时拉条
@@ -25,18 +25,18 @@ public static class PushHelper
     {
         if (GameSystemRegistry == null) return;
         if (!ActorHelper.IsValidActor(source) || !ActorHelper.IsValidActor(target)) return;
-        
+
         BeforeExcuteContext? beforeExcuteContext = EventHelper.TriggerBeforeExcuteContext(EventType.PushBefore, source, target, rate, skill);
         rate = beforeExcuteContext?.ValueCtx ?? rate;
         double action = target.ActionValueMaster.ActionValue;
         target.ActionValueMaster.Push(rate);
-        
+
         source.AttrSet.ClearTempModify();
         target.AttrSet.ClearTempModify();
-            
+
         EventHelper.TriggerPushContext(source, target, rate, target.ActionValueMaster.ActionValue - action);
     }
-    
+
     /// <summary>
     /// 使得指定目标行动立即行动
     /// </summary>
@@ -44,11 +44,11 @@ public static class PushHelper
     {
         if (GameSystemRegistry == null) return;
         if (!ActorHelper.IsValidActor(source) || !ActorHelper.IsValidActor(target)) return;
-        
+
         TakePushSingle(source, target, -1.0, skill);
         CreateActionHelper.CreateNormal(target);
     }
-    
+
     /// <summary>
     /// 使得指定阵营全体目标行动提前或延后
     /// rate>0时推条, rate小于0时拉条
@@ -74,7 +74,7 @@ public static class PushHelper
     public static void TakePushEjection(IActor source, double rate, TeamType team, ISkill? skill, int times = 1)
     {
         if (GameSystemRegistry == null) return;
-        for (int i=0; i<times; i++)
+        for (int i = 0; i < times; i++)
         {
             IActor[] survivalActors = ActorHelper.GetActorsByTeamWithLifeAndValid(team);
             if (survivalActors.Length == 0) return;

@@ -14,7 +14,7 @@ public struct EnterGameContext: IContext
         Sender = actor;
         Actor = actor;
     }
-    
+
     public EventType Type { get; init; }
     public object Sender { get; init; }
     /// <summary> 进入对局者 </summary>

@@ -9,7 +9,7 @@ public class LifeCycleMaster: ILifeCycleMaster
 {
     /// <summary> 效果所属角色 </summary>
     public required WeakReference<IActor> Owner { get; set; }
-    
+
     /// <summary> 持续回合数 </summary>
     public int? Duration { get; set; }
 

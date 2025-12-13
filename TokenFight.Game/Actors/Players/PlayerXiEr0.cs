@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using TokenFight.Core.Constants;
 using TokenFight.Core.Databases.Helpers;
 using TokenFight.Core.Databases.Interfaces;
-using TokenFight.Core.Databases.Models;
 using TokenFight.Core.Databases.Models.Growth;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Effects;
@@ -23,8 +22,9 @@ using TokenFight.Core.ReflectionAttribute;
 
 namespace TokenFight.Game.Actors.Players;
 
-[AutoActor(Id=GameIdTableConst.PlayerXiEr0, Team = TeamType.Player)]
-public class PlayerXiEr0 : PlayerActor
+[AutoActor(Id = GameIdTableConst.PlayerXiEr0, Team = TeamType.Player)]
+[SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
+public class PlayerXiEr0: PlayerActor
 {
     protected const string FactoryKey = GameIdTableConst.PlayerXiEr0;
     protected static DataActor? DataActor;
@@ -38,7 +38,7 @@ public class PlayerXiEr0 : PlayerActor
     protected static SkillEffectData? NaturalTalentData0;
 
     [SetsRequiredMembers]
-    public PlayerXiEr0(int level, GameSystemRegistry systemRegistry) : base(systemRegistry )
+    public PlayerXiEr0(int level, GameSystemRegistry systemRegistry): base(systemRegistry)
     {
         DataActor ??= (DataActor)systemRegistry.DatabaseServer.ActorTables[FactoryKey];
         BasicAttackData0 ??= DataActorHelper.GetSkillEffectData(DataActor!, SkillType.BasicAttack, BasicAttackSkillDBId);
@@ -58,8 +58,8 @@ public class PlayerXiEr0 : PlayerActor
             this,
             basicAttackRate,
             pushRate,
-            systemRegistry ));
-        
+            systemRegistry));
+
         SkillMaster.Add(new FightSkill(this));
         SkillMaster.Add(new UltimateSkill(this));
         SkillMaster.Add(new TalentSkill(this));
@@ -71,9 +71,9 @@ public class PlayerXiEr0 : PlayerActor
         IActor source,
         double basicAttackRate,
         double pushRate,
-        GameSystemRegistry systemRegistry )
-        : BasicBasicSkill(id, source, basicAttackRate, systemRegistry , 
-            BasicAttackData0!.Name, 
+        GameSystemRegistry systemRegistry)
+        : BasicBasicSkill(id, source, basicAttackRate, systemRegistry,
+            BasicAttackData0!.Name,
             DataActorHelper.FormatSkillDesc(BasicAttackData0, [$"{basicAttackRate:P}", $"{Math.Abs(pushRate):P}"]),
             BasicAttackData0.SkillPointDelta,
             BasicAttackData0.Charge)
@@ -85,10 +85,10 @@ public class PlayerXiEr0 : PlayerActor
         }
     }
 
-    private class FightSkill : BaseSkill
+    private class FightSkill: BaseSkill
     {
-        private double mainRate;
-        private double subRate;
+        private double _mainRate;
+        private double _subRate;
 
         [SetsRequiredMembers]
         public FightSkill(PlayerActor source)
@@ -100,15 +100,12 @@ public class PlayerXiEr0 : PlayerActor
             Choice = SkillChoiceType.OnlyEnemy;
             Type = SkillType.FightSkill;
             AutoMakeSure = false;
-            mainRate = DataActorHelper.GetGrowthValue(FightSkillData0, "伤害倍率0", source.Level, 0D);
-            subRate = DataActorHelper.GetGrowthValue(FightSkillData0, "伤害倍率1", source.Level, 0D);
-            Desc = DataActorHelper.FormatSkillDesc(FightSkillData0, [$"{mainRate:P}", $"{subRate:P}"]);
+            _mainRate = DataActorHelper.GetGrowthValue(FightSkillData0, "伤害倍率0", source.Level, 0D);
+            _subRate = DataActorHelper.GetGrowthValue(FightSkillData0, "伤害倍率1", source.Level, 0D);
+            Desc = DataActorHelper.FormatSkillDesc(FightSkillData0, [$"{_mainRate:P}", $"{_subRate:P}"]);
         }
 
-        public override bool CanUse()
-        {
-            return GameSystemRegistry!.GlobalResourcesSystem.SkillPoint >= 1;
-        }
+        public override bool CanUse() => GameSystemRegistry!.GlobalResourcesSystem.SkillPoint >= 1;
 
         public override void Execute()
         {
@@ -118,29 +115,29 @@ public class PlayerXiEr0 : PlayerActor
             }
 
             if (!ActorHelper.IsValidActor(Source)) return;
-            
+
             IActor? target = ActorHelper.GetActorFromWeakRef(Target);
             if (ActorHelper.IsValidActor(target))
             {
-                for (var i=0; i<3; i++)
+                for (int i = 0; i < 3; i++)
                 {
-                    DamageHelper.TakeDirectDamageThree(Source, target!, mainRate / 3, subRate / 3, this, DamageHelper.DefaultCalculatorGet);
+                    DamageHelper.TakeDirectDamageThree(Source, target!, _mainRate / 3, _subRate / 3, this, DamageHelper.DefaultCalculatorGet);
                 }
             }
-            
+
             if (Math.Abs(FightSkillData0.Charge) > double.Epsilon)
             {
                 Source.EnergyMaster.Adjust(FightSkillData0.Charge);
             }
         }
     }
-    
-    private class UltimateSkill : BaseUltimateSkill
+
+    private class UltimateSkill: BaseUltimateSkill
     {
-        private double mainRate;
-        private double subRate;
-        private double ejectionRate;
-        private int ejectionCount;
+        private double _mainRate;
+        private double _subRate;
+        private double _ejectionRate;
+        private int _ejectionCount;
 
         [SetsRequiredMembers]
         public UltimateSkill(PlayerActor source)
@@ -152,59 +149,56 @@ public class PlayerXiEr0 : PlayerActor
             Choice = SkillChoiceType.OnlyEnemy;
             Type = SkillType.UltimateSkill;
             AutoMakeSure = false;
-            
-            mainRate = DataActorHelper.GetGrowthValue(UltimateSkillData0, "伤害倍率0", source.Level, 0D);
-            subRate = DataActorHelper.GetGrowthValue(UltimateSkillData0, "伤害倍率1", source.Level, 0D);
-            ejectionCount = DataActorHelper.GetExtendProperty<int>(DataActor!, "终结技弹射次数");
-            ejectionRate = DataActorHelper.GetGrowthValue(UltimateSkillData0, "伤害倍率2", source.Level, 0D);
-            Desc = DataActorHelper.FormatSkillDesc(UltimateSkillData0, [$"{mainRate:P}", $"{subRate:P}", ejectionCount, $"{ejectionRate:P}"]);
+
+            _mainRate = DataActorHelper.GetGrowthValue(UltimateSkillData0, "伤害倍率0", source.Level, 0D);
+            _subRate = DataActorHelper.GetGrowthValue(UltimateSkillData0, "伤害倍率1", source.Level, 0D);
+            _ejectionCount = DataActorHelper.GetExtendProperty<int>(DataActor!, "终结技弹射次数");
+            _ejectionRate = DataActorHelper.GetGrowthValue(UltimateSkillData0, "伤害倍率2", source.Level, 0D);
+            Desc = DataActorHelper.FormatSkillDesc(UltimateSkillData0, [$"{_mainRate:P}", $"{_subRate:P}", _ejectionCount, $"{_ejectionRate:P}"]);
         }
 
-        public override bool CanUse()
-        {
-            return Source.EnergyMaster.IsEnergyFull && !IsUsing;
-        }
+        public override bool CanUse() => Source.EnergyMaster.IsEnergyFull && !IsUsing;
 
         public override void Execute()
         {
             if (Source.EnergyMaster.ConsumeOnceEnergy())
             {
                 EffectHelper.TakeEffectSingle(GetSelfEffect(Source, 2));
-                
+
                 IActor? target = ActorHelper.GetActorFromWeakRef(Target);
                 if (ActorHelper.IsValidActor(target))
                 {
-                    for (var i = 0; i < 3; i++)
+                    for (int i = 0; i < 3; i++)
                     {
-                        DamageHelper.TakeDirectDamageThree(Source, target!, mainRate / 3, subRate / 3, this, DamageHelper.DefaultCalculatorGet);
+                        DamageHelper.TakeDirectDamageThree(Source, target!, _mainRate / 3, _subRate / 3, this, DamageHelper.DefaultCalculatorGet);
                     }
                 }
 
-                DamageHelper.TakeDirectDamageEjection(Source, TeamType.Enemy, ejectionRate, this, DamageHelper.DefaultCalculatorGet, ejectionCount);
-                
+                DamageHelper.TakeDirectDamageEjection(Source, TeamType.Enemy, _ejectionRate, this, DamageHelper.DefaultCalculatorGet, _ejectionCount);
+
                 IsUsing = false;
             }
         }
     }
 
-    private class TalentSkill : BaseTalentSkill
+    private class TalentSkill: BaseTalentSkill
     {
         private bool _triggered = false;
-        private readonly HashSet<string> _triggeredT2 = new();
+        private readonly HashSet<string> _triggeredT2 = [];
 
         private double _extraCharge = DataActorHelper.GetExtendProperty<double>(DataActor!, "击败敌人额外回能");
         private int _markCount = DataActorHelper.GetExtendProperty<int>(DataActor!, "命中标记立即行动的层数");
-        
+
         [SetsRequiredMembers]
         public TalentSkill(PlayerActor source): base(source.NaturalTalentId, source, GameSystemRegistry!)
         {
             Name = NaturalTalentData0!.Name;
             Desc = DataActorHelper.FormatSkillDesc(NaturalTalentData0, [_extraCharge, _markCount]);
-            
+
             PassiveData!.Callbacks.Add(EventType.Damage, HandleTalentDamage);
             PassiveData.Callbacks.Add(EventType.ActionEnd, HandleTalent_重置CD);
         }
-        
+
         private void HandleTalentDamage(IContext data)
         {
             if (data is not DamageContext context) return;
@@ -217,8 +211,8 @@ public class PlayerXiEr0 : PlayerActor
             if (_triggeredT2.Add(target.Id))
             {
                 EffectHelper.TakeEffectSingle(GetMarkEffect(Source, target));
-                
-                
+
+
                 if (target.EffectMaster.Has(markId))
                 {
                     IEffect mark = target.EffectMaster.Get(markId);
@@ -237,8 +231,8 @@ public class PlayerXiEr0 : PlayerActor
             if (target.IsLive() || !context.IsKill) return;
             // 击杀再现
             ActionUnit? actionUnit = GameSystemRegistry!.ActionManagerSystem.NewestAction;
-            if (actionUnit == null 
-                || actionUnit.IsExtraTurn && actionUnit.OwnActor == Source 
+            if (actionUnit == null
+                || actionUnit.IsExtraTurn && actionUnit.OwnActor == Source
                 || _triggered) return;
             GameSystemRegistry!.GlobalResourcesSystem.AdjustSkillPoint(1);
             CreateActionHelper.CreateNewExtraTurn(xier);
@@ -275,7 +269,7 @@ public class PlayerXiEr0 : PlayerActor
             }
             _triggered = true;
         }
-        
+
         private void HandleTalent_重置CD(IContext data)
         {
             if (data is not ActionContext) return;
@@ -283,17 +277,14 @@ public class PlayerXiEr0 : PlayerActor
             _triggeredT2.Clear();
         }
     }
-    
+
     // 获取标记buff
-    private static BaseEffect GetMarkEffect(IActor source, IActor target)
-    {
-        return EffectCreateHelper.CreateMark(source.Id + "希尔标记", source, target);
-    }
-    
+    private static BaseEffect GetMarkEffect(IActor source, IActor target) => EffectCreateHelper.CreateMark(source.Id + "希尔标记", source, target);
+
     // 获取负面buff
     private static BaseEffect GetDebuffEffect(IActor source, IActor target)
     {
-        BaseEffectPctGain effect = new BaseEffectPctGain(source, target, source.Id + "希尔针对",
+        var effect = new BaseEffectPctGain(source, target, source.Id + "希尔针对",
             new Dictionary<int, double>
             {
                 { IAttrSet.ToInt(AttrType.Vulnerability), 0.1 }
@@ -305,18 +296,15 @@ public class PlayerXiEr0 : PlayerActor
         effect.InitStack(1, 999, 0);
         return effect;
     }
-    
+
     // 获取自拐buff
-    private static BaseEffect GetSelfEffect(IActor source, int initial = 1)
-    {
-        return EffectCreateHelper.CreatePctGain(source.Id + "希尔自拐", source, source,
-            new Dictionary<int, double>
-            {
-                { IAttrSet.ToInt(AttrType.Attack), 0.15 },
-                { IAttrSet.ToInt(AttrType.Speed), 0.15 },
-                { IAttrSet.ToInt(AttrType.DamageIncrease), 0.20 },
-            }, duration: 2, initStack: initial, maxStack: 2);
-    }
-    
-    
+    private static BaseEffect GetSelfEffect(IActor source, int initial = 1) => EffectCreateHelper.CreatePctGain(source.Id + "希尔自拐", source, source,
+        new Dictionary<int, double>
+        {
+            { IAttrSet.ToInt(AttrType.Attack), 0.15 },
+            { IAttrSet.ToInt(AttrType.Speed), 0.15 },
+            { IAttrSet.ToInt(AttrType.DamageIncrease), 0.20 }
+        }, 2, initial, 2);
+
+
 }

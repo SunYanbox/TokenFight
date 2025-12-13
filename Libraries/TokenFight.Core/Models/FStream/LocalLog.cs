@@ -9,7 +9,7 @@ public class LocalLog: ILocalLog
 {
     public void Init()
     {
-        var pathToMod = Environment.CurrentDirectory;
+        string pathToMod = Environment.CurrentDirectory;
 
         TryCatch("初始化本地日志核心", () =>
         {
@@ -27,7 +27,7 @@ public class LocalLog: ILocalLog
                 Directory.CreateDirectory(DataFolderPath);
                 return true;
             });
-            
+
             string infoPath = Path.Combine(LogFolderPath, "info.log");
             string warnPath = Path.Combine(LogFolderPath, "warn.log");
             string debugPath = Path.Combine(LogFolderPath, "debug.log");
@@ -38,7 +38,9 @@ public class LocalLog: ILocalLog
 
             TryCatch("日志过大检测", () =>
             {
-                foreach (var filePath in new [] { infoPath, warnPath, debugPath, errorPath, 
+                foreach (string filePath in new[]
+                         {
+                             infoPath, warnPath, debugPath, errorPath,
                              fightDetailPath, fightSummaryPath,
                              statsPath
                          })
@@ -89,7 +91,7 @@ public class LocalLog: ILocalLog
     {
         throw new NotImplementedException();
     }
-    
+
     public bool TryCatch(string task, Func<bool> func)
     {
         try
@@ -131,15 +133,36 @@ public class LocalLog: ILocalLog
             }
         }
     }
-    
-    public void Info(string message) => LocalLogMsg(LocalLogType.Info, message);
-    public void Warn(string message) => LocalLogMsg(LocalLogType.Warn, message);
-    public void LogError(string message) => LocalLogMsg(LocalLogType.Error, message);
-    public void Debug(string message) => LocalLogMsg(LocalLogType.Debug, message);
-    public void Detail(string message) => LocalLogMsg(LocalLogType.FightDetails, message);
-    public void Summary(string message) => LocalLogMsg(LocalLogType.FightSummary, message);
-    public void Stats(string message) => LocalLogMsg(LocalLogType.Stats, message);
-    
+
+    public void Info(string message)
+    {
+        LocalLogMsg(LocalLogType.Info, message);
+    }
+    public void Warn(string message)
+    {
+        LocalLogMsg(LocalLogType.Warn, message);
+    }
+    public void LogError(string message)
+    {
+        LocalLogMsg(LocalLogType.Error, message);
+    }
+    public void Debug(string message)
+    {
+        LocalLogMsg(LocalLogType.Debug, message);
+    }
+    public void Detail(string message)
+    {
+        LocalLogMsg(LocalLogType.FightDetails, message);
+    }
+    public void Summary(string message)
+    {
+        LocalLogMsg(LocalLogType.FightSummary, message);
+    }
+    public void Stats(string message)
+    {
+        LocalLogMsg(LocalLogType.Stats, message);
+    }
+
     /// <summary>
     /// 限制每行最多140字符
     /// </summary>
@@ -148,12 +171,12 @@ public class LocalLog: ILocalLog
     private static string SplitToLinesWithWords(string input, int maxLength = 140)
     {
         if (string.IsNullOrEmpty(input)) return input;
-    
-        var lines = new List<string>();
-        var words = input.Split(' ');
+
+        List<string> lines = [];
+        string[] words = input.Split(' ');
         var currentLine = new StringBuilder();
-    
-        foreach (var word in words)
+
+        foreach (string word in words)
         {
             if (currentLine.Length + word.Length + 1 <= maxLength) // +1 是空格
             {
@@ -165,17 +188,17 @@ public class LocalLog: ILocalLog
             {
                 if (currentLine.Length > 0)
                     lines.Add(currentLine.ToString());
-            
+
                 currentLine = new StringBuilder(word);
             }
         }
-    
+
         if (currentLine.Length > 0)
             lines.Add(currentLine.ToString());
-    
+
         return string.Join(Environment.NewLine + "  ", lines);
     }
-    
+
     private void RegisterWriterStream(string task, LocalLogType type, string path)
     {
         TryCatch(task, () =>

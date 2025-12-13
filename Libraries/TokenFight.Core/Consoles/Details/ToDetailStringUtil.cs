@@ -10,14 +10,14 @@ public static class ToDetailStringUtil
 {
     public static string DumpsActionListSystem(IActionListSystem actionListSystem)
     {
-        IEnumerable<string> items = actionListSystem.ActionList.Select(s => 
+        IEnumerable<string> items = actionListSystem.ActionList.Select(s =>
             $"{s.Name}({s.Id}~{DataShowUtil.ShowActionValue(s.ActionValueMaster.ActionValue)})");
         return $"行动队列: [ {string.Join(", ", items)} ] ";
     }
-    
+
     public static string DumpsActionUnit(ActionUnit actionUnit)
     {
-        StringBuilder msg =  new StringBuilder();
+        var msg = new StringBuilder();
         msg.Append("ActionUnit( ");
         if (actionUnit.IsNormal) { msg.Append($"普通行动-{actionUnit.Actor?.Name} {actionUnit.Skill?.Name}"); }
         if (actionUnit.IsExtraTurn) { msg.Append($"额外回合-{actionUnit.Actor?.Name} {actionUnit.Skill?.Name}"); }
@@ -29,7 +29,7 @@ public static class ToDetailStringUtil
 
     public static string DumpsActionManagerSystem(IActionManagerSystem actionManagerSystem)
     {
-        StringBuilder stringBuilder = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         stringBuilder.Append("ActionManagerSystem( ");
         stringBuilder.AppendJoin(", ", actionManagerSystem.GetActionList().Select(DumpsActionUnit));
         stringBuilder.Append(" )");
@@ -38,9 +38,9 @@ public static class ToDetailStringUtil
 
     public static void OutputActionManagerSystem(IActionManagerSystem actionManagerSystem)
     {
-        ConsolePrinter printer = new ConsolePrinter();
+        var printer = new ConsolePrinter();
         printer.Add("行动队列: ");
-        foreach (var actionUnit in actionManagerSystem.GetActionList())
+        foreach (ActionUnit actionUnit in actionManagerSystem.GetActionList())
         {
             switch (actionUnit.Priority)
             {

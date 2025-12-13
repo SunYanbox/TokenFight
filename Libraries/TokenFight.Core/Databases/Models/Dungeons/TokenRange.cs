@@ -7,8 +7,5 @@ public class TokenRange
 {
     public required int Min { get; set; }
     public required int Max { get; set; }
-    public override string ToString()
-    {
-        return $"{Min}~{Max}";
-    }
+    public override string ToString() => $"{Min}~{Max}";
 }

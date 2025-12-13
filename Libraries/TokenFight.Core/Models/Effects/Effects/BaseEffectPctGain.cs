@@ -11,9 +11,9 @@ namespace TokenFight.Core.Models.Effects.Effects;
 public class BaseEffectPctGain: BaseEffect
 {
     private readonly AttrModifyData _modifyData;
-    
+
     [SetsRequiredMembers]
-    public BaseEffectPctGain(IActor source, IActor target, string id, Dictionary<int,double> modifyData, 
+    public BaseEffectPctGain(IActor source, IActor target, string id, Dictionary<int, double> modifyData,
         GameSystemRegistry gameSystemRegistry)
     {
         Id = id;
@@ -38,7 +38,7 @@ public class BaseEffectPctGain: BaseEffect
     {
         LifeCycle!.InitDuration(duration);
     }
-    
+
     public void InitStack(int stack, int maxStack, int deltaStack = -1)
     {
         LifeCycle!.InitStack(stack, maxStack, deltaStack);
@@ -48,13 +48,13 @@ public class BaseEffectPctGain: BaseEffect
     {
         LifeCycle!.InitMark(mark);
     }
-    
+
     public override void OnApply()
     {
         if (Target.TryGetTarget(out IActor? target))
         {
-            Dictionary<int, double> modifyData = new Dictionary<int, double>(_modifyData.ModifyData);
-            foreach (var key in modifyData.Keys)
+            Dictionary<int, double> modifyData = new(_modifyData.ModifyData);
+            foreach (int key in modifyData.Keys)
             {
                 modifyData[key] *= LifeCycle?.HasStack ?? false ? LifeCycle.CurrentStack ?? 1 : 1;
             }

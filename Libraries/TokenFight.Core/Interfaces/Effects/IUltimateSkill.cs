@@ -6,8 +6,5 @@ public interface IUltimateSkill: ISkill
     /// <summary> 是否已经在终结技轮询中被启用 </summary>
     public bool IsUsing { get; set; }
 
-    public new bool CanUse()
-    {
-        return Source.EnergyMaster.IsEnergyFull;
-    }
+    public new bool CanUse() => Source.EnergyMaster.IsEnergyFull;
 }

@@ -7,18 +7,12 @@ using TokenFight.Core.Interfaces.Entities;
 namespace TokenFight.Core.Models.Entities.Actors;
 
 [method: SetsRequiredMembers]
-public abstract class EnemyActor(GameSystemRegistry gameSystemRegistry) : BaseActor(TeamType.Enemy, gameSystemRegistry), IEnemy
+public abstract class EnemyActor(GameSystemRegistry gameSystemRegistry): BaseActor(TeamType.Enemy, gameSystemRegistry), IEnemy
 {
     /// <summary> 默认普攻Id </summary>
     public string BasicAttackId => Id + nameof(SkillType.BasicAttack);
-    
-    public ISkill NextSkill()
-    {
-        return GetBasicAttack();
-    }
 
-    public override ISkill GetBasicAttack()
-    {
-        return SkillMaster.GetSkill(BasicAttackId);
-    }
+    public ISkill NextSkill() => GetBasicAttack();
+
+    public override ISkill GetBasicAttack() => SkillMaster.GetSkill(BasicAttackId);
 }

@@ -10,14 +10,14 @@ using TokenFight.Core.Models.Events.Contexts;
 namespace TokenFight.Core.Models.Systems;
 
 public class ActorManagerSystem(
-    IEventSystem eventSystem, 
+    IEventSystem eventSystem,
     ILocalLog localLog,
     IActorPositionSystem actorPositionSystem,
     IActionListSystem actionListSystem): IActorManagerSystem
 {
-    private readonly Dictionary<string, IActor> Actors =  new();
-    private readonly HashSet<IActor> DeathActors = new();
-    
+    private readonly Dictionary<string, IActor> _actors = new();
+    private readonly HashSet<IActor> _deathActors = [];
+
     public void Init()
     {
         eventSystem.Subscribe(EventType.ActorLife, HandleActorLifeEvent);
@@ -26,25 +26,23 @@ public class ActorManagerSystem(
         eventSystem.Subscribe(EventType.ActionEnd, HandleActorDeath);
         eventSystem.Subscribe(EventType.ActorDeath, HandleActorDeath);
     }
-    
+
     public void Reset()
     {
-        foreach (IActor actor in Actors.Values)
+        foreach (IActor actor in _actors.Values)
         {
             actor.Destroy();
         }
-        Actors.Clear();
+        _actors.Clear();
     }
 
-    public Dictionary<string, IActor> AllActors => Actors.AsReadOnly().ToDictionary();
+    public Dictionary<string, IActor> AllActors => _actors.AsReadOnly().ToDictionary();
     public Dictionary<string, IActor> AllPlayers =>
-        Actors.AsReadOnly().Where(x => x.Value.Team == TeamType.Player).ToDictionary();
+        _actors.AsReadOnly().Where(x => x.Value.Team == TeamType.Player).ToDictionary();
     public Dictionary<string, IActor> AllEnemies =>
-        Actors.AsReadOnly().Where(x => x.Value.Team == TeamType.Enemy).ToDictionary();
-    
+        _actors.AsReadOnly().Where(x => x.Value.Team == TeamType.Enemy).ToDictionary();
+
     /// <summary> 处理成员创建与删除 </summary>
-    /// <param name="source"></param>
-    /// <param name="data"></param>
     private void HandleActorLifeEvent(IContext data)
     {
         if (data is ActorLifeContext actorLifeContext)
@@ -52,7 +50,7 @@ public class ActorManagerSystem(
             if (actorLifeContext.IsCreate)
             {
                 localLog.Debug($"[成员管理系统] Actor {actorLifeContext.Actor.Name}({actorLifeContext.Actor.Id}) 已创建");
-                Actors.Add(actorLifeContext.Actor.Id, actorLifeContext.Actor);
+                _actors.Add(actorLifeContext.Actor.Id, actorLifeContext.Actor);
                 actionListSystem.Append(actorLifeContext.Actor);
                 actorPositionSystem.Append(actorLifeContext.Actor.Id, actorLifeContext.Actor.Team);
                 actorLifeContext.Actor.OnEnterGame();
@@ -61,7 +59,7 @@ public class ActorManagerSystem(
             else
             {
                 localLog.Debug($"[成员管理系统] Actor {actorLifeContext.Actor.Name}({actorLifeContext.Actor.Id}) 已移除");
-                Actors.Remove(actorLifeContext.Actor.Id);
+                _actors.Remove(actorLifeContext.Actor.Id);
             }
         }
     }
@@ -73,17 +71,17 @@ public class ActorManagerSystem(
         {
             if (deathContext.Type == EventType.ActorDeath)
             {
-                DeathActors.Add(deathContext.Actor);
+                _deathActors.Add(deathContext.Actor);
             }
             return;
         }
 
-        HashSet<IActor> delayDeathActors = new HashSet<IActor>();
+        HashSet<IActor> delayDeathActors = [];
         // 移除该被销毁的成员
         if (data is ActionContext or RoundContext)
         {
-            if (DeathActors.Count == 0) return;
-            foreach (var actor in DeathActors)
+            if (_deathActors.Count == 0) return;
+            foreach (var actor in _deathActors)
             {
                 if (actor.DelayDeath)
                 {
@@ -113,11 +111,11 @@ public class ActorManagerSystem(
                 }
                 // 销毁成员
                 actor.Destroy();
-                Actors.Remove(actor.Id);
+                _actors.Remove(actor.Id);
                 EventHelper.TriggerActorLifeContext(actor, false);
             }
-            DeathActors.Clear();
-            DeathActors.UnionWith(delayDeathActors);
+            _deathActors.Clear();
+            _deathActors.UnionWith(delayDeathActors);
         }
     }
 }

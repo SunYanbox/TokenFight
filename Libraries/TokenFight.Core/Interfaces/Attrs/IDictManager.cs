@@ -10,23 +10,23 @@ public interface IDictManager
     /// 初始化DictManager类, 设置可用的类型(类型在内部储存为整数)
     /// 会清理已有的数据
     /// </summary>
-    /// <param name="Ids"></param>
-    public void Init(HashSet<int> Ids);
+    /// <param name="ids"></param>
+    public void Init(HashSet<int> ids);
 
     /// <summary> 覆盖式添加新的属性 </summary>
     /// <param name="type">属性类型索引</param>
-    /// <param name="Id">数据的Id</param>
+    /// <param name="id">数据的Id</param>
     /// <param name="value">数据的值</param>
-    public bool Add(int type, string Id, double value);
+    public bool Add(int type, string id, double value);
 
     /// <summary> 通过属性类型和Id移除数据 </summary>
     /// <param name="type">属性类型索引</param>
-    /// <param name="Id">数据的Id</param>
-    public bool Remove(int type, string Id);
+    /// <param name="id">数据的Id</param>
+    public bool Remove(int type, string id);
 
     /// <summary> 移除来自Id的所有属性下的数据 </summary>
-    /// <param name="Id">数据的Id</param>
-    public void RemoveByKey(string Id);
+    /// <param name="id">数据的Id</param>
+    public void RemoveByKey(string id);
 
     /// <summary> 清理所有数据 </summary>
     public void Clear();
@@ -36,15 +36,15 @@ public interface IDictManager
 
     /// <summary> 获取指定属性下是否包含指定Id的数据 </summary>
     /// <param name="type">属性类型索引</param>
-    /// <param name="Id">数据的Id</param>
+    /// <param name="id">数据的Id</param>
     /// <returns></returns>
-    public bool ContainsKey(int type, string Id);
+    public bool ContainsKey(int type, string id);
 
     /// <summary> 获取指定属性下指定Id的数据 </summary>
     /// <param name="type">属性类型索引</param>
-    /// <param name="Id">数据的Id</param>
+    /// <param name="id">数据的Id</param>
     /// <returns></returns>
-    public double GetValue(int type, string Id);
+    public double GetValue(int type, string id);
 
     /// <summary> 获取指定属性的数据和 </summary>
     /// <param name="type">属性类型索引</param>
@@ -53,11 +53,11 @@ public interface IDictManager
 
     /// <summary> 尝试获取指定属性下指定Id的数据 </summary>
     /// <param name="type"></param>
-    /// <param name="Id"></param>
+    /// <param name="id"></param>
     /// <param name="value"></param>
     /// <returns>成功获取返回true</returns>
-    public bool TryGet(int type, string Id, out double? value);
-    
+    public bool TryGet(int type, string id, out double? value);
+
     /// <summary> 获取属性数量 </summary>
     public int Count { get; }
 

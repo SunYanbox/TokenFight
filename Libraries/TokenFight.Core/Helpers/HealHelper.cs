@@ -13,8 +13,8 @@ namespace TokenFight.Core.Helpers;
 public static class HealHelper
 {
     public static GameSystemRegistry? GameSystemRegistry { private get; set; }
-    private static readonly Random Random = new Random();
-    
+    private static readonly Random Random = new();
+
     /// <summary>
     /// 基于给定的数值提供治疗
     /// </summary>
@@ -26,12 +26,12 @@ public static class HealHelper
         double beforeHealth = target.HealthMaster?.Health ?? 0;
         BeforeExcuteContext? beforeExcuteContext = EventHelper.TriggerBeforeExcuteContext(EventType.HealBefore, source, target, heal, skill);
         heal = beforeExcuteContext?.ValueCtx ?? heal;
-        target.HealthMaster!.TakeHeal(heal, out var overflowHeal);
+        target.HealthMaster!.TakeHeal(heal, out double overflowHeal);
         EventHelper.TriggerHealthChangeContext(target, (target.HealthMaster?.Health ?? 0) - beforeHealth);
         EventHelper.TriggerHealContext(source, target, heal, overflowHeal);
         return heal;
     }
-    
+
     /// <summary>
     /// 对指定单体造成基于自身某个基础乘区rate倍率的治疗
     /// </summary>
@@ -41,18 +41,18 @@ public static class HealHelper
     {
         if (GameSystemRegistry == null) return 0;
         if (!ActorHelper.IsValidActor(source) || !ActorHelper.IsValidActor(target)) return 0;
-        
+
         EventHelper.TriggerBeforeCalculateContext(EventType.CalculateBefore, EventType.HealBefore, source, target, skill);
-        
+
         double heal = (source?.AttrSet?.GetAttr(baseFactor) ?? 0) * rate * (1 +
-            (source?.AttrSet?.GetAttr(AttrType.HealIncrease) ?? 0));
+                                                                            (source?.AttrSet?.GetAttr(AttrType.HealIncrease) ?? 0));
 
         source!.AttrSet!.ClearTempModify();
         target.AttrSet!.ClearTempModify();
-        
+
         return TakeHealByConstant(source, target, heal, skill);
     }
-    
+
     /// <summary>
     /// 对指定阵营全体造成一次治疗
     /// </summary>
@@ -80,7 +80,7 @@ public static class HealHelper
     {
         if (GameSystemRegistry == null) return 0;
         double sum = 0;
-        for (int i=0; i<times; i++)
+        for (int i = 0; i < times; i++)
         {
             IActor[] survivalActors = ActorHelper.GetActorsByTeamWithLifeAndValid(team);
             if (survivalActors.Length == 0) return sum;

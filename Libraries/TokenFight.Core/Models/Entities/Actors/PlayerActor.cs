@@ -14,7 +14,7 @@ namespace TokenFight.Core.Models.Entities.Actors;
 /// <summary>
 /// 玩家角色自带5%暴击率与50%暴击伤害加成
 /// </summary>
-public abstract class PlayerActor : BaseActor, IPlayer
+public abstract class PlayerActor: BaseActor, IPlayer
 {
     #region 默认键
     /// <summary> 默认普攻Id </summary>
@@ -28,9 +28,9 @@ public abstract class PlayerActor : BaseActor, IPlayer
     /// <summary> 默认天赋Id </summary>
     public string NaturalTalentId => Id + nameof(SkillType.NaturalTalent);
     #endregion
-    
+
     [SetsRequiredMembers]
-    protected PlayerActor(GameSystemRegistry gameSystemRegistry) : base(TeamType.Player, gameSystemRegistry)
+    protected PlayerActor(GameSystemRegistry gameSystemRegistry): base(TeamType.Player, gameSystemRegistry)
     {
         AttrSet?.SetAttr(new AttrModifyData
         {
@@ -45,16 +45,13 @@ public abstract class PlayerActor : BaseActor, IPlayer
         });
         DelayDeath = true;
     }
-    
+
     public virtual void ActivateUltimateSkill()
     {
         EnergyMaster.Adjust(AttrSet.GetAttr(AttrType.MaxEnergy));
     }
-    
-    public override ISkill GetBasicAttack()
-    {
-        return SkillMaster.GetSkill(BasicAttackId);
-    }
+
+    public override ISkill GetBasicAttack() => SkillMaster.GetSkill(BasicAttackId);
     /// <summary> 判断技能是否包含指定键的技能 </summary>
     public new bool HasSkill(string skillId) => SkillMaster.ContainsKey(skillId);
     /// <summary> 是否拥有终结技 </summary>
@@ -67,11 +64,11 @@ public abstract class PlayerActor : BaseActor, IPlayer
     public virtual ISkill GetUltimateSkill() => SkillMaster.GetSkill(UltimateSkillId);
     /// <summary> 获取追加攻击技能 </summary>
     public virtual ISkill GetFollowUpAttack() => SkillMaster.GetSkill(FollowUpAttackId);
-    
+
     public override void DisplayActorInfo()
     {
         ConsoleColor healthColor = Team == TeamType.Player ? ConsoleColor.Green : ConsoleColor.Red;
-        ConsolePrinter printer = new ConsolePrinter();
+        var printer = new ConsolePrinter();
         printer.Add($"{Name} ");
         printer.Add($"Lv.{Level} ", ConsoleColor.Magenta);
         printer.Add($"{Id} hp: ");
@@ -81,7 +78,7 @@ public abstract class PlayerActor : BaseActor, IPlayer
         printer.Add($"{EnergyMaster?.Energy} ", ConsoleColor.Cyan);
         printer.Add("Shield: ");
         printer.Add($"{ShieldMaster?.Shield:F2} ", ConsoleColor.Yellow);
-        
+
         string GetAttrDumps(AttrType type)
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -89,12 +86,12 @@ public abstract class PlayerActor : BaseActor, IPlayer
             Console.ResetColor();
             return $"{attrValue}({AttrSet.GetBaseAttr(type):F2}+{AttrSet.GetGainAttr(type):F2})";
         }
-        
+
         printer.Add($"atk: {GetAttrDumps(AttrType.Attack)}, ");
         printer.Add($"def: {GetAttrDumps(AttrType.Defense)}, ");
         printer.Add($"spd: {GetAttrDumps(AttrType.Speed)}, ");
         printer.Add($"cri: {AttrSet.GetAttr(AttrType.CriticalRate):P}, crd: {AttrSet.GetAttr(AttrType.CriticalDamage):P}");
-        
+
         if (!EffectMaster.Empty)
         {
             printer.Add("\n");

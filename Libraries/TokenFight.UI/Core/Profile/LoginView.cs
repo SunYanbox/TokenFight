@@ -12,51 +12,51 @@ public class LoginView: View
     private Button _loginButton;
     private Button _registerButton;
     private TableView _accountTableView;
-    
+
     public LoginView(IDatabaseServer databaseServer)
     {
         _databaseServer = databaseServer;
         CanFocus = true;
-        
+
         Width = Dim.Fill();
         Height = Dim.Fill();
-        
+
         var usernameLabel = new Label { Text = "账号:" };
 
-        _accountTextField = new TextField()
+        _accountTextField = new TextField
         {
             Text = "admin",
             X = Pos.Right(usernameLabel) + 1,
             Width = Dim.Absolute(20),
-            CanFocus=true
+            CanFocus = true
         };
 
         var passwordLabel = new Label
         {
-            Text = "密码:", X = Pos.Left (usernameLabel), Y = Pos.Bottom (usernameLabel) + 1
+            Text = "密码:", X = Pos.Left(usernameLabel), Y = Pos.Bottom(usernameLabel) + 1
         };
 
-        _passwordTextField = new TextField()
+        _passwordTextField = new TextField
         {
             Text = "123456",
             Secret = true,
             X = Pos.Left(_accountTextField),
             Y = Pos.Top(passwordLabel),
             Width = Dim.Absolute(20),
-            CanFocus=true
+            CanFocus = true
         };
 
         // Create login button
         _loginButton = new Button
         {
             Text = "登录",
-            Y = Pos.Bottom (passwordLabel) + 1,
+            Y = Pos.Bottom(passwordLabel) + 1,
 
             // center the login button horizontally
             X = 0,
             IsDefault = true
         };
-        
+
         // Create login button
         _registerButton = new Button
         {
@@ -79,45 +79,45 @@ public class LoginView: View
 
         // When login button is clicked display a message popup
         _loginButton.Accepting += (s, args) =>
+        {
+            object oLock = new();
+            App!.Invoke(() =>
             {
-                object oLock = new object();
-                App!.Invoke(() =>
+                lock (oLock)
                 {
-                    lock (oLock)
+                    if (_databaseServer.TryLogin(_accountTextField.Text, _passwordTextField.Text))
                     {
-                        if (_databaseServer.TryLogin(_accountTextField.Text, _passwordTextField.Text))
-                        {
-                            UIUtil.QueryAtMainLoop(this, "登录", $"登录成功: {_accountTextField.Text}", "确认");
-                        }
-                        else
-                        {
-                            OutputLoginOrRegisterError("登录");
-                        }
+                        UIUtil.QueryAtMainLoop(this, "登录", $"登录成功: {_accountTextField.Text}", "确认");
                     }
-                });
-                SetTableView();
-                args.Handled = true;
-            };
+                    else
+                    {
+                        OutputLoginOrRegisterError("登录");
+                    }
+                }
+            });
+            SetTableView();
+            args.Handled = true;
+        };
 
         _registerButton.Accepting += (s, args) =>
+        {
+            if (_databaseServer.Register(_accountTextField.Text, _passwordTextField.Text))
             {
-                if (_databaseServer.Register(_accountTextField.Text, _passwordTextField.Text))
-                {
-                    _databaseServer.Save(_databaseServer.ProfileTables[_accountTextField.Text]);
-                    UIUtil.QueryAtMainLoop(this, "注册", $"注册成功: {_accountTextField.Text}", "确认");
-                }
-                else
-                {
-                    OutputLoginOrRegisterError("注册");
-                }
+                _databaseServer.Save(_databaseServer.ProfileTables[_accountTextField.Text]);
+                UIUtil.QueryAtMainLoop(this, "注册", $"注册成功: {_accountTextField.Text}", "确认");
+            }
+            else
+            {
+                OutputLoginOrRegisterError("注册");
+            }
 
-                SetTableView();
-                args.Handled = true;
-            };
+            SetTableView();
+            args.Handled = true;
+        };
 
         // Add the views to the Window
-        Add (usernameLabel, _accountTextField, passwordLabel, 
-            _passwordTextField, _loginButton, 
+        Add(usernameLabel, _accountTextField, passwordLabel,
+            _passwordTextField, _loginButton,
             _registerButton, _accountTableView);
         SetTableView();
     }
@@ -141,15 +141,15 @@ public class LoginView: View
             errorMessage += "\n- 密码包含非ASCII可打印字符";
         UIUtil.ErrorQueryAtMainLoop(this, title, errorMessage, "确认");
     }
-    
+
     private void SetTableView()
     {
         string[] accounts = _databaseServer.ProfileTables.Keys.ToArray();
 
-        _accountTableView.Table = new EnumerableTableSource<string>(accounts, 
+        _accountTableView.Table = new EnumerableTableSource<string>(accounts,
             new Dictionary<string, Func<string, object>>
             {
-                { "序号", t => accounts.IndexOf(t) }, 
+                { "序号", t => accounts.IndexOf(t) },
                 { "账号", t => t },
                 { "Token", t => _databaseServer.ProfileTables.GetValueOrDefault(t)?.Token ?? 0 }
             });

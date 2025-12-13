@@ -12,7 +12,7 @@ public class PassiveData(IEventSystem eventSystem, ILocalLog localLog)
     /// <summary> 技能管理的事件 -> 回调函数 <br /> 在外部初始化, 使用Subscribe后就不应该再进行任何更改 </summary>
     public Dictionary<EventType, EventCallback> Callbacks { get; } = new();
     /// <summary> 事件系统 </summary>
-    private readonly IEventSystem _eventSystem  = eventSystem;
+    private readonly IEventSystem _eventSystem = eventSystem;
     /// <summary> 注册所有技能回调 </summary>
     public void Subscribe()
     {

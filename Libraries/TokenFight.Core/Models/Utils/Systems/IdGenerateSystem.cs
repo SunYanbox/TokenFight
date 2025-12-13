@@ -20,7 +20,7 @@ public class IdGenerateSystem(ILocalLog localLog)
     /// <summary> 获取指定阵营成员的新Id </summary>
     public string GetNewId(TeamType team)
     {
-        StringBuilder stringBuilder = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         stringBuilder.Append(team + "_");
         if (_releases.TryGetValue(team, out Queue<int>? queue))
         {
@@ -44,43 +44,43 @@ public class IdGenerateSystem(ILocalLog localLog)
     }
 
     /// <summary> 释放一个Id </summary>
-    public void ReleaseId(string Id)
+    public void ReleaseId(string id)
     {
         const string namePlayer = nameof(TeamType.Player) + "_";
         const string nameEnemy = nameof(TeamType.Enemy) + "_";
-        if (Id.StartsWith(namePlayer))
+        if (id.StartsWith(namePlayer))
         {
             try
             {
-                int release = Convert.ToInt32(Id.Replace(namePlayer, ""));
+                int release = Convert.ToInt32(id.Replace(namePlayer, ""));
                 _releases[TeamType.Player].Enqueue(release);
             }
             catch (FormatException e)
             {
-                localLog.LogError($"[IdGenerateSystem.ReleaseId] 解析的 '{Id}' 格式错误, 无法成功释放: {e.Message}");
+                localLog.LogError($"[IdGenerateSystem.ReleaseId] 解析的 '{id}' 格式错误, 无法成功释放: {e.Message}");
                 throw;
             }
             catch (OverflowException e)
             {
-                localLog.LogError($"[IdGenerateSystem.ReleaseId] 解析的 '{Id}' 超出整数范围, 无法成功释放: {e.Message}");
+                localLog.LogError($"[IdGenerateSystem.ReleaseId] 解析的 '{id}' 超出整数范围, 无法成功释放: {e.Message}");
                 throw;
             }
         }
-        else if (Id.StartsWith(nameEnemy))
+        else if (id.StartsWith(nameEnemy))
         {
             try
             {
-                int release = Convert.ToInt32(Id.Replace(nameEnemy, ""));
+                int release = Convert.ToInt32(id.Replace(nameEnemy, ""));
                 _releases[TeamType.Enemy].Enqueue(release);
             }
             catch (FormatException e)
             {
-                localLog.LogError($"[IdGenerateSystem.ReleaseId] 解析的 '{Id}' 格式错误, 无法成功释放: {e.Message}");
+                localLog.LogError($"[IdGenerateSystem.ReleaseId] 解析的 '{id}' 格式错误, 无法成功释放: {e.Message}");
                 throw;
             }
             catch (OverflowException e)
             {
-                localLog.LogError($"[IdGenerateSystem.ReleaseId] 解析的 '{Id}' 超出整数范围, 无法成功释放: {e.Message}");
+                localLog.LogError($"[IdGenerateSystem.ReleaseId] 解析的 '{id}' 超出整数范围, 无法成功释放: {e.Message}");
                 throw;
             }
         }

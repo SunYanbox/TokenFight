@@ -16,7 +16,7 @@ public class EnergyMaster: IEnergyMaster
     {
         Owner = new WeakReference<IActor>(owner);
         AttrSet = owner.AttrSet;
-        MaxEnergy = (AttrSet?.GetBaseAttr(AttrType.MaxEnergy) ?? 0) 
+        MaxEnergy = (AttrSet?.GetBaseAttr(AttrType.MaxEnergy) ?? 0)
                     + (AttrSet?.GetGainAttr(AttrType.MaxEnergy) ?? 0);
         MaxEnergy = Math.Max(MaxEnergy, 1);
         CurrentEnergy = MaxEnergy * 0.5;
@@ -41,10 +41,10 @@ public class EnergyMaster: IEnergyMaster
 
     private void UpdateMaxEnergy()
     {
-        double maxEnergy = (AttrSet?.GetBaseAttr(AttrType.MaxEnergy) ?? 0) 
+        double maxEnergy = (AttrSet?.GetBaseAttr(AttrType.MaxEnergy) ?? 0)
                            + (AttrSet?.GetGainAttr(AttrType.MaxEnergy) ?? 0);
         // 最大能量值变化
-        if (Math.Abs(maxEnergy - MaxEnergy) >= Double.Epsilon)
+        if (Math.Abs(maxEnergy - MaxEnergy) >= double.Epsilon)
         {
             double change = maxEnergy / Math.Max(MaxEnergy, 1);
             CurrentEnergy *= change;

@@ -1,5 +1,4 @@
 using TokenFight.Core.Databases.Interfaces;
-using TokenFight.Core.Databases.Models;
 using TokenFight.Core.Databases.Models.Growth;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Effects;
@@ -15,7 +14,7 @@ public static class DataActorHelper
     /// <summary> 通过DataActor数据初始化Actor的养成属性 </summary>
     public static void InitAttrSet(IActor actor, DataActor dataActor)
     {
-        Dictionary<int, double> modify = new Dictionary<int, double>();
+        Dictionary<int, double> modify = new();
         foreach ((AttrType type, GrowthBase value) in dataActor.AttrGrowth)
         {
             double v = value.Calculate(actor.Level);
@@ -31,7 +30,7 @@ public static class DataActorHelper
             Id = "base"
         });
     }
-    
+
     /// <summary>
     /// 安全地获取技能效果数据
     /// </summary>
@@ -40,11 +39,11 @@ public static class DataActorHelper
     /// <param name="skillId">技能ID</param>
     /// <returns>技能效果数据，如果不存在则返回null</returns>
     public static SkillEffectData? GetSkillEffectData(
-        DataActor dataActor, 
-        SkillType skillType, 
+        DataActor dataActor,
+        SkillType skillType,
         string skillId)
     {
-        if (!dataActor.SkillGrowth.TryGetValue(skillType, out var skillDict)) return null;
+        if (!dataActor.SkillGrowth.TryGetValue(skillType, out Dictionary<string, SkillEffectData>? skillDict)) return null;
         skillDict.TryGetValue(skillId, out SkillEffectData? skillData);
         return skillData;
     }
@@ -55,11 +54,8 @@ public static class DataActorHelper
     /// <param name="skillEffectData">技能效果数据</param>
     /// <param name="args">参数</param>
     /// <returns>格式化后的技能描述</returns>
-    public static string FormatSkillDesc(SkillEffectData skillEffectData, object?[] args)
-    {
-        return string.Format(skillEffectData.Desc, args);
-    }
-    
+    public static string FormatSkillDesc(SkillEffectData skillEffectData, object?[] args) => string.Format(skillEffectData.Desc, args);
+
     /// <summary>
     /// 获取技能成长值
     /// </summary>
@@ -69,12 +65,12 @@ public static class DataActorHelper
     /// <param name="defaultValue">默认值</param>
     /// <returns>计算后的成长值</returns>
     public static double GetGrowthValue(
-        SkillEffectData skillData, 
-        string growthKey, 
-        int level, 
+        SkillEffectData skillData,
+        string growthKey,
+        int level,
         double defaultValue = 0.0)
     {
-        if (skillData.Growths.TryGetValue(growthKey, out var growth))
+        if (skillData.Growths.TryGetValue(growthKey, out GrowthBase? growth))
         {
             return growth.Calculate(level);
         }
@@ -95,10 +91,10 @@ public static class DataActorHelper
 
         if (typeof(T) == typeof(int))
             return (T?)(object?)dataActor.DataInt?.GetValueOrDefault(key, 0);
-        
-        if (typeof(T) == typeof(bool)) 
+
+        if (typeof(T) == typeof(bool))
             return (T?)(object)dataActor.DataBool?.GetValueOrDefault(key, false);
-        
+
         if (typeof(T) == typeof(string))
             return (T?)(object?)dataActor.DataString?.GetValueOrDefault(key, "");
 

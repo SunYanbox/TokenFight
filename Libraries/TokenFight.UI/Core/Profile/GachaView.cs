@@ -7,6 +7,6 @@ public class GachaView: View
 {
     public GachaView(IDatabaseServer databaseServer)
     {
-        
+
     }
 }

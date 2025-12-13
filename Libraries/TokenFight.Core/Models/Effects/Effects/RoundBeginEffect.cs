@@ -7,9 +7,9 @@ public abstract class RoundBeginEffect: BaseEffect
     {
         LifeCycle?.SettlementCycle();
     }
-    
+
     public new void OnRoundEnd()
     {
-        
+
     }
 }

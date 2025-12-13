@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using TokenFight.Core.Consoles.Display;
-using TokenFight.Core.Databases.Models;
 using TokenFight.Core.Enums.Attrs;
 using TokenFight.Core.Enums.Entities;
 using TokenFight.Core.Helpers;
@@ -19,7 +18,7 @@ namespace TokenFight.Core.Models.Entities.Actors;
 public abstract class BaseActor: IActor
 {
     public static GameSystemRegistry? GameSystemRegistry { protected get; set; }
-    
+
     /// <summary> 成员销毁 </summary>
     public virtual void Destroy()
     {
@@ -69,7 +68,7 @@ public abstract class BaseActor: IActor
         _hadTriggerDeathContext = false;
     }
     public abstract ISkill GetBasicAttack();
-    
+
     public required string Id { get; init; }
     public bool IsActive { get; set; }
     public required string Name { get; set; }
@@ -86,10 +85,10 @@ public abstract class BaseActor: IActor
     public required IRelationshipMaster RelationshipMaster { get; set; }
     public bool DelayDeath { get; set; }
     private bool _hadTriggerDeathContext;
-    
+
     public virtual void OnEnterGame()
     {
-        
+
     }
 
     public virtual void RoundBegin()
@@ -115,7 +114,7 @@ public abstract class BaseActor: IActor
     public virtual void DisplayActorInfo()
     {
         ConsoleColor healthColor = Team == TeamType.Player ? ConsoleColor.Green : ConsoleColor.Red;
-        ConsolePrinter printer = new ConsolePrinter();
+        var printer = new ConsolePrinter();
         printer.Add($"{Name} ");
         printer.Add($"Lv.{Level} ", ConsoleColor.Magenta);
         printer.Add($"{Id} hp: ");
@@ -125,7 +124,7 @@ public abstract class BaseActor: IActor
         printer.Add($"{EnergyMaster?.Energy} ", ConsoleColor.Cyan);
         printer.Add("Shield: ");
         printer.Add($"{ShieldMaster?.Shield:F2} ", ConsoleColor.Yellow);
-        
+
         string GetAttrDumps(AttrType type)
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -133,11 +132,11 @@ public abstract class BaseActor: IActor
             Console.ResetColor();
             return $"{attrValue}({AttrSet.GetBaseAttr(type):F2}+{AttrSet.GetGainAttr(type):F2})";
         }
-        
+
         printer.Add($"atk: {GetAttrDumps(AttrType.Attack)}, ");
         printer.Add($"def: {GetAttrDumps(AttrType.Defense)}, ");
         printer.Add($"spd: {GetAttrDumps(AttrType.Speed)}");
-        
+
         if (!EffectMaster.Empty)
         {
             printer.Add("\n");

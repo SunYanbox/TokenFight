@@ -23,5 +23,3 @@ public record GameSystemRegistry(
     IActionManagerSystem ActionManagerSystem,
     IActorFactorySystem ActorFactorySystem,
     IDungeonFactorySystem DungeonFactorySystem);
-    
-    

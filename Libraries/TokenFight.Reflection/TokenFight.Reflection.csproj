@@ -12,7 +12,7 @@
         <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
     </PropertyGroup>
     <ItemGroup>
-      <ProjectReference Include="..\TokenFight.Core\TokenFight.Core.csproj" />
+        <ProjectReference Include="..\TokenFight.Core\TokenFight.Core.csproj"/>
     </ItemGroup>
 
 </Project>

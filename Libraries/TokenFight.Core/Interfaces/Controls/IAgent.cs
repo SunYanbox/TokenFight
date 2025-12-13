@@ -5,7 +5,6 @@ using TokenFight.Core.Models.Actions;
 
 namespace TokenFight.Core.Interfaces.Controls;
 
-
 /// <summary> 代理角色行动, 在控制台显示技能选择信息的接口 </summary>
 public interface IAgent
 {
@@ -14,7 +13,7 @@ public interface IAgent
 
     /// <summary> 判断当前类是否可以处理传入的成员派生类 </summary>
     public bool CanHandle(IActor actor);
-    
+
     /// <summary>
     /// 处理actor技能选择的行动
     /// <br />
@@ -30,10 +29,10 @@ public interface IAgent
     /// </summary>
     public void HandleTargetChoice(IActor actor, ActionUnit actionUnit);
 
-    
+
     protected static void OutputTalentData(IActor actor)
     {
-        List<ISkill> cantChoiceSkill = new List<ISkill>();
+        List<ISkill> cantChoiceSkill = [];
         cantChoiceSkill.AddRange(actor.SkillMaster.GetSkillAll().Where(x => !x.CanUse()));
         foreach (ISkill x in cantChoiceSkill)
         {

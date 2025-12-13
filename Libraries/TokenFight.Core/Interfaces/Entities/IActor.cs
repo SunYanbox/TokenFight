@@ -7,7 +7,7 @@ namespace TokenFight.Core.Interfaces.Entities;
 /// <summary>
 /// 表示一个演员实体接口，继承自基础实体接口
 /// </summary>
-public interface IActor : IEntity
+public interface IActor: IEntity
 {
     /// <summary>
     /// 演员的名称
@@ -36,8 +36,8 @@ public interface IActor : IEntity
     IActionValueMaster ActionValueMaster { get; protected set; }
     IRelationshipMaster RelationshipMaster { get; protected set; }
     IEffectMaster EffectMaster { get; protected set; }
-    IEnumTypeMaster<IdentityType>  IdentityMaster { get; protected set; }
-    
+    IEnumTypeMaster<IdentityType> IdentityMaster { get; protected set; }
+
     /// <summary> 是否延迟角色死亡到所有行动结束 </summary>
     public bool DelayDeath { get; set; }
     /// <summary> 进入对局时触发 </summary>
@@ -55,7 +55,7 @@ public interface IActor : IEntity
 
     /// <summary> 判断技能是否包含指定键的技能 </summary>
     public bool HasSkill(string skillId);
-    
+
     /// <summary> 用来在控制台显示成员基础信息, 适合用于战场显示 </summary>
     public void DisplayActorInfo();
 }

@@ -11,7 +11,7 @@ using TokenFight.Core.ReflectionAttribute;
 
 namespace TokenFight.Core.Models.Game;
 
-[AutoDungeon(Id="BaseDungeon")]
+[AutoDungeon(Id = "BaseDungeon")]
 public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
 {
     #region 成员实例
@@ -21,15 +21,13 @@ public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
     public Profile? Profile { get; protected set; }
     /// <summary> 游戏是否结束 </summary>
     public bool EndTag { get; protected set; }
-    
+
     /// <summary> 玩家行动代理 </summary>
-    public readonly AgentPlayer AgentPlayer 
-        =  new AgentPlayer(gameSystemRegistry.LocalLog, gameSystemRegistry.ActionManagerSystem, gameSystemRegistry.ActorManagerSystem, gameSystemRegistry.ActorPositionSystem);
+    public readonly AgentPlayer AgentPlayer = new(gameSystemRegistry.LocalLog, gameSystemRegistry.ActionManagerSystem, gameSystemRegistry.ActorManagerSystem, gameSystemRegistry.ActorPositionSystem);
     /// <summary> 敌人行动代理 </summary>
-    public readonly AgentEnemy AgentEnemy =  new AgentEnemy();
-    
+    public readonly AgentEnemy AgentEnemy = new();
     #endregion
-    
+
     /// <summary> 清理所有战斗相关数据 </summary>
     public virtual void Clear()
     {
@@ -49,7 +47,7 @@ public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
     {
         EnvironmentBuff.Subscribe();
     }
-    
+
     public virtual void OnGameWin()
     {
         if (gameSystemRegistry.ActorManagerSystem.AllEnemies.Count == 0 && gameSystemRegistry.ActorPoolSystem.EnemyCount == 0)
@@ -76,12 +74,12 @@ public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
 
     public virtual void InitActorPool()
     {
-        
+
     }
 
     public virtual void OnUpdate()
     {
-        
+
     }
 
     public virtual void Main()
@@ -109,16 +107,16 @@ public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
             if (ControlConsole.CheckAndHandleUltimates("回合开始前")) continue;
             gameSystemRegistry.ActionManagerSystem.RoundBegin();
             DataShowUtil.ShowGameField(gameSystemRegistry);
-            
+
             ActionUnit? newestAction = gameSystemRegistry.ActionManagerSystem.NewestAction;
-            
+
             if (newestAction != null)
             {
                 IActor actor = newestAction.OwnActor;
                 if (AgentEnemy.HandleSkillChoice(actor, newestAction)) continue;
                 if (AgentPlayer.HandleSkillChoice(actor, newestAction)) continue;
-                
-                
+
+
                 (IActor? actor1, ISkill? skill) = gameSystemRegistry.ActionManagerSystem.ActionBegin();
 
                 if (actor1 != null && skill != null)
@@ -133,18 +131,18 @@ public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
                     } while (skill.KeepAction());
                 }
             }
-            
+
             gameSystemRegistry.ActionManagerSystem.ActionEnd();
             if (ControlConsole.CheckAndHandleUltimates("行动结束时")) continue;
             gameSystemRegistry.ActionManagerSystem.RoundEnd();
             if (ControlConsole.CheckAndHandleUltimates("回合结束时")) continue;
-            
+
             Thread.Sleep(750);
             OnGameWin();
             OnGameOver();
             gameSystemRegistry.ActorPoolSystem.FillActors();
         }
-        
+
     }
 
     public virtual void OnDestroy()

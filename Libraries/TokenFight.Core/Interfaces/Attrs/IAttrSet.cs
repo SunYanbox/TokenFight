@@ -7,17 +7,17 @@ namespace TokenFight.Core.Interfaces.Attrs;
 public interface IAttrSet
 {
     /// <summary> 获取基础属性 </summary>
-    double GetBaseAttr<T>(T type, DamageModifierType? modifierType = null) where T: struct, Enum;
+    double GetBaseAttr<T>(T type, DamageModifierType? modifierType = null) where T : struct, Enum;
 
     /// <summary> 获取增益属性 </summary>
-    double GetGainAttr<T>(T type, DamageModifierType? modifierType = null) where T: struct, Enum;
+    double GetGainAttr<T>(T type, DamageModifierType? modifierType = null) where T : struct, Enum;
 
     /// <summary> 获取最终属性(包含临时增益) </summary>
-    double GetAttr<T>(T type, DamageModifierType? modifierType = null) where T: struct, Enum;
+    double GetAttr<T>(T type, DamageModifierType? modifierType = null) where T : struct, Enum;
 
     /// <summary> 覆盖式设置属性 </summary>
     public void SetAttr(AttrModifyData data);
-    
+
     /// <summary> 清理所有临时增益 </summary>
     public void ClearTempModify();
 

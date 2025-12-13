@@ -34,23 +34,23 @@ public sealed class DamageCalculator
 
     /// <summary> 基础伤害是否为固定值 <br /> 设置后忽略`BaseAttrType`属性 <br /> 设置后以参数rate作为基础伤害 </summary>
     public bool FixBaseDamage = false;
-    
+
     /// <summary> 基础属性类型（默认为攻击力） <br /> FixBaseDamage为false时使用该属性计算基础伤害 </summary>
     public AttrType BaseAttrType = AttrType.Attack;
-    
+
     /// <summary> 伤害属性 </summary>
     public Element Element = Element.Physics;
-    
+
     /// <summary> 伤害类型 </summary>
-    public readonly EnumTypeMaster<DamageType> DamageTypes = new EnumTypeMaster<DamageType>([DamageType.NormalAttack]);
-    
+    public readonly EnumTypeMaster<DamageType> DamageTypes = new([DamageType.NormalAttack]);
+
     /// <summary> 随机数生成器（用于暴击判定）</summary>
-    public Random Random = new Random();
+    public Random Random = new();
 
     /// <summary>
     /// 创建一个新的伤害计算构建器实例（每次调用应新建，以保证线程安全）
     /// </summary>
-    public static DamageCalculator New => new DamageCalculator();
+    public static DamageCalculator New => new();
 
     /// <summary>
     /// 设置是否使用固定的基础伤害, 设置为true后忽略基础乘区
@@ -60,7 +60,7 @@ public sealed class DamageCalculator
         FixBaseDamage = fixBaseDamage;
         return this;
     }
-    
+
     /// <summary>
     /// 设置是否启用倍率乘区
     /// </summary>
@@ -130,7 +130,7 @@ public sealed class DamageCalculator
         DamageTypes.AddRange(types);
         return this;
     }
-    
+
     /// <summary>
     /// 设置伤害的属性类型
     /// </summary>
@@ -139,7 +139,7 @@ public sealed class DamageCalculator
         Element = element;
         return this;
     }
-    
+
     /// <summary>
     /// 设置是否启用暴击判定
     /// </summary>
@@ -181,8 +181,8 @@ public sealed class DamageCalculator
         }
 
         isCrit = false;
-        double damage = FixBaseDamage ? rate : (source.AttrSet.GetAttr(BaseAttrType) * (_useRate ? rate : 1));
-        
+        double damage = FixBaseDamage ? rate : source.AttrSet.GetAttr(BaseAttrType) * (_useRate ? rate : 1);
+
         if (_useCritical && Random.NextDouble() < source.AttrSet.GetAttr(AttrType.CriticalRate))
         {
             damage *= 1 + source.AttrSet.GetAttr(AttrType.CriticalDamage);
@@ -207,7 +207,7 @@ public sealed class DamageCalculator
             double inc = source.AttrSet.GetAttr(AttrType.DamageIncrease); // 通用
             inc += source.AttrSet.GetAttr(Element, DamageModifierType.DamageIncrease); // 属性
             inc += DamageTypes.Select(x => source.AttrSet.GetAttr(x, DamageModifierType.DamageIncrease)).Sum();
-            
+
             damage *= 1 + inc;
         }
 
@@ -216,7 +216,7 @@ public sealed class DamageCalculator
             double red = target.AttrSet.GetAttr(AttrType.DamageReduction); // 通用
             red += target.AttrSet.GetAttr(Element, DamageModifierType.DamageReduction); // 属性
             red += DamageTypes.Select(x => target.AttrSet.GetAttr(x, DamageModifierType.DamageReduction)).Sum();
-            
+
             damage *= Math.Max(1 - red, 0.001);
         }
 
@@ -225,7 +225,7 @@ public sealed class DamageCalculator
             double vul = source.AttrSet.GetAttr(AttrType.Vulnerability); // 通用
             vul += source.AttrSet.GetAttr(Element, DamageModifierType.Vulnerability);
             vul += DamageTypes.Select(x => source.AttrSet.GetAttr(x, DamageModifierType.Vulnerability)).Sum();
-            
+
             damage *= 1 + vul;
         }
 
@@ -234,12 +234,12 @@ public sealed class DamageCalculator
             double pen = source.AttrSet.GetAttr(AttrType.DamagePenetrate);
             pen += source.AttrSet.GetAttr(Element, DamageModifierType.Penetration);
             pen += DamageTypes.Select(x => source.AttrSet.GetAttr(x, DamageModifierType.Penetration)).Sum();
-            
+
             double res = target.AttrSet.GetAttr(AttrType.DamageResistance);
             res += target.AttrSet.GetAttr(Element, DamageModifierType.Resistance);
             res += DamageTypes.Select(x => target.AttrSet.GetAttr(x, DamageModifierType.Resistance)).Sum();
-            
-            
+
+
             double netPen = pen - res;
             damage *= Math.Max(1 + netPen, 0.001);
         }

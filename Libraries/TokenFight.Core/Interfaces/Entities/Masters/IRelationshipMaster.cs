@@ -10,5 +10,5 @@ public interface IRelationshipMaster: IMaster
     public WeakReference<IActor>? ParentActor { get; set; }
     /// <summary> 子成员 </summary>
     public Dictionary<string, WeakReference<IActor>>? ChildActors { get; set; }
-    
+
 }

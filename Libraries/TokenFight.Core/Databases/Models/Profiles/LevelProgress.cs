@@ -6,17 +6,14 @@ public struct LevelProgress
     public int Level { get; set; }
     public int MaxLevel { get; set; }
 
-    public LevelProgress()
-    {
-        Level = MaxLevel = 1;
-    }
+    public LevelProgress() => Level = MaxLevel = 1;
 
     public LevelProgress(int level, int maxLevel)
     {
         Level = level;
         MaxLevel = maxLevel;
     }
-    
+
     public LevelProgress(LevelProgress? other)
     {
         if (other?.Level == null || other?.MaxLevel == null)

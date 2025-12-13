@@ -16,7 +16,7 @@ public static class ItemHelper
     }
 
     public static bool VerifyProperties(Properties properties, ItemType itemType)
-    { 
+    {
         switch (itemType)
         {
             case ItemType.Gift:
@@ -26,7 +26,7 @@ public static class ItemHelper
                     return false;
                 break;
             case ItemType.Weapon:
-                if (properties.SkillId == null 
+                if (properties.SkillId == null
                     || properties.WeaponLayers == null
                     || properties.WeaponLevel == null)
                     return false;
@@ -54,11 +54,11 @@ public static class ItemHelper
         }
         return true;
     }
-    
+
     public static void InitItem(ItemType itemType, Properties properties, string? parentId = null)
     {
         string uuid = Guid.NewGuid().ToString();
-        Item item = new Item
+        var item = new Item
         {
             Id = uuid,
             Name = properties.Name,

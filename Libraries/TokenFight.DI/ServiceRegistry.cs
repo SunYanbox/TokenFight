@@ -23,7 +23,7 @@ public static class ServiceRegistry
     {
         // 数据库注册
         services.AddSingleton<IDatabaseServer, DatabaseServer>();
-        
+
         // 系统注册
         services.AddSingleton<ILocalLog, LocalLog>();
         services.AddSingleton<IEventSystem, EventSystem>();
@@ -34,16 +34,16 @@ public static class ServiceRegistry
         services.AddSingleton<IActorPoolSystem, ActorPoolSystem>();
         services.AddSingleton<IActorPositionSystem, ActorPositionSystem>();
         services.AddSingleton<IEventOutputSystem, EventOutputSystem>();
-        
+
         // 工厂系统注册
         services.AddSingleton<IActorFactorySystem, ActorFactorySystem>();
         services.AddSingleton<IDungeonFactorySystem, DungeonFactorySystem>();
         services.AddSingleton<ISkillFactorySystem, SkillFactorySystem>();
-        
+
         // 单例上下文注册
         services.AddSingleton<IdGenerateSystem>();
         services.AddSingleton<GameSystemRegistry>();
-        
+
         // masters注册
         services.AddScoped(typeof(IEnumTypeMaster<>), typeof(EnumTypeMaster<>));
         services.AddScoped<IHealthMaster, HealthMaster>();
@@ -54,7 +54,7 @@ public static class ServiceRegistry
         services.AddScoped<IRelationshipMaster, RelationshipMaster>();
         services.AddScoped<IShieldMaster, ShieldMaster>();
         services.AddScoped<ILifeCycleMaster, LifeCycleMaster>();
-        
+
         // // 副本注册
         // services.AddKeyedScoped<IDungeon, BaseDungeon>(BaseDungeon.Id);
     }
@@ -75,8 +75,8 @@ public static class ServiceRegistry
         serviceProvider.GetService<IActorFactorySystem>()?.Init();
         serviceProvider.GetService<IDungeonFactorySystem>()?.Init();
         serviceProvider.GetService<ISkillFactorySystem>()?.Init();
-        
-        var systemRegistry  = serviceProvider.GetService<GameSystemRegistry>();
+
+        var systemRegistry = serviceProvider.GetService<GameSystemRegistry>();
 
         AutoSysRegistryInitUtil.Initialize(systemRegistry!);
     }

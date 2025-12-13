@@ -10,8 +10,8 @@ namespace TokenFight.Core.Models.Entities.Masters;
 public class EffectMaster(IActor actor): IEffectMaster
 {
     public WeakReference<IActor> Owner { get; set; } = new(actor);
-    private readonly Dictionary<string, IEffect> _effects =  new();
-    private readonly Dictionary<EffectType, HashSet<string>> _existBuffs = new Dictionary<EffectType, HashSet<string>>
+    private readonly Dictionary<string, IEffect> _effects = new();
+    private readonly Dictionary<EffectType, HashSet<string>> _existBuffs = new()
     {
         { EffectType.Buff, [] },
         { EffectType.Debuff, [] },
@@ -31,7 +31,7 @@ public class EffectMaster(IActor actor): IEffectMaster
             _existBuffs[effect.Type].Remove(effect.Id);
         }
     }
-    
+
     public void RoundEnd()
     {
         foreach (IEffect effect in _effects.Values)
@@ -43,7 +43,7 @@ public class EffectMaster(IActor actor): IEffectMaster
             _existBuffs[effect.Type].Remove(effect.Id);
         }
     }
-    
+
     public void Apply(IEffect effect)
     {
         if (string.IsNullOrEmpty(effect.Id)) return;
@@ -60,7 +60,7 @@ public class EffectMaster(IActor actor): IEffectMaster
             TriggerEvent(EventType.EffectApply, effect);
         }
     }
-    
+
     public void Remove(string id)
     {
         if (_effects.TryGetValue(id, out IEffect? effect))
@@ -74,7 +74,7 @@ public class EffectMaster(IActor actor): IEffectMaster
 
     public void Remove(IEnumerable<string> ids)
     {
-        foreach (var id in ids)
+        foreach (string id in ids)
         {
             Remove(id);
         }
@@ -94,11 +94,11 @@ public class EffectMaster(IActor actor): IEffectMaster
         if (type != EventType.EffectRemove && type != EventType.EffectApply) return;
         EventHelper.TriggerEffectContext(effect, type == EventType.EffectApply);
     }
-    
+
     /// <summary> 清理来自指定成员的所有引用 </summary>
     public void RemoveWithActor(IActor actor)
     {
-        foreach ((var _, IEffect effect) in _effects.AsReadOnly())
+        foreach ((_, IEffect effect) in _effects.AsReadOnly())
         {
             if (effect.Source.TryGetTarget(out IActor? target) && target == actor)
             {

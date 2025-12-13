@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using TokenFight.Core.Databases.Models;
 using TokenFight.Core.Databases.Models.Growth;
 
 namespace TokenFight.Core.Databases.Interfaces;
@@ -54,7 +53,7 @@ public interface IGrowthBase
     // 分段线性
     [JsonPropertyName("Segments")]
     List<Segment>? Segments { get; set; }
-    
+
     /// <summary>
     /// 分段线性养成数据
     /// </summary>
@@ -62,10 +61,10 @@ public interface IGrowthBase
     {
         [JsonPropertyName("MaxLevel")]
         public int MaxLevel { get; set; }
-        
+
         [JsonPropertyName("ValueDelta")]
         public double ValueDelta { get; set; }
-        
+
         [JsonPropertyName("GrowthPerLevel")]
         public double GrowthPerLevel { get; set; }
     }

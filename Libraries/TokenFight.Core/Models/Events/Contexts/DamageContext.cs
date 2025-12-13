@@ -9,7 +9,7 @@ namespace TokenFight.Core.Models.Events.Contexts;
 /// <summary> 造成伤害在事件中的上下文 </summary>
 public struct DamageContext: IContext
 {
-    
+
     public EventType Type { get; init; }
     public object Sender { get; init; }
     /// <summary> 施加伤害者 </summary>
@@ -29,5 +29,5 @@ public struct DamageContext: IContext
     /// <summary> 是否真实伤害 </summary>
     public bool IsReal;
     /// <summary> 是否暴击 </summary>
-    public bool IsCrit; 
+    public bool IsCrit;
 }

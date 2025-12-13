@@ -22,7 +22,7 @@ public interface ILifeCycleMaster: IMaster
 
     /// <summary> 标记等级/标记信息 </summary>
     public int? CurrentMark { get; set; }
-    
+
     /// <summary> 初始化持续时间型生命周期 </summary>
     public void InitDuration(int duration);
 

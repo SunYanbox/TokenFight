@@ -29,7 +29,7 @@ public static class EventHelper
         if (GameSystemRegistry == null) return null;
         try
         {
-            BeforeExcuteContext beforeExcuteContext = new BeforeExcuteContext
+            var beforeExcuteContext = new BeforeExcuteContext
             {
                 Type = eventType,
                 Sender = source,
@@ -48,7 +48,7 @@ public static class EventHelper
 
         return null;
     }
-    
+
     /// <summary>
     /// 计算双方角色属性前触发
     /// </summary>
@@ -75,7 +75,7 @@ public static class EventHelper
             GameSystemRegistry.LocalLog.LogError($"触发事件{eventType.ToString()}时出错: {e.Message}\n\tstack: {e.StackTrace}");
         }
     }
-    
+
     /// <summary>
     /// 触发SourceTargetContext上下文的事件
     /// </summary>
@@ -129,7 +129,7 @@ public static class EventHelper
             GameSystemRegistry.LocalLog.LogError($"触发伤害事件时出错: {e.Message}\n\tstack: {e.StackTrace}");
         }
     }
-    
+
     /// <summary> 触发成员生命周期事件 </summary>
     public static void TriggerActorLifeContext(IActor actor, bool isCreate)
     {
@@ -178,7 +178,7 @@ public static class EventHelper
             GameSystemRegistry.LocalLog.LogError($"触发效果事件时出错: {e.Message}\n\tstack: {e.StackTrace}");
         }
     }
-    
+
     /// <summary> 触发血量变化事件 </summary>
     public static void TriggerHealthChangeContext(IActor actor, double delta)
     {
@@ -201,7 +201,7 @@ public static class EventHelper
             GameSystemRegistry.LocalLog.LogError($"触发效果事件时出错: {e.Message}\n\tstack: {e.StackTrace}");
         }
     }
-    
+
     /// <summary> 触发治疗事件 </summary>
     public static void TriggerHealContext(IActor source, IActor target, double heal, double overflowHeal)
     {
@@ -255,7 +255,7 @@ public static class EventHelper
             GameSystemRegistry.LocalLog.LogError($"触发推条事件时出错: {e.Message}\n\tstack: {e.StackTrace}");
         }
     }
-    
+
     /// <summary> 触发护盾事件 </summary>
     public static void TriggerShieldContext(IActor source, IActor target, double shield)
     {
@@ -278,7 +278,7 @@ public static class EventHelper
             GameSystemRegistry.LocalLog.LogError($"触发护盾事件时出错: {e.Message}\n\tstack: {e.StackTrace}");
         }
     }
-    
+
     /// <summary> 触发释放技能事件 </summary>
     public static void TriggerReleaseSkillContext(IActor source, ISkill skill)
     {
@@ -327,7 +327,7 @@ public static class EventHelper
             GameSystemRegistry.LocalLog.LogError($"触发行动开始或结束事件时出错: {e.Message}\n\tstack: {e.StackTrace}");
         }
     }
-    
+
     /// <summary> 触发回合开始或结束事件 </summary>
     public static void TriggerRoundContext(EventType type, IActor actor)
 
@@ -342,7 +342,7 @@ public static class EventHelper
                 {
                     Type = type,
                     Sender = actor,
-                    Actor = actor,
+                    Actor = actor
                 });
         }
         catch (Exception e)
@@ -350,7 +350,7 @@ public static class EventHelper
             GameSystemRegistry.LocalLog.LogError($"触发回合开始或结束事件时出错: {e.Message}\n\tstack: {e.StackTrace}");
         }
     }
-    
+
     /// <summary> 触发死亡事件 </summary>
     public static void TriggerDeathContext(IActor actor)
     {

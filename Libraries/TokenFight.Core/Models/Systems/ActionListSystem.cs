@@ -11,13 +11,10 @@ public class ActionListSystem(IGlobalResourcesSystem globalResourcesSystem): IAc
         public int Sequence; // 全局递增，保证稳定排序
     }
 
-    private readonly List<ActionSlot> _actionSlots = new();
+    private readonly List<ActionSlot> _actionSlots = [];
     private int _nextSequence = 0;
-    
-    public void Init()
-    {
-        
-    }
+
+    public void Init() { }
 
     public void Reset()
     {
@@ -25,13 +22,13 @@ public class ActionListSystem(IGlobalResourcesSystem globalResourcesSystem): IAc
         _nextSequence = 0;
     }
 
-    public IReadOnlyList<IActor> ActionList => 
+    public IReadOnlyList<IActor> ActionList =>
         _actionSlots.Select(s => s.Actor).ToList().AsReadOnly();
-    
+
     public void Append(IActor actor)
     {
         if (_actionSlots.Any(s => s.Actor == actor)) return;
-        
+
         actor.ActionValueMaster.Reset();
         _actionSlots.Add(new ActionSlot
         {
@@ -41,16 +38,16 @@ public class ActionListSystem(IGlobalResourcesSystem globalResourcesSystem): IAc
         SortActionList();
     }
 
-    public IActor? FastestActor => 
+    public IActor? FastestActor =>
         _actionSlots.Count > 0 ? _actionSlots[0].Actor : null;
     public void ActionAll()
     {
         if (_actionSlots.Count == 0) return;
-        
+
         double minActionValue = _actionSlots
             .Min(s => s.Actor.ActionValueMaster.ActionValue);
-            
-        if (minActionValue >= Double.Epsilon)
+
+        if (minActionValue >= double.Epsilon)
         {
             foreach (ActionSlot slot in _actionSlots)
             {
@@ -90,6 +87,6 @@ public class ActionListSystem(IGlobalResourcesSystem globalResourcesSystem): IAc
             _actionSlots[i] = snapshot[i].Slot;
         }
     }
-    
-    
+
+
 }

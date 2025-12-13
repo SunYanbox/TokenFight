@@ -12,9 +12,9 @@ public class BasicBasicSkill: BaseSkill
     protected int SkillPointDelta;
     protected double EnergyCharge;
     protected readonly GameSystemRegistry GameSystemRegistry;
-    
+
     [SetsRequiredMembers]
-    public BasicBasicSkill(string id, IActor source, double rate, GameSystemRegistry gameSystemRegistry, 
+    public BasicBasicSkill(string id, IActor source, double rate, GameSystemRegistry gameSystemRegistry,
         string name = "佚名", string desc = "未知", int skillPointDelta = 0, double charge = 0)
     {
         Id = id;
@@ -26,7 +26,7 @@ public class BasicBasicSkill: BaseSkill
         PassiveData = new PassiveData(gameSystemRegistry.EventSystem, gameSystemRegistry.LocalLog);
         AutoMakeSure = false;
         Type = SkillType.BasicAttack;
-        
+
         Rate = rate;
         SkillPointDelta = skillPointDelta;
         GameSystemRegistry = gameSystemRegistry;
@@ -42,8 +42,8 @@ public class BasicBasicSkill: BaseSkill
             IActor? target = ActorHelper.GetActorFromWeakRef(Target);
             if (ActorHelper.IsValidActor(target))
                 DamageHelper.TakeDirectDamageSingle(Source, target!, Rate, this, DamageHelper.DefaultCalculatorGet);
-            
-            if (Math.Abs(EnergyCharge) > Double.Epsilon)
+
+            if (Math.Abs(EnergyCharge) > double.Epsilon)
             {
                 Source.EnergyMaster.Adjust(EnergyCharge);
             }

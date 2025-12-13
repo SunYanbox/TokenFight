@@ -10,21 +10,21 @@ namespace TokenFight.Core.Interfaces.Entities.Masters;
 public interface IShieldMaster: IMaster
 {
     /// <summary> 覆盖形式添加护盾 </summary>
-    /// <param name="Id">护盾Id</param>
+    /// <param name="id">护盾Id</param>
     /// <param name="value">护盾值</param>
-    public void Add(string Id, double value);
+    public void Add(string id, double value);
 
     /// <summary>
     /// 移除指定Id的护盾
     ///
     /// 如果Id为null, 则清空所有护盾
     /// </summary>
-    /// <param name="Id">护盾Id</param>
-    public void Remove(string? Id);
+    /// <param name="id">护盾Id</param>
+    public void Remove(string? id);
 
     /// <summary> 移除多个键的护盾 </summary>
-    /// <param name="Ids">护盾Id的可枚举迭代器</param>
-    public void RemoveShields(IEnumerable<string> Ids);
+    /// <param name="ids">护盾Id的可枚举迭代器</param>
+    public void RemoveShields(IEnumerable<string> ids);
 
     /// <summary> 获取护盾值 </summary>
     public double Shield { get; }
@@ -37,5 +37,5 @@ public interface IShieldMaster: IMaster
     public void TakeDamage(double damage, out double residualDamage, out double shieldDefense);
 
     /// <summary> 获取指定Id的护盾值 </summary>
-    public double GetShield(string Id);
+    public double GetShield(string id);
 }

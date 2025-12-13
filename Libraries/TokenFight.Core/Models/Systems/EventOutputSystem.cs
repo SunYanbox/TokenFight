@@ -1,5 +1,6 @@
 using TokenFight.Core.Enums.Events;
 using TokenFight.Core.Helpers;
+using TokenFight.Core.Interfaces.Effects;
 using TokenFight.Core.Interfaces.Entities;
 using TokenFight.Core.Interfaces.Events;
 using TokenFight.Core.Interfaces.Systems;
@@ -19,7 +20,7 @@ public class EventOutputSystem(IEventSystem eventSystem): IEventOutputSystem
 
     public void Reset()
     {
-        
+
     }
 }
 
@@ -47,20 +48,20 @@ internal static class OutputHelper
     // 图标配置
     private static readonly Dictionary<EventType, string> EventIcons = new()
     {
-        [EventType.Damage] = "[ATK]",        // Attack
-        [EventType.Heal] = "[HEAL]",         // Heal
-        [EventType.Shield] = "[DEF]",        // Defense
-        [EventType.EffectApply] = "[+]",     // Add effect
-        [EventType.EffectRemove] = "[-]",    // Remove effect
-        [EventType.Push] = "[>>]",           // Push action
-        [EventType.EnterGame] = "[ENTER]",      // Push action
+        [EventType.Damage] = "[ATK]", // Attack
+        [EventType.Heal] = "[HEAL]", // Heal
+        [EventType.Shield] = "[DEF]", // Defense
+        [EventType.EffectApply] = "[+]", // Add effect
+        [EventType.EffectRemove] = "[-]", // Remove effect
+        [EventType.Push] = "[>>]", // Push action
+        [EventType.EnterGame] = "[ENTER]", // Push action
         [EventType.ReleaseSkill] = "[SKILL]", // Skill
         [EventType.ActionStart] = "[START]", // Action start
-        [EventType.ActionEnd] = "[END]",     // Action end
+        [EventType.ActionEnd] = "[END]", // Action end
         [EventType.RoundBegin] = "[ROUND+]", // Round begin
-        [EventType.RoundEnd] = "[ROUND-]",   // Round end
-        [EventType.ActorDeath] = "[DEAD]",  // Death
-        [EventType.ActorLife] = "[LIFE]"    // Life cycle
+        [EventType.RoundEnd] = "[ROUND-]", // Round end
+        [EventType.ActorDeath] = "[DEAD]", // Death
+        [EventType.ActorLife] = "[LIFE]" // Life cycle
     };
 
     /// <summary>
@@ -71,8 +72,8 @@ internal static class OutputHelper
     {
         EventType gameEvent = data.Type;
 
-        var color = GetEventColor(gameEvent);
-        var icon = GetEventIcon(gameEvent);
+        ConsoleColor color = GetEventColor(gameEvent);
+        string icon = GetEventIcon(gameEvent);
 
         Console.ForegroundColor = color;
 
@@ -134,13 +135,13 @@ internal static class OutputHelper
     {
         Console.WriteLine($"{icon} {actor.Name}({actor.Id})进入对局");
     }
-    
+
     private static void OutputDamage(IActor actor, DamageContext context, string icon)
     {
-        var damageType = string.Join("|", context.DamageType.ToArray());
-        var critMark = context.IsCrit ? "暴击" : "";
-        var killMark = context.IsKill ? "击杀" : "";
-        var realMark = context.IsReal ? "真实" : "";
+        string damageType = string.Join("|", context.DamageType.ToArray());
+        string critMark = context.IsCrit ? "暴击" : "";
+        string killMark = context.IsKill ? "击杀" : "";
+        string realMark = context.IsReal ? "真实" : "";
         Console.WriteLine($"{icon} {actor.Name}({actor.Id}) → {context.Target.Name}({context.Target.Id}): {context.Damage:F1}伤害 {{ {damageType} }} {critMark} {killMark} {realMark}");
         if (context.ShieldDefense > 0)
             Console.WriteLine($"   护盾吸收: {context.ShieldDefense:F1}");
@@ -160,24 +161,24 @@ internal static class OutputHelper
 
     private static void OutputEffectApply(IActor actor, EffectContext context, string icon)
     {
-        var effect = context.Effect;
-        var stackInfo = (effect.LifeCycle?.HasStack ?? false) ? $"({effect.LifeCycle.CurrentStack}层)" : "";
-        var markInfo = (effect.LifeCycle?.HasMark ?? false) ? $"({effect.LifeCycle.CurrentMark}层)" : "";
+        IEffect effect = context.Effect;
+        string stackInfo = effect.LifeCycle?.HasStack ?? false ? $"({effect.LifeCycle.CurrentStack}层)" : "";
+        string markInfo = effect.LifeCycle?.HasMark ?? false ? $"({effect.LifeCycle.CurrentMark}层)" : "";
         IActor? target = ActorHelper.GetActorFromWeakRef(context.Effect.Target);
         Console.WriteLine($"{icon} {actor.Name}({actor.Id}) -> {target?.Name}({target?.Id}): {effect.Id} {stackInfo} {markInfo}");
     }
 
     private static void OutputEffectRemove(IActor actor, EffectContext context, string icon)
     {
-        var effect = context.Effect;
+        IEffect effect = context.Effect;
         IActor? target = ActorHelper.GetActorFromWeakRef(context.Effect.Target);
         Console.WriteLine($"{icon} -> {target?.Name}({target?.Id}): 移除{effect.Id}");
     }
 
     private static void OutputPush(IActor actor, PushContext context, string icon)
     {
-        var actionType = context.Adjust > 0 ? "推迟" : "提前";
-        var percentage = Math.Abs(context.Adjust).ToString("P0");
+        string actionType = context.Adjust > 0 ? "推迟" : "提前";
+        string percentage = Math.Abs(context.Adjust).ToString("P0");
         Console.WriteLine($"{icon} {actor.Name}({actor.Id}) {context.Target.Name}({context.Target.Id}): {actionType}{percentage} 行动值变化量: {context.ActionValueDelta:F2}");
     }
 
@@ -189,13 +190,13 @@ internal static class OutputHelper
 
     private static void OutputActionStart(IActor actor, ActionContext context, string icon)
     {
-        var typeMarks = new List<string>();
+        List<string> typeMarks = [];
         if (context.IsExtraTurn) typeMarks.Add("额外回合");
         if (context.IsUltimate) typeMarks.Add("终结技");
-        
-        var typeInfo = typeMarks.Count > 0 ? $" [{string.Join("+", typeMarks)}]" : "";
+
+        string typeInfo = typeMarks.Count > 0 ? $" [{string.Join("+", typeMarks)}]" : "";
         Console.WriteLine($"\n{icon} {actor.Name}({actor.Id}) 开始行动{typeInfo}");
-        
+
         if (context.Skill != null)
             Console.WriteLine($"   技能: {context.Skill.Name}  目标: {ActorHelper.GetActorFromWeakRef(context.Skill.Target)?.Name}");
     }
@@ -222,25 +223,11 @@ internal static class OutputHelper
 
     private static void OutputActorLife(IActor actor, ActorLifeContext context, string icon)
     {
-        var action = context.IsDestroy ? "销毁" : "创建";
+        string action = context.IsDestroy ? "销毁" : "创建";
         Console.WriteLine($"{icon} {actor.Name}({actor.Id}) {action}");
     }
 
-    private static ConsoleColor GetEventColor(EventType eventType)
-    {
-        return EventColors.TryGetValue(eventType, out var color) ? color : ConsoleColor.White;
-    }
+    private static ConsoleColor GetEventColor(EventType eventType) => EventColors.TryGetValue(eventType, out ConsoleColor color) ? color : ConsoleColor.White;
 
-    private static string GetEventIcon(EventType eventType)
-    {
-        return EventIcons.TryGetValue(eventType, out var icon) ? icon : "[标记]";
-    }
-} 
-
-
-
-
-
-
-
-
+    private static string GetEventIcon(EventType eventType) => EventIcons.TryGetValue(eventType, out string? icon) ? icon : "[标记]";
+}

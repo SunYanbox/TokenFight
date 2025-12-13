@@ -1,4 +1,3 @@
-using TokenFight.Core.Databases.Models;
 using TokenFight.Core.Databases.Models.DataTables;
 using TokenFight.Core.Databases.Models.Dungeons;
 using TokenFight.Core.Databases.Models.Growth;
@@ -7,7 +6,7 @@ using TokenFight.Core.Interfaces.Bases;
 
 namespace TokenFight.Core.Databases.Interfaces;
 
-public interface IDatabaseServer : ISystem
+public interface IDatabaseServer: ISystem
 {
     public DataTable<DataActor> ActorTables { get; init; }
     public DataTable<Profile> ProfileTables { get; init; }

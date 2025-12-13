@@ -10,19 +10,19 @@ public class GrowthBase: IGrowthBase
     public int MinLevel { get; set; }
     [JsonPropertyName("MaxLevel")]
     public int MaxLevel { get; set; }
-    
+
     // 线性成长参数
     [JsonPropertyName("BaseValue")]
     public double? BaseValue { get; set; }
     [JsonPropertyName("GrowthPerLevel")]
     public double? GrowthPerLevel { get; set; }
-    
+
     // 指数成长参数
     [JsonPropertyName("ExpBase")]
     public double? ExpBase { get; set; }
     [JsonPropertyName("GrowthFactor")]
     public double? GrowthFactor { get; set; }
-    
+
     // 对数成长参数
     [JsonPropertyName("LogBaseValue")]
     public double? LogBaseValue { get; set; }
@@ -30,7 +30,7 @@ public class GrowthBase: IGrowthBase
     public double? ScaleFactor { get; set; }
     [JsonPropertyName("LogBase")]
     public double? LogBase { get; set; }
-    
+
     // 混合成长参数（用于更复杂的曲线）
     [JsonPropertyName("Offset")]
     public double? Offset { get; set; }
@@ -42,21 +42,21 @@ public class GrowthBase: IGrowthBase
     // 分段线性养成
     [JsonPropertyName("Segments")]
     public List<IGrowthBase.Segment>? Segments { get; set; }
-    
+
     [JsonIgnore] private bool IsLinear => BaseValue != null && GrowthPerLevel != null;
-    
+
     [JsonIgnore]
     private bool IsExponential => ExpBase != null && GrowthFactor != null;
-    
+
     [JsonIgnore]
     private bool IsLogarithmic => LogBaseValue != null && ScaleFactor != null;
-    
+
     [JsonIgnore]
     private bool IsPowerBased => Offset != null && Multiplier != null && Power != null;
-    
+
     [JsonIgnore]
     private bool IsSegmentedLinear => Segments != null;
-    
+
     [JsonIgnore]
     public string GrowthType
     {
@@ -74,7 +74,7 @@ public class GrowthBase: IGrowthBase
     public double Calculate(int level)
     {
         level = Math.Clamp(level, MinLevel, MaxLevel);
-        
+
         if (IsLinear)
         {
             return CalculateLinear(level);
@@ -100,11 +100,8 @@ public class GrowthBase: IGrowthBase
             throw new InvalidOperationException("未配置有效的成长参数");
         }
     }
-    
-    private double CalculateLinear(int level)
-    {
-        return BaseValue!.Value + (level - 1) * GrowthPerLevel!.Value;
-    }
+
+    private double CalculateLinear(int level) => BaseValue!.Value + (level - 1) * GrowthPerLevel!.Value;
 
     private double CalculateSegmentedLinear(int level)
     {
@@ -116,24 +113,18 @@ public class GrowthBase: IGrowthBase
         }
         return value;
     }
-    
-    private double CalculateExponential(int level)
-    {
-        return ExpBase!.Value * Math.Pow(GrowthFactor!.Value, level - 1);
-    }
-    
+
+    private double CalculateExponential(int level) => ExpBase!.Value * Math.Pow(GrowthFactor!.Value, level - 1);
+
     private double CalculateLogarithmic(int level)
     {
-        double logValue = LogBase != null ? 
-            Math.Log(level, LogBase.Value) : 
+        double logValue = LogBase != null ?
+            Math.Log(level, LogBase.Value) :
             Math.Log10(level);
         return LogBaseValue!.Value + ScaleFactor!.Value * logValue;
     }
-    
-    private double CalculatePowerBased(int level)
-    {
-        return Offset!.Value + Multiplier!.Value * Math.Pow(level, Power!.Value);
-    }
+
+    private double CalculatePowerBased(int level) => Offset!.Value + Multiplier!.Value * Math.Pow(level, Power!.Value);
 
     public string GetGrowthDescription()
     {
@@ -146,25 +137,25 @@ public class GrowthBase: IGrowthBase
             _ => "未知成长类型或参数配置不完整"
         };
     }
-    
+
     /// <summary>获取成长曲线的预览数据</summary>
     public string GetGrowthPreview(int sampleCount = 5)
     {
         if (sampleCount < 2) sampleCount = 2;
         if (sampleCount > MaxLevel - MinLevel + 1) sampleCount = MaxLevel - MinLevel + 1;
-        
-        var step = (MaxLevel - MinLevel) / (sampleCount - 1);
+
+        int step = (MaxLevel - MinLevel) / (sampleCount - 1);
         var preview = new System.Text.StringBuilder();
         preview.AppendLine($"{GetGrowthDescription()} 预览:");
-        
+
         for (int i = 0; i < sampleCount; i++)
         {
-            var level = MinLevel + i * step;
+            int level = MinLevel + i * step;
             if (level > MaxLevel) level = MaxLevel;
-            var value = Calculate(level);
+            double value = Calculate(level);
             preview.AppendLine($"  等级 {level}: {value:F2}");
         }
-        
+
         return preview.ToString();
     }
 }

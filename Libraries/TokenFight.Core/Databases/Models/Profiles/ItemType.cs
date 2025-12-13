@@ -12,7 +12,7 @@ public enum ItemType
     /// <summary> 武器 </summary>
     Weapon,
     /// <summary> 遗器 </summary>
-    Relics, 
+    Relics,
     /// <summary> 角色 </summary>
     Actor
 }

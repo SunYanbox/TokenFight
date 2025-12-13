@@ -22,8 +22,8 @@ public class BaseTalentSkill: BaseSkill
         PassiveData = new PassiveData(gameSystemRegistry.EventSystem, gameSystemRegistry.LocalLog);
         Desc = "未知天赋";
     }
-    
+
     public override bool CanUse() => false;
 
-    public override void Execute() {}
+    public override void Execute() { }
 }

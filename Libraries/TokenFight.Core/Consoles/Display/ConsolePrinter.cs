@@ -4,7 +4,7 @@ namespace TokenFight.Core.Consoles.Display;
 public class ConsolePrinter
 {
     /// <summary> 数据队列 </summary>
-    public readonly Queue<OutputItem> OutputItems = new Queue<OutputItem>();
+    public readonly Queue<OutputItem> OutputItems = new();
 
     /// <summary> 添加一条带颜色的文本信息(不会自动换行) </summary>
     public ConsolePrinter Add(string msg, ConsoleColor color = ConsoleColor.White)
@@ -23,7 +23,7 @@ public class ConsolePrinter
         DisplayInfo(OutputItems);
         OutputItems.Clear();
     }
-    
+
     /// <summary> 批量显示颜色格式化文本数据(不会自动换行) </summary>
     public static void DisplayInfo(Queue<OutputItem> outputRecords)
     {
@@ -39,7 +39,7 @@ public class ConsolePrinter
             }
             Console.Write(date.Text);
         }
-        
+
         Console.ResetColor();
         Console.ForegroundColor = beginColor;
     }

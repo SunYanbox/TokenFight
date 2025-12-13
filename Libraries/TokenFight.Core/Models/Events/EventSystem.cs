@@ -45,22 +45,22 @@ public class EventSystem(ILocalLog localLog): IEventSystem
         catch (Exception e)
         {
             string msg = $"触发游戏事件{eventType.ToString()}时发生错误: {e.Message}\n\t> 堆栈: {e.StackTrace}";
-            ConsolePrinter printer = new ConsolePrinter();
+            var printer = new ConsolePrinter();
             printer.Add(msg, ConsoleColor.Red).Display();
             localLog.LogError(msg);
         }
     }
-    
+
     /// <summary> 事件回调函数 </summary>
     protected readonly Dictionary<EventType, EventCallback> EventCallbacks = new();
-    
+
     public bool Subscribe(EventType eventType, EventCallback callback)
     {
         if (eventType == EventType.Null) return false;
         EventCallbacks[eventType] += callback;
         return true;
     }
-    
+
     public bool Unsubscribe(EventType eventType, EventCallback callback)
     {
         if (eventType == EventType.Null) return false;

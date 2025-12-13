@@ -15,7 +15,7 @@ public class GlobalResourcesSystem(ILocalLog localLog): IGlobalResourcesSystem
     {
         Init();
     }
-    
+
     public int SkillPoint { get; set; }
     public int MaxSkillPoint { get; set; }
     public double ActionValue { get; set; }
@@ -32,6 +32,6 @@ public class GlobalResourcesSystem(ILocalLog localLog): IGlobalResourcesSystem
         double oldSkillPoint = ActionValue;
         ActionValue += delta;
         ActionValue = Math.Max(ActionValue, 0);
-        if (Math.Abs(delta) < Double.Epsilon) localLog.Debug($"[全局资源] 行动值已变更: {oldSkillPoint} -> {ActionValue}");
+        if (Math.Abs(delta) < double.Epsilon) localLog.Debug($"[全局资源] 行动值已变更: {oldSkillPoint} -> {ActionValue}");
     }
 }

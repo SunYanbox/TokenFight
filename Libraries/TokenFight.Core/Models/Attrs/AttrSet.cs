@@ -15,15 +15,15 @@ namespace TokenFight.Core.Models.Attrs;
 public class AttrSet: IAttrSet
 {
     private static readonly HashSet<int> AttrIndexes = Enum.GetValues<AttrType>().Select(x => IAttrSet.ToInt(x)).ToHashSet();
-    private static readonly HashSet<int> DamageIndexes = 
+    private static readonly HashSet<int> DamageIndexes =
         Enum.GetValues<DamageType>()
-            .SelectMany(damageType => 
+            .SelectMany(damageType =>
                 Enum.GetValues<DamageModifierType>()
                     .Select(modifierType => IAttrSet.ToInt(damageType, modifierType)))
             .ToHashSet();
-    private static readonly HashSet<int> ElementIndexes = 
+    private static readonly HashSet<int> ElementIndexes =
         Enum.GetValues<Element>()
-            .SelectMany(element => 
+            .SelectMany(element =>
                 Enum.GetValues<DamageModifierType>()
                     .Select(modifierType => IAttrSet.ToInt(element, modifierType)))
             .ToHashSet();
@@ -112,7 +112,7 @@ public class AttrSet: IAttrSet
         try
         {
             int attr = IAttrSet.ToInt(type, modifierType);
-            return BaseValue(attr) 
+            return BaseValue(attr)
                    * PercentValue(attr)
                    + FlatValue(attr);
         }
@@ -128,7 +128,7 @@ public class AttrSet: IAttrSet
         try
         {
             int attr = IAttrSet.ToInt(type, modifierType);
-            return BaseValue(attr) 
+            return BaseValue(attr)
                    * (1 + PercentValue(attr))
                    + FlatValue(attr);
         }
@@ -143,7 +143,7 @@ public class AttrSet: IAttrSet
     public void SetAttr(AttrModifyData data)
     {
         if (string.IsNullOrEmpty(data.Id)) return;
-        foreach (var (type, value) in data.ModifyData)
+        foreach ((int type, double value) in data.ModifyData)
         {
             switch (data.Type)
             {
@@ -179,34 +179,34 @@ public class AttrSet: IAttrSet
 
     /// <summary> 字符串化 </summary>
     public override string ToString() => ToDetailString();
-    
+
     public string ToDetailString(HashSet<object>? visited = null)
     {
-        StringBuilder stringBuilder = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         stringBuilder.Append("AttrSet( ");
         if (_baseAttribute.Count > 0)
         {
             IEnumerable<string> lines = Enum.GetValues<AttrType>()
-                    .Select(type => $"{type}: {GetAttr(type):F2}");
+                .Select(type => $"{type}: {GetAttr(type):F2}");
             stringBuilder.AppendJoin(", ", lines);
-            AppendModifierAttributes(stringBuilder, Enum.GetValues<DamageType>(), 
-                (dt, mod) => GetAttr(dt, mod), 
+            AppendModifierAttributes(stringBuilder, Enum.GetValues<DamageType>(),
+                (dt, mod) => GetAttr(dt, mod),
                 (dt, mod) => $"{dt}{mod}");
-            AppendModifierAttributes(stringBuilder, Enum.GetValues<Element>(), 
-                (e, mod) => GetAttr(e, mod), 
+            AppendModifierAttributes(stringBuilder, Enum.GetValues<Element>(),
+                (e, mod) => GetAttr(e, mod),
                 (e, mod) => $"{e}{mod}");
         }
         stringBuilder.Append(" )");
         return stringBuilder.ToString();
     }
-    
+
     private void AppendModifierAttributes<T>(
         StringBuilder sb,
         T[] types,
         Func<T, DamageModifierType, double> getValue,
         Func<T, DamageModifierType, string> formatKey) where T : struct, Enum
     {
-        var lines = types.Select(type =>
+        IEnumerable<string> lines = types.Select(type =>
             string.Join(", ",
                 Enum.GetValues<DamageModifierType>()
                     .Select(mod =>
@@ -220,7 +220,7 @@ public class AttrSet: IAttrSet
 
         sb.AppendJoin(", ", lines);
     }
-    
+
     public string ToShortString(HashSet<object>? visited = null)
     {
         string msg = "AttrSet { ";

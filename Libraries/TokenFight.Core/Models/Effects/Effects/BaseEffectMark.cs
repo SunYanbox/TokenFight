@@ -31,11 +31,11 @@ public class BaseEffectMark: BaseEffect
     }
     public override void OnRoundBegin()
     {
-        
+
     }
 
     public override void OnRoundEnd()
     {
-        
+
     }
 }

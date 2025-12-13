@@ -30,20 +30,21 @@ public static class DataShowUtil
             actor.DisplayActorInfo();
             Console.WriteLine();
         }
-        
+
         Console.WriteLine();
         Console.WriteLine(ToDetailStringUtil.DumpsActionListSystem(gameSystemRegistry.ActionListSystem));
-        
-        Console.WriteLine($"剩余玩家数量: {gameSystemRegistry.ActorPoolSystem.PlayerCount}, 敌人数量: {gameSystemRegistry.ActorManagerSystem.AllEnemies.Count+gameSystemRegistry.ActorPoolSystem.EnemyCount}/{gameSystemRegistry.ActorPoolSystem.EnemyMaxCount}, 波次: {gameSystemRegistry.ActorPoolSystem.Wave+1}/{gameSystemRegistry.ActorPoolSystem.WaveMax}");
+
+        Console.WriteLine(
+            $"剩余玩家数量: {gameSystemRegistry.ActorPoolSystem.PlayerCount}, 敌人数量: {gameSystemRegistry.ActorManagerSystem.AllEnemies.Count + gameSystemRegistry.ActorPoolSystem.EnemyCount}/{gameSystemRegistry.ActorPoolSystem.EnemyMaxCount}, 波次: {gameSystemRegistry.ActorPoolSystem.Wave + 1}/{gameSystemRegistry.ActorPoolSystem.WaveMax}");
         // Console.WriteLine(ToDetailStringUtil.DumpsActionManagerSystem(gameSystemRegistry.ActionManagerSystem));
         ToDetailStringUtil.OutputActionManagerSystem(gameSystemRegistry.ActionManagerSystem);
-        
+
         Console.Write($"战技点: ");
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write($"{gameSystemRegistry.GlobalResourcesSystem.SkillPoint}");
         Console.ResetColor();
         Console.Write($"/{gameSystemRegistry.GlobalResourcesSystem.MaxSkillPoint} ");
-        
+
         Console.Write($"行动值: ");
         Console.ForegroundColor = ConsoleColor.White;
         Console.Write($"{gameSystemRegistry.GlobalResourcesSystem.ActionValue}");

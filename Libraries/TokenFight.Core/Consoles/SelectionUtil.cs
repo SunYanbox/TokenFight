@@ -29,7 +29,7 @@ public static class SelectionUtil
                 throw new ArgumentOutOfRangeException(nameof(SkillChoiceType));
         }
     }
-    
+
     /// <summary>
     /// 显示选项列表并等待用户选择。
     /// </summary>
@@ -56,7 +56,7 @@ public static class SelectionUtil
             Console.WriteLine();
             for (int i = 0; i < options.Count; i++)
             {
-                Console.WriteLine($"[{i+1}] " + displayFormatter(options[i]));
+                Console.WriteLine($"[{i + 1}] " + displayFormatter(options[i]));
             }
 
             if (allowQuit)
@@ -88,19 +88,13 @@ public static class SelectionUtil
     /// <summary>
     /// 检查输入是否为退出命令。
     /// </summary>
-    private static bool IsQuitCommand(string? input)
-    {
-        return input != null && 
-               (input.Equals("q", StringComparison.OrdinalIgnoreCase) ||
-                input.Equals("quit", StringComparison.OrdinalIgnoreCase) ||
-                input.Equals("exit", StringComparison.OrdinalIgnoreCase));
-    }
+    private static bool IsQuitCommand(string? input) => input != null &&
+                                                        (input.Equals("q", StringComparison.OrdinalIgnoreCase) ||
+                                                         input.Equals("quit", StringComparison.OrdinalIgnoreCase) ||
+                                                         input.Equals("exit", StringComparison.OrdinalIgnoreCase));
 
     /// <summary>
     /// 获取支持的退出关键词（用于提示）。
     /// </summary>
-    private static string GetQuitWords()
-    {
-        return "'q', 'quit' 或 'exit'";
-    }
+    private static string GetQuitWords() => "'q', 'quit' 或 'exit'";
 }

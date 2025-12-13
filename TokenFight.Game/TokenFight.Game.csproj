@@ -22,20 +22,19 @@
         <None Update="data\**">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Remove="core\actors\**" />
+        <None Remove="core\actors\**"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Libraries\TokenFight.Core\TokenFight.Core.csproj" />
-        <ProjectReference Include="..\Libraries\TokenFight.DI\TokenFight.DI.csproj" />
-        <ProjectReference Include="..\Libraries\TokenFight.UI\TokenFight.UI.csproj" />
-        <ProjectReference Include="..\Libraries\TokenFight.Reflection\TokenFight.Reflection.csproj" />
+        <ProjectReference Include="..\Libraries\TokenFight.Core\TokenFight.Core.csproj"/>
+        <ProjectReference Include="..\Libraries\TokenFight.DI\TokenFight.DI.csproj"/>
+        <ProjectReference Include="..\Libraries\TokenFight.UI\TokenFight.UI.csproj"/>
+        <ProjectReference Include="..\Libraries\TokenFight.Reflection\TokenFight.Reflection.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="data\templates\" />
+        <Folder Include="data\templates\"/>
     </ItemGroup>
 
-    
 
 </Project>

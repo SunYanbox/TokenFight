@@ -17,10 +17,10 @@ public interface IEffectMaster: IMaster
 
     /// <summary> 移除指定Id的效果 </summary>
     public void Remove(string id);
-    
+
     /// <summary> 移除多个Id的效果 </summary>
     public void Remove(IEnumerable<string> ids);
-    
+
     /// <summary> 获取所有效果 </summary>
     public IEnumerable<IEffect> Values { get; }
 
