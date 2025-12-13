@@ -1,0 +1,15 @@
+{
+  "Id": "weapon1",
+  "Type": "Weapon",
+  "Name": "Weapon 1",
+  "Desc": "世间第一把光锥",
+  "SkillId": "skill1",
+  "WeaponLayers": {
+    "Level": 1,
+    "MaxLevel": 5
+  },
+  "WeaponLevel": {
+    "Level": 1,
+    "MaxLevel": 80
+  }
+}

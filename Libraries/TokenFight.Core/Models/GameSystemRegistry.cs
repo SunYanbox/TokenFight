@@ -3,6 +3,8 @@ using TokenFight.Core.Interfaces.Events;
 using TokenFight.Core.Interfaces.Factories;
 using TokenFight.Core.Interfaces.FStream;
 using TokenFight.Core.Interfaces.Systems;
+using TokenFight.Core.Interfaces.Systems.Build;
+using TokenFight.Core.Interfaces.Systems.Combatant;
 using TokenFight.Core.Models.Utils.Systems;
 
 namespace TokenFight.Core.Models;
@@ -22,4 +24,5 @@ public record GameSystemRegistry(
     IActorManagerSystem ActorManagerSystem,
     IActionManagerSystem ActionManagerSystem,
     IActorFactorySystem ActorFactorySystem,
-    IDungeonFactorySystem DungeonFactorySystem);
+    IDungeonFactorySystem DungeonFactorySystem,
+    IGachaSystem GachaSystem);

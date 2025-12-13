@@ -2,7 +2,7 @@ using Terminal.Gui.ViewBase;
 using Terminal.Gui.Views;
 using TokenFight.Core.Databases.Interfaces;
 
-namespace TokenFight.UI.Core.Profile;
+namespace TokenFight.UI.Core.ProfileAbout;
 
 public class LoginView: View
 {

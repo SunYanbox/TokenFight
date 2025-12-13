@@ -2,6 +2,7 @@ using System.Text;
 using TokenFight.Core.Consoles.Display;
 using TokenFight.Core.Enums.Actions;
 using TokenFight.Core.Interfaces.Systems;
+using TokenFight.Core.Interfaces.Systems.Combatant;
 using TokenFight.Core.Models.Actions;
 
 namespace TokenFight.Core.Consoles.Details;

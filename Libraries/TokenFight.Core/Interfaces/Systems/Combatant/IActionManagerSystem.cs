@@ -4,7 +4,7 @@ using TokenFight.Core.Interfaces.Effects;
 using TokenFight.Core.Interfaces.Entities;
 using TokenFight.Core.Models.Actions;
 
-namespace TokenFight.Core.Interfaces.Systems;
+namespace TokenFight.Core.Interfaces.Systems.Combatant;
 
 /// <summary>
 /// 管理游戏中所有行动单位的调度、生命周期与执行顺序的核心系统。

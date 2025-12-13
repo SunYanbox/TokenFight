@@ -1,0 +1,15 @@
+{
+  "Id": "weapon3",
+  "Type": "Weapon",
+  "Name": "Weapon 3",
+  "Desc": "世间第三把光锥",
+  "SkillId": "skill3",
+  "WeaponLayers": {
+    "Level": 1,
+    "MaxLevel": 5
+  },
+  "WeaponLevel": {
+    "Level": 1,
+    "MaxLevel": 80
+  }
+}

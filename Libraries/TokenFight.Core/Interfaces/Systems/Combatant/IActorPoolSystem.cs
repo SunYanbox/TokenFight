@@ -1,7 +1,7 @@
 using TokenFight.Core.Interfaces.Bases;
 using TokenFight.Core.Interfaces.Entities;
 
-namespace TokenFight.Core.Interfaces.Systems;
+namespace TokenFight.Core.Interfaces.Systems.Combatant;
 
 /// <summary> 角色池系统 </summary>
 public interface IActorPoolSystem: ISystem

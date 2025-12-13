@@ -1,0 +1,15 @@
+{
+  "Id": "weapon2",
+  "Type": "Weapon",
+  "Name": "Weapon 2",
+  "Desc": "世间第二把光锥",
+  "SkillId": "skill2",
+  "WeaponLayers": {
+    "Level": 1,
+    "MaxLevel": 5
+  },
+  "WeaponLevel": {
+    "Level": 1,
+    "MaxLevel": 80
+  }
+}

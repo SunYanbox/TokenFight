@@ -1,7 +1,7 @@
 using TokenFight.Core.Enums.Entities;
 using TokenFight.Core.Interfaces.Bases;
 
-namespace TokenFight.Core.Interfaces.Systems;
+namespace TokenFight.Core.Interfaces.Systems.Combatant;
 
 /// <summary> 管理所有角色站位的系统 </summary>
 public interface IActorPositionSystem: ISystem

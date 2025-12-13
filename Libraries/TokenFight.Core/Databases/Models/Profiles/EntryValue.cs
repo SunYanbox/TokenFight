@@ -9,6 +9,8 @@ public class EntryValue(AttrType attrType, double value)
 
     public override string ToString() => $"{AttrType}: {Value}";
 
+    public EntryValue(): this(AttrType.EndTag, 0) { }
+
     public EntryValue(EntryValue? other): this(other?.AttrType ?? AttrType.EndTag, other?.Value ?? 0)
     {
     }

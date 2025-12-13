@@ -1,7 +1,7 @@
 using TokenFight.Core.Interfaces.Bases;
 using TokenFight.Core.Interfaces.Entities;
 
-namespace TokenFight.Core.Interfaces.Systems;
+namespace TokenFight.Core.Interfaces.Systems.Combatant;
 
 public interface IActionListSystem: ISystem
 {

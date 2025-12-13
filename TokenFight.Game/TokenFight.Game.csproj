@@ -23,6 +23,15 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
         <None Remove="core\actors\**"/>
+        <None Update="data\templates\weapon2.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="data\templates\weapon3.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="data\templates\weapon4.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -30,10 +39,6 @@
         <ProjectReference Include="..\Libraries\TokenFight.DI\TokenFight.DI.csproj"/>
         <ProjectReference Include="..\Libraries\TokenFight.UI\TokenFight.UI.csproj"/>
         <ProjectReference Include="..\Libraries\TokenFight.Reflection\TokenFight.Reflection.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="data\templates\"/>
     </ItemGroup>
 
 

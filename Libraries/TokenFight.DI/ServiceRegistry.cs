@@ -6,11 +6,15 @@ using TokenFight.Core.Interfaces.Events;
 using TokenFight.Core.Interfaces.Factories;
 using TokenFight.Core.Interfaces.FStream;
 using TokenFight.Core.Interfaces.Systems;
+using TokenFight.Core.Interfaces.Systems.Build;
+using TokenFight.Core.Interfaces.Systems.Combatant;
 using TokenFight.Core.Models;
 using TokenFight.Core.Models.Entities.Masters;
 using TokenFight.Core.Models.Events;
 using TokenFight.Core.Models.FStream;
 using TokenFight.Core.Models.Systems;
+using TokenFight.Core.Models.Systems.Build;
+using TokenFight.Core.Models.Systems.Combatant;
 using TokenFight.Core.Models.Utils.Systems;
 using TokenFight.Reflection;
 using TokenFight.Reflection.AutoRegister;
@@ -34,6 +38,7 @@ public static class ServiceRegistry
         services.AddSingleton<IActorPoolSystem, ActorPoolSystem>();
         services.AddSingleton<IActorPositionSystem, ActorPositionSystem>();
         services.AddSingleton<IEventOutputSystem, EventOutputSystem>();
+        services.AddSingleton<IGachaSystem, GachaSystem>();
 
         // 工厂系统注册
         services.AddSingleton<IActorFactorySystem, ActorFactorySystem>();
@@ -71,6 +76,7 @@ public static class ServiceRegistry
         serviceProvider.GetService<IGlobalResourcesSystem>()?.Init();
         serviceProvider.GetService<IActionListSystem>()?.Init();
         serviceProvider.GetService<IEventOutputSystem>()?.Init();
+        serviceProvider.GetService<IGachaSystem>()?.Init();
         // 反射工厂系统
         serviceProvider.GetService<IActorFactorySystem>()?.Init();
         serviceProvider.GetService<IDungeonFactorySystem>()?.Init();

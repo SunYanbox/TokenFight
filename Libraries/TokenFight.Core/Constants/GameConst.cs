@@ -1,3 +1,6 @@
+using TokenFight.Core.Databases.Models.Dungeons;
+using TokenFight.Core.Databases.Models.Profiles;
+
 namespace TokenFight.Core.Constants;
 
 /// <summary>
@@ -38,5 +41,17 @@ public static class GameConst
     public const string LogFolder = "logs";
     /// <summary> 数据文件夹路径 </summary>
     public const string DataFolder = "data";
+    /// <summary> 抽卡 | 抽卡一次需要消耗的Token </summary>
+    public const int GachaTokenCost = 160;
+    /// <summary> 抽卡 | 四星爆率 </summary>
+    public const double GachaStar4Rate = 0.06;
+    /// <summary> 抽卡 | 四星保底范围 </summary>
+    public static readonly TokenRange GachaStar4Guarantee = new(8, 10);
+    /// <summary> 抽卡 | 五星爆率 </summary>
+    public const double GachaStar5Rate = 0.006;
+    /// <summary> 抽卡 | 五星保底范围 </summary>
+    public static readonly TokenRange GachaStar5Guarantee = new(60, 90);
+    /// <summary> 抽卡 | 五星小保底不歪概率 </summary>
+    public const double GachaStar5SmallGuaranteeRate = 0.50;
     #endregion
 }

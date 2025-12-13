@@ -4,10 +4,10 @@ using TokenFight.Core.Helpers;
 using TokenFight.Core.Interfaces.Entities;
 using TokenFight.Core.Interfaces.Events;
 using TokenFight.Core.Interfaces.FStream;
-using TokenFight.Core.Interfaces.Systems;
+using TokenFight.Core.Interfaces.Systems.Combatant;
 using TokenFight.Core.Models.Events.Contexts;
 
-namespace TokenFight.Core.Models.Systems;
+namespace TokenFight.Core.Models.Systems.Combatant;
 
 public class ActorManagerSystem(
     IEventSystem eventSystem,

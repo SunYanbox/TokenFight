@@ -55,18 +55,38 @@ public static class ItemHelper
         return true;
     }
 
-    public static void InitItem(ItemType itemType, Properties properties, string? parentId = null)
+    /// <summary>
+    /// 初始化物品
+    /// </summary>
+    /// <param name="properties">用于覆盖的物品属性</param>
+    /// <param name="parentId">父级物品ID</param>
+    public static Item InitItem(Properties properties, string? parentId = null)
+    {
+        Item item = InitItem(properties.Id);
+        item.Parent = parentId;
+        item.Properties?.OverrideProperties(properties);
+        return item;
+    }
+
+    /// <summary>
+    /// 初始化物品
+    /// </summary>
+    /// <param name="tplId">物品模板ID</param>
+    public static Item InitItem(string tplId)
     {
         string uuid = Guid.NewGuid().ToString();
+        Properties? properties = GameSystemRegistry?.DatabaseServer.TemplateTables.GetValueOrDefault(tplId);
+        if (properties == null) throw new Exception($"物品模板不存在: {tplId}");
         var item = new Item
         {
             Id = uuid,
             Name = properties.Name,
-            Type = itemType,
-            Parent = parentId,
-            TemplateId = properties.Id,
+            Type = properties.Type,
+            Parent = null,
+            TemplateId = tplId,
             Properties = new Properties(properties)
         };
+        return item;
     }
 
     /// <summary>

@@ -66,14 +66,7 @@ try
     var autoDungeon = serviceProvider.GetService<IDungeonFactorySystem>()!;
     BaseDungeon battleFlow = autoDungeon.CreateInstance(GameIdTableConst.BattleFlow, [systemRegistry, "dungeon1"])!;
 
-    battleFlow.OnLoad(new Profile
-    {
-        Account = "null",
-        Password = "null",
-        Token = 0,
-        Inventory = new Inventory(),
-        GiftInfos = new Dictionary<string, int>()
-    });
+    battleFlow.OnLoad(new Profile("null", "null"));
 
     battleFlow.InitActorPool();
 

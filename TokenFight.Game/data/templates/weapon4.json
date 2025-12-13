@@ -1,0 +1,15 @@
+{
+  "Id": "weapon4",
+  "Type": "Weapon",
+  "Name": "Weapon 4",
+  "Desc": "世间第四把光锥",
+  "SkillId": "skill4",
+  "WeaponLayers": {
+    "Level": 1,
+    "MaxLevel": 5
+  },
+  "WeaponLevel": {
+    "Level": 1,
+    "MaxLevel": 80
+  }
+}

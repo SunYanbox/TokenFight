@@ -6,17 +6,19 @@ using TokenFight.Core.Databases.Models.DataTables;
 using TokenFight.Core.Databases.Models.Dungeons;
 using TokenFight.Core.Databases.Models.Growth;
 using TokenFight.Core.Databases.Models.Profiles;
+using TokenFight.Core.Models.Build;
 
 namespace TokenFight.Core.Databases;
 
 public sealed class DatabaseServer: IDatabaseServer
 {
-    private const string LogLoadPrefix = "[DatabaseServer Load]";
+    private const string LogLoadPrefix = "[数据库加载]";
     private const string DataFolder = GameConst.DataFolder;
     private string ActorFolder => Path.Combine(DataFolder, "actors");
     private string ProfileFolder => Path.Combine(DataFolder, "profiles");
     private string DungeonFolder => Path.Combine(DataFolder, "dungeons");
     private string TemplateFolder => Path.Combine(DataFolder, "templates");
+    private string GachaRewardFolder => Path.Combine(DataFolder, "gachaRewards");
     private readonly JsonSerializerOptions _jsonSaveOption = new()
     {
         WriteIndented = true,
@@ -30,6 +32,7 @@ public sealed class DatabaseServer: IDatabaseServer
         Directory.CreateDirectory(ProfileFolder);
         Directory.CreateDirectory(DungeonFolder);
         Directory.CreateDirectory(TemplateFolder);
+        Directory.CreateDirectory(GachaRewardFolder);
 
         LoadDataFromFolder(ActorFolder, ActorTables, (actorData, dict) =>
         {
@@ -56,12 +59,19 @@ public sealed class DatabaseServer: IDatabaseServer
             dict.Add(templateData.Id, templateData);
             Console.WriteLine($"{LogLoadPrefix}: 加载物品模板: {templateData.Id} {templateData.Name}");
         });
+
+        LoadDataFromFolder(GachaRewardFolder, GachaRewardTables, (gachaReward, dict) =>
+        {
+            dict.Add(gachaReward.Id, gachaReward);
+            Console.WriteLine($"{LogLoadPrefix}: 加载抽卡配置: {gachaReward.Id} {gachaReward.Name}");
+        });
     }
 
     public DataTable<DataActor> ActorTables { get; init; } = new();
     public DataTable<Profile> ProfileTables { get; init; } = new();
     public DataTable<DungeonInfo> DungeonInfoTables { get; init; } = new();
     public DataTable<Properties> TemplateTables { get; init; } = new();
+    public DataTable<GachaReward> GachaRewardTables { get; init; } = new();
     public Profile? CurrentProfile { get; set; }
 
     private readonly PasswordHasher<string> _passwordHasher = new();
@@ -92,14 +102,7 @@ public sealed class DatabaseServer: IDatabaseServer
         {
             return false;
         }
-        ProfileTables.Add(account, new Profile
-        {
-            Account = account,
-            Password = _passwordHasher.HashPassword(account, password),
-            Token = 1600,
-            Inventory = new Inventory(),
-            GiftInfos = new Dictionary<string, int>()
-        });
+        ProfileTables.Add(account, new Profile(account, password));
         return true;
     }
 

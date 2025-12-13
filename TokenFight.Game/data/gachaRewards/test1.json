@@ -1,0 +1,16 @@
+{
+  "Id": "test1",
+  "Name": "Test1",
+  "Star5Plus": [
+    "weapon1"
+  ],
+  "Star5": [
+    "weapon2"
+  ],
+  "Star4": [
+    "weapon3"
+  ],
+  "Star3": [
+    "weapon4"
+  ]
+}

@@ -8,6 +8,8 @@ public class Properties
 {
     /// <summary> 模板ID </summary>
     public required string Id { get; set; }
+    /// <summary> 模板类型 </summary>
+    public required ItemType Type { get; set; }
     /// <summary> 名称 </summary>
     public string? Name { get; set; }
     /// <summary> 描述 </summary>
@@ -58,8 +60,7 @@ public class Properties
     [SetsRequiredMembers]
     public Properties(Properties source)
     {
-        if (source == null)
-            throw new ArgumentNullException(nameof(source));
+        ArgumentNullException.ThrowIfNull(source);
 
         // 复制值类型和不可变引用类型
         Id = source.Id;
@@ -77,10 +78,10 @@ public class Properties
         MaxResources = source.MaxResources;
 
         // 复制引用类型 - 值类型成员不需要深拷贝
-        WeaponLayers = new LevelProgress(source.WeaponLayers);
-        WeaponLevel = new LevelProgress(source.WeaponLevel);
-        RelicsLevel = new LevelProgress(source.RelicsLevel);
-        ActorLevel = new LevelProgress(source.ActorLevel);
+        if (source.WeaponLayers is not null) WeaponLayers = new LevelProgress(source.WeaponLayers);
+        if (source.WeaponLevel is not null) WeaponLevel = new LevelProgress(source.WeaponLevel);
+        if (source.RelicsLevel is not null) RelicsLevel = new LevelProgress(source.RelicsLevel);
+        if (source.ActorLevel is not null) ActorLevel = new LevelProgress(source.ActorLevel);
 
         // 复制枚举类型
         MainEntry = new EntryValue(source.MainEntry);
@@ -106,4 +107,56 @@ public class Properties
             }
         }
     }
+
+    /// <summary> 覆盖当前实例的属性 | 仅通过source中非空属性覆盖 </summary>
+    public void OverrideProperties(Properties source)
+    {
+        if (source == null || source.Id != Id)
+            throw new ArgumentNullException(nameof(source));
+
+        // 复制值类型和不可变引用类型
+        if (source.Name is not null) Name = source.Name;
+        if (source.Desc is not null) Desc = source.Desc;
+        if (source.SkillId is not null) SkillId = source.SkillId;
+        if (source.RelicsTypeId is not null) RelicsTypeId = source.RelicsTypeId;
+        if (source.ActorId is not null) ActorId = source.ActorId;
+        if (source.GiftCode is not null) GiftCode = source.GiftCode;
+        if (source.UseCallback is not null) UseCallback = source.UseCallback;
+
+        // 复制可空值类型
+        if (source.GiftMaxExchangeTimes.HasValue) GiftMaxExchangeTimes = source.GiftMaxExchangeTimes;
+        if (source.CurrentResources.HasValue) CurrentResources = source.CurrentResources;
+        if (source.MaxResources.HasValue) MaxResources = source.MaxResources;
+
+        // 复制引用类型 - 值类型成员不需要深拷贝
+        if (source.WeaponLayers is not null) WeaponLayers = new LevelProgress(source.WeaponLayers);
+        if (source.WeaponLevel is not null) WeaponLevel = new LevelProgress(source.WeaponLevel);
+        if (source.RelicsLevel is not null) RelicsLevel = new LevelProgress(source.RelicsLevel);
+        if (source.ActorLevel is not null) ActorLevel = new LevelProgress(source.ActorLevel);
+
+        // 复制枚举类型
+        if (source.MainEntry is not null) MainEntry = new EntryValue(source.MainEntry);
+
+        // 深拷贝列表
+        if (source.SubEntries != null)
+        {
+            SubEntries = new List<EntryValue>(source.SubEntries);
+        }
+
+        // 深拷贝字典
+        if (source.SkillLevel != null)
+        {
+            SkillLevel = new Dictionary<SkillType, Dictionary<string, LevelProgress>>();
+            foreach (KeyValuePair<SkillType, Dictionary<string, LevelProgress>> skillPair in source.SkillLevel)
+            {
+                Dictionary<string, LevelProgress> innerDict = new();
+                foreach (KeyValuePair<string, LevelProgress> levelPair in skillPair.Value)
+                {
+                    innerDict[levelPair.Key] = new LevelProgress(levelPair.Value);
+                }
+                SkillLevel[skillPair.Key] = innerDict;
+            }
+        }
+    }
+
 }

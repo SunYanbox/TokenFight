@@ -7,6 +7,7 @@ using TokenFight.Core.Interfaces.Effects;
 using TokenFight.Core.Interfaces.Entities;
 using TokenFight.Core.Interfaces.FStream;
 using TokenFight.Core.Interfaces.Systems;
+using TokenFight.Core.Interfaces.Systems.Combatant;
 using TokenFight.Core.Models.Actions;
 using TokenFight.Core.Models.Entities.Actors;
 

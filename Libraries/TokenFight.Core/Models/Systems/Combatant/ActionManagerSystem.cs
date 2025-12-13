@@ -4,10 +4,10 @@ using TokenFight.Core.Helpers;
 using TokenFight.Core.Interfaces.Effects;
 using TokenFight.Core.Interfaces.Entities;
 using TokenFight.Core.Interfaces.FStream;
-using TokenFight.Core.Interfaces.Systems;
+using TokenFight.Core.Interfaces.Systems.Combatant;
 using TokenFight.Core.Models.Actions;
 
-namespace TokenFight.Core.Models.Systems;
+namespace TokenFight.Core.Models.Systems.Combatant;
 
 public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
 {

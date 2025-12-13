@@ -3,7 +3,7 @@ using Terminal.Gui.Views;
 using TokenFight.Core.Models;
 using TokenFight.Core.Models.Entities.Masters;
 using TokenFight.Core.ReflectionAttribute;
-using TokenFight.UI.Core.Profile;
+using TokenFight.UI.Core.ProfileAbout;
 
 namespace TokenFight.UI.Core;
 
@@ -46,7 +46,7 @@ public sealed class GameWindow: Window
         // 抽卡界面
         _gachaTab = new Tab
         {
-            View = new GachaView(GameSystemRegistry!.DatabaseServer),
+            View = new GachaView(GameSystemRegistry),
             DisplayText = "抽卡"
         };
 

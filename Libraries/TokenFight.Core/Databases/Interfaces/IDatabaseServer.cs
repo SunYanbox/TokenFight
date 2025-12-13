@@ -3,6 +3,7 @@ using TokenFight.Core.Databases.Models.Dungeons;
 using TokenFight.Core.Databases.Models.Growth;
 using TokenFight.Core.Databases.Models.Profiles;
 using TokenFight.Core.Interfaces.Bases;
+using TokenFight.Core.Models.Build;
 
 namespace TokenFight.Core.Databases.Interfaces;
 
@@ -12,6 +13,7 @@ public interface IDatabaseServer: ISystem
     public DataTable<Profile> ProfileTables { get; init; }
     public DataTable<DungeonInfo> DungeonInfoTables { get; init; }
     public DataTable<Properties> TemplateTables { get; init; }
+    public DataTable<GachaReward> GachaRewardTables { get; init; }
     public Profile? CurrentProfile { get; set; }
     /// <summary>
     /// 尝试登录

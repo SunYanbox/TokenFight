@@ -1,7 +1,7 @@
 using TokenFight.Core.Interfaces.Bases;
 using TokenFight.Core.Interfaces.Entities;
 
-namespace TokenFight.Core.Interfaces.Systems;
+namespace TokenFight.Core.Interfaces.Systems.Combatant;
 
 /// <summary> 管理所有成员的系统 </summary>
 public interface IActorManagerSystem: ISystem

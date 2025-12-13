@@ -1,8 +1,8 @@
 using TokenFight.Core.Enums.Entities;
 using TokenFight.Core.Interfaces.Entities;
-using TokenFight.Core.Interfaces.Systems;
+using TokenFight.Core.Interfaces.Systems.Combatant;
 
-namespace TokenFight.Core.Models.Systems;
+namespace TokenFight.Core.Models.Systems.Combatant;
 
 public class ActorPositionSystem: IActorPositionSystem
 {

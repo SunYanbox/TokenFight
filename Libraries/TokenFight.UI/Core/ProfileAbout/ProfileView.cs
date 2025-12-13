@@ -4,7 +4,7 @@ using TokenFight.Core.Databases.Helpers;
 using TokenFight.Core.Databases.Interfaces;
 using TokenFight.Core.Databases.Models.Profiles;
 
-namespace TokenFight.UI.Core.Profile;
+namespace TokenFight.UI.Core.ProfileAbout;
 
 public sealed class ProfileView: View
 {
