@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenFight.DI", "Libraries\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenFight.UI", "Libraries\TokenFight.UI\TokenFight.UI.csproj", "{A681A47C-95C0-4C9A-9A3F-B535037774B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TokenFight.UI.Widgets", "Libraries\TokenFight.UI.Widgets\TokenFight.UI.Widgets.csproj", "{0E27454F-5AE3-4772-8A28-7CD6BA556831}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,5 +39,9 @@ Global
 		{A681A47C-95C0-4C9A-9A3F-B535037774B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A681A47C-95C0-4C9A-9A3F-B535037774B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A681A47C-95C0-4C9A-9A3F-B535037774B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E27454F-5AE3-4772-8A28-7CD6BA556831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E27454F-5AE3-4772-8A28-7CD6BA556831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E27454F-5AE3-4772-8A28-7CD6BA556831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E27454F-5AE3-4772-8A28-7CD6BA556831}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
