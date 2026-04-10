@@ -21,7 +21,4 @@
         <!-- 排除整个示例文件夹及其子文件夹 -->
         <Compile Remove="Examples\**\*.cs"/>
     </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Terminal.Gui" Version="2.0.0"/>
-    </ItemGroup>
 </Project>
