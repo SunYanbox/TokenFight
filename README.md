@@ -131,6 +131,10 @@ dotnet publish TokenFight.Game/TokenFight.Game.csproj -c Release
 
 参见 [AGENTS.md](./AGENTS.md) 获取详细的代码风格约定、构建命令和开发工作流。
 
+## 架构规划
+
+参见 [架构设计文档](./docs/architecture/design.md) 了解 ECS + 状态机架构改造计划。
+
 ## 项目里程碑
 
 | 版本 | 说明 |
