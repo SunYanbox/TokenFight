@@ -6,7 +6,7 @@ using TokenFight.Core.Interfaces.Entities.Masters;
 namespace TokenFight.Core.Models.Effects.Effects;
 
 /// <summary> 基础效果 </summary>
-public abstract class BaseEffect: IEffect
+public abstract class BaseEffect : IEffect
 {
     public required string Id { get; set; }
     public EffectType Type { get; set; }

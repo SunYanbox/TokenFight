@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using TokenFight.Core.Constants;
 using TokenFight.Core.Databases.Models.Profiles;
 using TokenFight.Core.Enums.Attrs;
@@ -20,27 +20,17 @@ using TokenFight.DI;
 
 var services = new ServiceCollection();
 
-
-
-
-ServiceRegistry.RegisterAllServices(services);
-
-ServiceProvider serviceProvider = services.BuildServiceProvider();
-
-ServiceRegistry.InitAllSystems(serviceProvider);
-
-var systemRegistryGlobal = serviceProvider.GetService<GameSystemRegistry>()!;
-
+ServiceProvider serviceProvider;
 
 try
 {
-    // ConfigurationManager.RuntimeConfig = """{ "Theme": "Amber Phosphor" }""";
-    // ConfigurationManager.Enable(ConfigLocations.All);
-    //
-    // // With using statement for automatic disposal
-    // using IApplication app = Application.Create().Init();
-    // using var window = new GameWindow();
-    // app.Run(window);
+    ServiceRegistry.RegisterAllServices(services);
+
+    serviceProvider = services.BuildServiceProvider();
+
+    ServiceRegistry.InitAllSystems(serviceProvider);
+
+    var systemRegistryGlobal = serviceProvider.GetService<GameSystemRegistry>()!;
 }
 catch (Exception e)
 {

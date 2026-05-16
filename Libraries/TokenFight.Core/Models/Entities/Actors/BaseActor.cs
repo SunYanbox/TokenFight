@@ -15,7 +15,7 @@ using TokenFight.Core.ReflectionAttribute;
 namespace TokenFight.Core.Models.Entities.Actors;
 
 [AutoSysRegistryInit]
-public abstract class BaseActor: IActor
+public abstract class BaseActor : IActor
 {
     public static GameSystemRegistry? GameSystemRegistry { protected get; set; }
 

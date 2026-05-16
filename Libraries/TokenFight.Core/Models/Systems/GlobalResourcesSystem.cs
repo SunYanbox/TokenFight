@@ -3,7 +3,7 @@ using TokenFight.Core.Interfaces.Systems;
 
 namespace TokenFight.Core.Models.Systems;
 
-public class GlobalResourcesSystem(ILocalLog localLog): IGlobalResourcesSystem
+public class GlobalResourcesSystem(ILocalLog localLog) : IGlobalResourcesSystem
 {
     public void Init()
     {

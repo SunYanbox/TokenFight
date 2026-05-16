@@ -1,6 +1,6 @@
 namespace TokenFight.Core.Interfaces.Entities.Masters;
 
-public interface IRelationshipMaster: IMaster
+public interface IRelationshipMaster : IMaster
 {
     /// <summary> 队伍左侧目标 </summary>
     public WeakReference<IActor>? LeftActor { get; set; }

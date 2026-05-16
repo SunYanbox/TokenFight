@@ -4,7 +4,7 @@ using TokenFight.Core.Interfaces.Entities.Masters;
 
 namespace TokenFight.Core.Models.Entities.Masters;
 
-public class RelationshipMaster(IActor owner): IRelationshipMaster
+public class RelationshipMaster(IActor owner) : IRelationshipMaster
 {
     public WeakReference<IActor> Owner { get; set; } = new(owner);
 

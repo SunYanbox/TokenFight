@@ -12,7 +12,7 @@ namespace TokenFight.Core.Models.Attrs;
 /// Percent（百分比加成）
 /// 支持临时和永久属性修改
 /// </summary>
-public class AttrSet: IAttrSet
+public class AttrSet : IAttrSet
 {
     private static readonly HashSet<int> AttrIndexes = Enum.GetValues<AttrType>().Select(x => IAttrSet.ToInt(x)).ToHashSet();
     private static readonly HashSet<int> DamageIndexes =
@@ -214,7 +214,7 @@ public class AttrSet: IAttrSet
                         double value = getValue(type, mod);
                         return Math.Abs(value) < double.Epsilon ? null : $"{formatKey(type, mod)}: {value:P2}";
                     })
-                // .Where(s => s != null) // 配合上面的 null 判断
+            // .Where(s => s != null) // 配合上面的 null 判断
             )
         );
 

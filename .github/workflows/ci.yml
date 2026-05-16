@@ -1,0 +1,29 @@
+name: Code Format Check
+
+on: [push, pull_request]
+
+jobs:
+    format-check:
+        runs-on: ubuntu-latest
+        
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v6.0.2
+
+            - name: Setup .NET SDK
+              uses: actions/setup-dotnet@v5.2.0
+              with:
+                  dotnet-version: '9.0.x'
+
+            - name: Cache about nuget packages
+               uses: actions/cache@v5
+               with:
+                 path: ~/.nuget/packages
+                 key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+                 restore-keys: |
+                   ${{ runner.os }}-nuget-
+            - name: Restore dependencies
+              run: dotnet restore
+
+            - name: Verify formatting
+              run: dotnet format --verify-no-changes

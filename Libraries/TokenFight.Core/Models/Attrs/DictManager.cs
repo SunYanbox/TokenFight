@@ -7,7 +7,7 @@ namespace TokenFight.Core.Models.Attrs;
 /// 属性字典泛型 内部储存方式为 int(type) -> { Id -> 值 }
 ///
 /// </summary>
-public class DictManager: IDictManager
+public class DictManager : IDictManager
 {
     private readonly Dictionary<int, Dictionary<string, double>> _dict = new();
     private readonly Dictionary<string, HashSet<int>> _added = new();

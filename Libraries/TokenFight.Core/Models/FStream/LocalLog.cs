@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.FStream;
 
 namespace TokenFight.Core.Models.FStream;
 
-public class LocalLog: ILocalLog
+public class LocalLog : ILocalLog
 {
     public void Init()
     {

@@ -4,7 +4,7 @@ using TokenFight.Core.Interfaces.Bases;
 
 namespace TokenFight.Core.Interfaces.FStream;
 
-public interface ILocalLog: ISystem
+public interface ILocalLog : ISystem
 {
     protected delegate void LogFunc(string msg);
 

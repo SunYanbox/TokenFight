@@ -4,7 +4,7 @@ using TokenFight.Core.Interfaces.Systems.Combatant;
 
 namespace TokenFight.Core.Models.Systems.Combatant;
 
-public class ActionListSystem(IGlobalResourcesSystem globalResourcesSystem): IActionListSystem
+public class ActionListSystem(IGlobalResourcesSystem globalResourcesSystem) : IActionListSystem
 {
     private class ActionSlot
     {

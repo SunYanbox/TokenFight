@@ -4,7 +4,7 @@ namespace TokenFight.Core.Interfaces.Bases;
 /// 表示一个可变的枚举类型集合，支持增、删、查与遍历。
 /// </summary>
 /// <typeparam name="T">必须是 struct 且为 Enum 类型</typeparam>
-public interface IEnumSet<T>: IEnumerable<T>
+public interface IEnumSet<T> : IEnumerable<T>
     where T : struct, Enum
 {
     // ———————— 增 ————————

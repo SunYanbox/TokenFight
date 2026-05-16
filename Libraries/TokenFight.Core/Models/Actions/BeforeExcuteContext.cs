@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Events;
 
 namespace TokenFight.Core.Models.Actions;
 
-public struct BeforeExcuteContext: IContext
+public struct BeforeExcuteContext : IContext
 {
     public EventType Type { get; init; }
     public object Sender { get; init; }

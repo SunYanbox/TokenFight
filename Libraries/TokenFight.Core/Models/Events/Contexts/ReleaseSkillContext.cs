@@ -6,7 +6,7 @@ using TokenFight.Core.Interfaces.Events;
 namespace TokenFight.Core.Models.Events.Contexts;
 
 /// <summary> 释放技能事件 </summary>
-public struct ReleaseSkillContext: IContext
+public struct ReleaseSkillContext : IContext
 {
     public EventType Type { get; init; }
     public object Sender { get; init; }

@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Events;
 namespace TokenFight.Core.Models.Events.Contexts;
 
 /// <summary> 推条事件上下文 </summary>
-public class PushContext: IContext
+public class PushContext : IContext
 {
     public EventType Type { get; init; }
     public object Sender { get; init; }

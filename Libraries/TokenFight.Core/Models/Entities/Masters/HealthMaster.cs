@@ -11,7 +11,7 @@ namespace TokenFight.Core.Models.Entities.Masters;
 ///
 /// 绑定一个AttrSet用于跟踪最大生命值变化
 /// </summary>
-public class HealthMaster: IHealthMaster
+public class HealthMaster : IHealthMaster
 {
     public required WeakReference<IActor> Owner { get; set; }
     private double MaxHealth { get; set; }

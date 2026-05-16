@@ -7,7 +7,7 @@ using TokenFight.Core.Models.Build;
 
 namespace TokenFight.Core.Databases.Interfaces;
 
-public interface IDatabaseServer: ISystem
+public interface IDatabaseServer : ISystem
 {
     public DataTable<DataActor> ActorTables { get; init; }
     public DataTable<Profile> ProfileTables { get; init; }

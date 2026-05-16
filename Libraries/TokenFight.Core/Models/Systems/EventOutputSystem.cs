@@ -8,7 +8,7 @@ using TokenFight.Core.Models.Events.Contexts;
 
 namespace TokenFight.Core.Models.Systems;
 
-public class EventOutputSystem(IEventSystem eventSystem): IEventOutputSystem
+public class EventOutputSystem(IEventSystem eventSystem) : IEventOutputSystem
 {
     public void Init()
     {
@@ -120,9 +120,9 @@ internal static class OutputHelper
                 case EventType.ActorDeath when data is DeathContext deathContext:
                     OutputDeath(deathContext.Actor, icon);
                     break;
-                // case TriggerType.ActorLife when data is ActorLifeContext actorLifeContext:
-                //     OutputActorLife(actorLifeContext.Actor, actorLifeContext, icon);
-                //     break;
+                    // case TriggerType.ActorLife when data is ActorLifeContext actorLifeContext:
+                    //     OutputActorLife(actorLifeContext.Actor, actorLifeContext, icon);
+                    //     break;
             }
         }
         finally

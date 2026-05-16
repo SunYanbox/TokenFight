@@ -3,4 +3,4 @@ using TokenFight.Core.ReflectionAttribute;
 
 namespace TokenFight.Core.Interfaces.Factories;
 
-public interface IActorFactorySystem: IFactorySystem<BaseActor, AutoActorAttribute>;
+public interface IActorFactorySystem : IFactorySystem<BaseActor, AutoActorAttribute>;

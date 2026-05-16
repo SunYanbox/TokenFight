@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Entities.Masters;
 
 namespace TokenFight.Core.Models.Entities.Masters;
 
-public class EnergyMaster: IEnergyMaster
+public class EnergyMaster : IEnergyMaster
 {
     public WeakReference<IActor> Owner { get; set; }
     private double MaxEnergy { get; set; }

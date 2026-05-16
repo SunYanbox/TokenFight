@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Events;
 
 namespace TokenFight.Core.Models.Events.Contexts;
 
-public struct BeforeCalculateContext: IContext
+public struct BeforeCalculateContext : IContext
 {
     public EventType Type { get; init; }
     /// <summary> 下一件要做的事情 | 分辨是攻击前, 治疗前... </summary>

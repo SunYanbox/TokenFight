@@ -4,7 +4,7 @@ using TokenFight.Core.Databases.Interfaces;
 namespace TokenFight.Core.Databases.Models.Growth;
 
 /// <summary>角色/技能的成长方式</summary>
-public class GrowthBase: IGrowthBase
+public class GrowthBase : IGrowthBase
 {
     [JsonPropertyName("MinLevel")]
     public int MinLevel { get; set; }

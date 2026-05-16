@@ -4,4 +4,4 @@ using TokenFight.Core.ReflectionAttribute;
 
 namespace TokenFight.Reflection.AutoRegister;
 
-public class SkillFactorySystem: AutoFactorySystem<BaseTalentSkill, AutoSkillAttribute>, ISkillFactorySystem;
+public class SkillFactorySystem : AutoFactorySystem<BaseTalentSkill, AutoSkillAttribute>, ISkillFactorySystem;

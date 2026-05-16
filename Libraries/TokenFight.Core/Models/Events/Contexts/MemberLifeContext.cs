@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Events;
 namespace TokenFight.Core.Models.Events.Contexts;
 
 /// <summary> IActor创建与移除的上下文 </summary>
-public struct ActorLifeContext: IContext
+public struct ActorLifeContext : IContext
 {
     public EventType Type { get; init; }
     public object Sender { get; init; }

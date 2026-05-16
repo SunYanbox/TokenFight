@@ -6,7 +6,7 @@ using TokenFight.Core.Interfaces.Entities;
 namespace TokenFight.Core.Models.Effects.Skills;
 
 /// <summary> 基于攻击力的指定比率对指定敌方单体造成伤害 | 可选消耗或增加战技点 </summary>
-public class BasicBasicSkill: BaseSkill
+public class BasicBasicSkill : BaseSkill
 {
     protected double Rate;
     protected int SkillPointDelta;

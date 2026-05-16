@@ -4,7 +4,7 @@ using TokenFight.Core.Enums.Effects;
 
 namespace TokenFight.Core.Databases.Models.Growth;
 
-public class DataActor: IDataActor
+public class DataActor : IDataActor
 {
     public required string Id { get; set; }
     public required string Name { get; set; }

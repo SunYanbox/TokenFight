@@ -1,6 +1,6 @@
 namespace TokenFight.Core.Interfaces.Entities.Masters;
 
-public interface IHealthMaster: IMaster
+public interface IHealthMaster : IMaster
 {
     /// <summary> 获取当前生命值 </summary>
     public double Health { get; }

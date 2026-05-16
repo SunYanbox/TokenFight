@@ -3,7 +3,7 @@ using TokenFight.Core.Interfaces.Entities;
 
 namespace TokenFight.Core.Interfaces.Systems.Combatant;
 
-public interface IActionListSystem: ISystem
+public interface IActionListSystem : ISystem
 {
     /// <summary> 获取行动序列 </summary>
     public IReadOnlyList<IActor> ActionList { get; }

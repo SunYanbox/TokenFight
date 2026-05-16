@@ -7,7 +7,7 @@ using TokenFight.Core.Models.Entities.Masters;
 namespace TokenFight.Core.Models.Events.Contexts;
 
 /// <summary> 造成伤害在事件中的上下文 </summary>
-public struct DamageContext: IContext
+public struct DamageContext : IContext
 {
 
     public EventType Type { get; init; }

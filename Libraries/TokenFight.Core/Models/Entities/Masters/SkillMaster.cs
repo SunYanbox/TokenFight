@@ -4,7 +4,7 @@ using TokenFight.Core.Interfaces.Entities.Masters;
 
 namespace TokenFight.Core.Models.Entities.Masters;
 
-public class SkillMaster: ISkillMaster
+public class SkillMaster : ISkillMaster
 {
     public required WeakReference<IActor> Owner { get; set; }
     private readonly Dictionary<string, ISkill> _skills = new();

@@ -4,7 +4,7 @@ using TokenFight.Core.Interfaces.Systems.Combatant;
 
 namespace TokenFight.Core.Models.Systems.Combatant;
 
-public class ActorPositionSystem: IActorPositionSystem
+public class ActorPositionSystem : IActorPositionSystem
 {
     private readonly List<string> _players = [];
     private readonly List<string> _enemies = [];

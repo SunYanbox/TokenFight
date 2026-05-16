@@ -7,7 +7,7 @@ namespace TokenFight.Core.Interfaces.Entities;
 /// <summary>
 /// 表示一个演员实体接口，继承自基础实体接口
 /// </summary>
-public interface IActor: IEntity
+public interface IActor : IEntity
 {
     /// <summary>
     /// 演员的名称

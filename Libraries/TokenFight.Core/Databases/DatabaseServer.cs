@@ -10,7 +10,7 @@ using TokenFight.Core.Models.Build;
 
 namespace TokenFight.Core.Databases;
 
-public sealed class DatabaseServer: IDatabaseServer
+public sealed class DatabaseServer : IDatabaseServer
 {
     private const string LogLoadPrefix = "[数据库加载]";
     private const string DataFolder = GameConst.DataFolder;

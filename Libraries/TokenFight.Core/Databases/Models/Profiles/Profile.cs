@@ -33,7 +33,7 @@ public class Profile(
     private static readonly PasswordHasher<string> PasswordHasher = new();
 
     [SetsRequiredMembers]
-    public Profile(): this("", "")
+    public Profile() : this("", "")
     {
 
     }

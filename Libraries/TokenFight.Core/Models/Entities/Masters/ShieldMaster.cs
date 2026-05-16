@@ -3,7 +3,7 @@ using TokenFight.Core.Interfaces.Entities.Masters;
 
 namespace TokenFight.Core.Models.Entities.Masters;
 
-public class ShieldMaster(IActor actor): IShieldMaster
+public class ShieldMaster(IActor actor) : IShieldMaster
 {
     public WeakReference<IActor> Owner { get; set; } = new(actor);
 

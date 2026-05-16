@@ -4,7 +4,7 @@ using TokenFight.Core.Interfaces.Entities;
 
 namespace TokenFight.Core.Models.Effects.Skills;
 
-public class BaseTalentSkill: BaseSkill
+public class BaseTalentSkill : BaseSkill
 {
     /// <summary>
     /// 需要自行赋值Name和Desc | PassiveData已赋值

@@ -10,7 +10,7 @@ using TokenFight.Core.Models.Entities.Masters;
 namespace TokenFight.Core.Models.Effects.Effects;
 
 /// <summary> 限时的护盾效果 | 回合开始时结算 </summary>
-public class BaseShieldTimeLimited: BaseEffect
+public class BaseShieldTimeLimited : BaseEffect
 {
     /// <summary> 可以在外部设置护盾的值 </summary>
     public double Shield { get; set; }

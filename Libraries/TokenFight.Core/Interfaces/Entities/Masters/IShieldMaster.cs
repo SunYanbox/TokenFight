@@ -7,7 +7,7 @@ namespace TokenFight.Core.Interfaces.Entities.Masters;
 ///
 /// 受到攻击时: 同步削减所有护盾, 并移除被破除的护盾
 /// </summary>
-public interface IShieldMaster: IMaster
+public interface IShieldMaster : IMaster
 {
     /// <summary> 覆盖形式添加护盾 </summary>
     /// <param name="id">护盾Id</param>

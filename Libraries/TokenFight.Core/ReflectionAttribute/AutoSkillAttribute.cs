@@ -4,4 +4,4 @@ namespace TokenFight.Core.ReflectionAttribute;
 /// 环境紊流, 光锥技能
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-public class AutoSkillAttribute: AutoBaseAttribute;
+public class AutoSkillAttribute : AutoBaseAttribute;

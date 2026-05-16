@@ -1,6 +1,6 @@
 namespace TokenFight.Core.Interfaces.Entities.Masters;
 
-public interface ILifeCycleMaster: IMaster
+public interface ILifeCycleMaster : IMaster
 {
     /// <summary> 持续回合数 </summary>
     public int? Duration { get; set; }

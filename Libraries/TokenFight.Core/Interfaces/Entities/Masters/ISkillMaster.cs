@@ -4,7 +4,7 @@ using TokenFight.Core.Interfaces.Effects;
 namespace TokenFight.Core.Interfaces.Entities.Masters;
 
 /// <summary> 技能管理器 </summary>
-public interface ISkillMaster: IMaster
+public interface ISkillMaster : IMaster
 {
     /// <summary> 判断技能是否包含指定键的技能 </summary>
     public bool ContainsKey(string id);

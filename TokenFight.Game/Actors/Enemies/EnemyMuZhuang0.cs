@@ -16,7 +16,7 @@ using TokenFight.Core.ReflectionAttribute;
 namespace TokenFight.Game.Actors.Enemies;
 
 [AutoActor(Id = GameIdTableConst.EnemyMuZhuang0, Team = TeamType.Enemy)]
-public class EnemyMuZhuang0: EnemyActor
+public class EnemyMuZhuang0 : EnemyActor
 {
     protected const string FactoryKey = GameIdTableConst.EnemyMuZhuang0;
     protected static DataActor? DataActor;
@@ -44,7 +44,7 @@ public class EnemyMuZhuang0: EnemyActor
             new PassiveData(systemRegistry.EventSystem, systemRegistry.LocalLog)));
     }
 
-    private class HealSelf: BaseSkill
+    private class HealSelf : BaseSkill
     {
         private double? _rate;
 

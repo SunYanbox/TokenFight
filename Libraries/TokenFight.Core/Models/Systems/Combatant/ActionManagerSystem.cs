@@ -9,7 +9,7 @@ using TokenFight.Core.Models.Actions;
 
 namespace TokenFight.Core.Models.Systems.Combatant;
 
-public class ActionManagerSystem(ILocalLog localLog): IActionManagerSystem
+public class ActionManagerSystem(ILocalLog localLog) : IActionManagerSystem
 {
     public void Init() { }
 

@@ -8,7 +8,7 @@ using TokenFight.Core.Models.Entities.Masters;
 namespace TokenFight.Core.Models.Effects.Effects;
 
 /// <summary> 封装百分比增益 可以按照层数等比例提升 </summary>
-public class BaseEffectPctGain: BaseEffect
+public class BaseEffectPctGain : BaseEffect
 {
     private readonly AttrModifyData _modifyData;
 

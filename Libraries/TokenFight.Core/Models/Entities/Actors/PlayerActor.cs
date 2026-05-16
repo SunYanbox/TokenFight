@@ -14,7 +14,7 @@ namespace TokenFight.Core.Models.Entities.Actors;
 /// <summary>
 /// 玩家角色自带5%暴击率与50%暴击伤害加成
 /// </summary>
-public abstract class PlayerActor: BaseActor, IPlayer
+public abstract class PlayerActor : BaseActor, IPlayer
 {
     #region 默认键
     /// <summary> 默认普攻Id </summary>
@@ -30,7 +30,7 @@ public abstract class PlayerActor: BaseActor, IPlayer
     #endregion
 
     [SetsRequiredMembers]
-    protected PlayerActor(GameSystemRegistry gameSystemRegistry): base(TeamType.Player, gameSystemRegistry)
+    protected PlayerActor(GameSystemRegistry gameSystemRegistry) : base(TeamType.Player, gameSystemRegistry)
     {
         AttrSet?.SetAttr(new AttrModifyData
         {
