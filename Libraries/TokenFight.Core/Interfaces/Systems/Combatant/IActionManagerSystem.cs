@@ -11,7 +11,7 @@ namespace TokenFight.Core.Interfaces.Systems.Combatant;
 /// 负责区分不同类型的行动（普通、终结技、追加攻击、额外回合等），
 /// 并维护已执行行动与已处理回合开始事件的历史记录。
 /// </summary>
-public interface IActionManagerSystem: ISystem
+public interface IActionManagerSystem : ISystem
 {
     /// <summary>
     /// 创建一个行动

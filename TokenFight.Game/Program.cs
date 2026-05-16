@@ -25,7 +25,7 @@ ServiceProvider serviceProvider;
 try
 {
     ServiceRegistry.RegisterAllServices(services);
-    
+
     serviceProvider = services.BuildServiceProvider();
 
     ServiceRegistry.InitAllSystems(serviceProvider);

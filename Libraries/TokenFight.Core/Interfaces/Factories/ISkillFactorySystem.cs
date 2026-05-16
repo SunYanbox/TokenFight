@@ -3,4 +3,4 @@ using TokenFight.Core.ReflectionAttribute;
 
 namespace TokenFight.Core.Interfaces.Factories;
 
-public interface ISkillFactorySystem: IFactorySystem<BaseTalentSkill, AutoSkillAttribute>;
+public interface ISkillFactorySystem : IFactorySystem<BaseTalentSkill, AutoSkillAttribute>;

@@ -4,7 +4,7 @@ using TokenFight.Core.Interfaces.Entities;
 namespace TokenFight.Core.Interfaces.Systems.Combatant;
 
 /// <summary> 管理所有成员的系统 </summary>
-public interface IActorManagerSystem: ISystem
+public interface IActorManagerSystem : ISystem
 {
     /// <summary> 获取所有注册过的成员的引用 </summary>
     public Dictionary<string, IActor> AllActors { get; }

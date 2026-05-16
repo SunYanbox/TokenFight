@@ -3,7 +3,7 @@ using TokenFight.Core.Interfaces.Entities.Masters;
 
 namespace TokenFight.Core.Models.Entities.Masters;
 
-public class EnumTypeMaster<T>: IEnumTypeMaster<T>
+public class EnumTypeMaster<T> : IEnumTypeMaster<T>
     where T : struct, Enum
 {
     private readonly HashSet<T> _types = [];

@@ -6,7 +6,7 @@ namespace TokenFight.Core.ReflectionAttribute;
 /// 自动注册的Actor
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-public class AutoActorAttribute: AutoBaseAttribute
+public class AutoActorAttribute : AutoBaseAttribute
 {
     public TeamType Team { get; set; }
     public string? Name { get; set; }

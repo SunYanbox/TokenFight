@@ -2,7 +2,7 @@ using TokenFight.Core.Interfaces.Bases;
 
 namespace TokenFight.Core.Interfaces.Systems;
 
-public interface IGlobalResourcesSystem: ISystem
+public interface IGlobalResourcesSystem : ISystem
 {
     /// <summary> 战技点 </summary>
     public int SkillPoint { get; protected set; }

@@ -10,7 +10,7 @@ namespace TokenFight.Reflection;
 /// </summary>
 /// <typeparam name="TBase"></typeparam>
 /// <typeparam name="TAttribute"></typeparam>
-public class AutoFactorySystem<TBase, TAttribute>: IFactorySystem<TBase, TAttribute>
+public class AutoFactorySystem<TBase, TAttribute> : IFactorySystem<TBase, TAttribute>
     where TBase : class
     where TAttribute : AutoBaseAttribute
 {

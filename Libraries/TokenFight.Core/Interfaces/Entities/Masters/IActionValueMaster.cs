@@ -5,7 +5,7 @@ namespace TokenFight.Core.Interfaces.Entities.Masters;
 ///
 /// 绑定一个AttributeSet用于跟踪速度变化
 /// </summary>
-public interface IActionValueMaster: IMaster
+public interface IActionValueMaster : IMaster
 {
     /// <summary> 获取当前行动值 </summary>
     public double ActionValue { get; }

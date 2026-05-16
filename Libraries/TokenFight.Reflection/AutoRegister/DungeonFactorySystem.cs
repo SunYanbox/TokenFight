@@ -4,4 +4,4 @@ using TokenFight.Core.ReflectionAttribute;
 
 namespace TokenFight.Reflection.AutoRegister;
 
-public class DungeonFactorySystem: AutoFactorySystem<BaseDungeon, AutoDungeonAttribute>, IDungeonFactorySystem;
+public class DungeonFactorySystem : AutoFactorySystem<BaseDungeon, AutoDungeonAttribute>, IDungeonFactorySystem;

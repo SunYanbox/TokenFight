@@ -8,7 +8,7 @@ using TokenFight.Core.Models.Build;
 
 namespace TokenFight.Core.Models.Systems.Build;
 
-public class GachaSystem(IDatabaseServer databaseServer): IGachaSystem
+public class GachaSystem(IDatabaseServer databaseServer) : IGachaSystem
 {
     private readonly Random _random = new();
     public void Init() { }

@@ -4,7 +4,7 @@ using TokenFight.Core.Interfaces.Entities;
 namespace TokenFight.Core.Interfaces.Systems.Combatant;
 
 /// <summary> 角色池系统 </summary>
-public interface IActorPoolSystem: ISystem
+public interface IActorPoolSystem : ISystem
 {
     /// <summary> 向对局中填充成员 </summary>
     public void FillActors();

@@ -12,7 +12,7 @@ using TokenFight.Core.ReflectionAttribute;
 namespace TokenFight.Core.Models.Game;
 
 [AutoDungeon(Id = "BaseDungeon")]
-public class BaseDungeon(GameSystemRegistry gameSystemRegistry): IDungeon
+public class BaseDungeon(GameSystemRegistry gameSystemRegistry) : IDungeon
 {
     #region 成员实例
     public double? ActionValueLimit { get; set; }

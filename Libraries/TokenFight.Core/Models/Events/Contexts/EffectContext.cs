@@ -6,7 +6,7 @@ using TokenFight.Core.Interfaces.Events;
 namespace TokenFight.Core.Models.Events.Contexts;
 
 /// <summary> 效果应用与移除的事件上下文 </summary>
-public struct EffectContext: IContext
+public struct EffectContext : IContext
 {
     public EventType Type { get; init; }
     public object Sender { get; init; }

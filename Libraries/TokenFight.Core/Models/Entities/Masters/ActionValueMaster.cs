@@ -6,7 +6,7 @@ using TokenFight.Core.Interfaces.Entities.Masters;
 
 namespace TokenFight.Core.Models.Entities.Masters;
 
-public class ActionValueMaster: IActionValueMaster
+public class ActionValueMaster : IActionValueMaster
 {
     public WeakReference<IActor> Owner { get; set; }
     private double Speed { get; set; }

@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Entities;
 namespace TokenFight.Core.Models.Effects.Skills;
 
 /// <summary> 技能基类 </summary>
-public abstract class BaseSkill: ISkill
+public abstract class BaseSkill : ISkill
 {
     public required string Id { get; set; }
 

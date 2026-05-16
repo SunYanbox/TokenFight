@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Events;
 namespace TokenFight.Core.Models.Events.Contexts;
 
 /// <summary> 源 + 目标 事件上下文 </summary>
-public struct SourceTargetContext: IContext
+public struct SourceTargetContext : IContext
 {
     public EventType Type { get; init; }
     public object Sender { get; init; }

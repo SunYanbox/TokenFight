@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Entities.Masters;
 namespace TokenFight.Core.Models.Entities.Masters;
 
 /// <summary> 效果的生命周期 </summary>
-public class LifeCycleMaster: ILifeCycleMaster
+public class LifeCycleMaster : ILifeCycleMaster
 {
     /// <summary> 效果所属角色 </summary>
     public required WeakReference<IActor> Owner { get; set; }

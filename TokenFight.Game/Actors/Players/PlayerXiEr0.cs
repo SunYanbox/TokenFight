@@ -24,7 +24,7 @@ namespace TokenFight.Game.Actors.Players;
 
 [AutoActor(Id = GameIdTableConst.PlayerXiEr0, Team = TeamType.Player)]
 [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
-public class PlayerXiEr0: PlayerActor
+public class PlayerXiEr0 : PlayerActor
 {
     protected const string FactoryKey = GameIdTableConst.PlayerXiEr0;
     protected static DataActor? DataActor;
@@ -38,7 +38,7 @@ public class PlayerXiEr0: PlayerActor
     protected static SkillEffectData? NaturalTalentData0;
 
     [SetsRequiredMembers]
-    public PlayerXiEr0(int level, GameSystemRegistry systemRegistry): base(systemRegistry)
+    public PlayerXiEr0(int level, GameSystemRegistry systemRegistry) : base(systemRegistry)
     {
         DataActor ??= (DataActor)systemRegistry.DatabaseServer.ActorTables[FactoryKey];
         BasicAttackData0 ??= DataActorHelper.GetSkillEffectData(DataActor!, SkillType.BasicAttack, BasicAttackSkillDBId);
@@ -85,7 +85,7 @@ public class PlayerXiEr0: PlayerActor
         }
     }
 
-    private class FightSkill: BaseSkill
+    private class FightSkill : BaseSkill
     {
         private double _mainRate;
         private double _subRate;
@@ -132,7 +132,7 @@ public class PlayerXiEr0: PlayerActor
         }
     }
 
-    private class UltimateSkill: BaseUltimateSkill
+    private class UltimateSkill : BaseUltimateSkill
     {
         private double _mainRate;
         private double _subRate;
@@ -181,7 +181,7 @@ public class PlayerXiEr0: PlayerActor
         }
     }
 
-    private class TalentSkill: BaseTalentSkill
+    private class TalentSkill : BaseTalentSkill
     {
         private bool _triggered = false;
         private readonly HashSet<string> _triggeredT2 = [];
@@ -190,7 +190,7 @@ public class PlayerXiEr0: PlayerActor
         private int _markCount = DataActorHelper.GetExtendProperty<int>(DataActor!, "命中标记立即行动的层数");
 
         [SetsRequiredMembers]
-        public TalentSkill(PlayerActor source): base(source.NaturalTalentId, source, GameSystemRegistry!)
+        public TalentSkill(PlayerActor source) : base(source.NaturalTalentId, source, GameSystemRegistry!)
         {
             Name = NaturalTalentData0!.Name;
             Desc = DataActorHelper.FormatSkillDesc(NaturalTalentData0, [_extraCharge, _markCount]);

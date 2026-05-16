@@ -13,7 +13,7 @@ public class ActorManagerSystem(
     IEventSystem eventSystem,
     ILocalLog localLog,
     IActorPositionSystem actorPositionSystem,
-    IActionListSystem actionListSystem): IActorManagerSystem
+    IActionListSystem actionListSystem) : IActorManagerSystem
 {
     private readonly Dictionary<string, IActor> _actors = new();
     private readonly HashSet<IActor> _deathActors = [];

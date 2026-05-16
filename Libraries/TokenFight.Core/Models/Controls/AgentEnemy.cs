@@ -9,7 +9,7 @@ using TokenFight.Core.Models.Entities.Actors;
 namespace TokenFight.Core.Models.Controls;
 
 /// <summary> 代理敌人行动的简单逻辑 </summary>
-public class AgentEnemy: IAgent
+public class AgentEnemy : IAgent
 {
     public Random Random { get; init; } = new();
 

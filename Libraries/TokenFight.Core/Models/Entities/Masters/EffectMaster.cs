@@ -7,7 +7,7 @@ using TokenFight.Core.Interfaces.Entities.Masters;
 
 namespace TokenFight.Core.Models.Entities.Masters;
 
-public class EffectMaster(IActor actor): IEffectMaster
+public class EffectMaster(IActor actor) : IEffectMaster
 {
     public WeakReference<IActor> Owner { get; set; } = new(actor);
     private readonly Dictionary<string, IEffect> _effects = new();
@@ -18,7 +18,7 @@ public class EffectMaster(IActor actor): IEffectMaster
         { EffectType.Mark, [] }
     };
 
-    public HashSet<string> GetEffectIds(EffectType type) => [.._existBuffs[type]];
+    public HashSet<string> GetEffectIds(EffectType type) => [.. _existBuffs[type]];
 
     public void RoundBegin()
     {

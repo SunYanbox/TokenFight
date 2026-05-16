@@ -2,7 +2,7 @@ using TokenFight.Core.Interfaces.Bases;
 
 namespace TokenFight.Core.Interfaces.Factories;
 
-public interface IFactorySystem<TBase, TAttribute>: ISystem
+public interface IFactorySystem<TBase, TAttribute> : ISystem
     where TBase : class
     where TAttribute : Attribute
 {

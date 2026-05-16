@@ -3,7 +3,7 @@ using TokenFight.Core.Interfaces.Effects;
 
 namespace TokenFight.Core.Interfaces.Entities.Masters;
 
-public interface IEffectMaster: IMaster
+public interface IEffectMaster : IMaster
 {
     public bool Empty { get; }
     /// <summary> 处理效果回合开始 </summary>

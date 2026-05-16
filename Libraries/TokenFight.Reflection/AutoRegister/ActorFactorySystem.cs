@@ -4,4 +4,4 @@ using TokenFight.Core.ReflectionAttribute;
 
 namespace TokenFight.Reflection.AutoRegister;
 
-public class ActorFactorySystem: AutoFactorySystem<BaseActor, AutoActorAttribute>, IActorFactorySystem;
+public class ActorFactorySystem : AutoFactorySystem<BaseActor, AutoActorAttribute>, IActorFactorySystem;

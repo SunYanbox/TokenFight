@@ -6,4 +6,4 @@ namespace TokenFight.Core.ReflectionAttribute;
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct,
     AllowMultiple = false,
     Inherited = false)]
-public class AutoSysRegistryInitAttribute: Attribute;
+public class AutoSysRegistryInitAttribute : Attribute;

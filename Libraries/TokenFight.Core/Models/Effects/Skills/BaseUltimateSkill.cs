@@ -4,7 +4,7 @@ using TokenFight.Core.Interfaces.Entities;
 
 namespace TokenFight.Core.Models.Effects.Skills;
 
-public abstract class BaseUltimateSkill: IUltimateSkill
+public abstract class BaseUltimateSkill : IUltimateSkill
 {
     public required string Id { get; set; }
     public required string Name { get; set; }

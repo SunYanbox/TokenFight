@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Events;
 namespace TokenFight.Core.Models.Events.Contexts;
 
 /// <summary> 治疗上下文 </summary>
-public struct HealContext: IContext
+public struct HealContext : IContext
 {
     public EventType Type { get; init; }
     public object Sender { get; init; }

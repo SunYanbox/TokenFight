@@ -7,7 +7,7 @@ using TokenFight.Core.Models.Entities.Masters;
 namespace TokenFight.Core.Models.Effects.Effects;
 
 /// <summary> 标记效果 | 无限持续时间的标记效果 | 每次应用时标记次数+1 </summary>
-public class BaseEffectMark: BaseEffect
+public class BaseEffectMark : BaseEffect
 {
     [SetsRequiredMembers]
     public BaseEffectMark(IActor source, IActor target, string id,

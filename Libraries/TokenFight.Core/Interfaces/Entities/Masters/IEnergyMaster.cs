@@ -1,6 +1,6 @@
 namespace TokenFight.Core.Interfaces.Entities.Masters;
 
-public interface IEnergyMaster: IMaster
+public interface IEnergyMaster : IMaster
 {
     /// <summary> 获取当前能量值 </summary>
     public double Energy { get; }

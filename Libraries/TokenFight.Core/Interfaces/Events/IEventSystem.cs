@@ -8,7 +8,7 @@ public delegate void EventCallback(IContext context);
 /// <summary>
 /// 事件系统接口
 /// </summary>
-public interface IEventSystem: ISystem
+public interface IEventSystem : ISystem
 {
     /// <summary>
     /// 触发事件

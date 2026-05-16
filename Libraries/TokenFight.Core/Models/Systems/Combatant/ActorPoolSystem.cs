@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Systems.Combatant;
 
 namespace TokenFight.Core.Models.Systems.Combatant;
 
-public class ActorPoolSystem(IActorManagerSystem actorManagerSystem): IActorPoolSystem
+public class ActorPoolSystem(IActorManagerSystem actorManagerSystem) : IActorPoolSystem
 {
     private readonly Queue<Lazy<IActor>> _playerPool = new();
     private readonly List<Queue<Lazy<IActor>>> _enemyPool = [];

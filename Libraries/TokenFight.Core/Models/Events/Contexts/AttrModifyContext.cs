@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Events;
 namespace TokenFight.Core.Models.Events.Contexts;
 
 /// <summary> 修改属性参数封装 </summary>
-public struct AttrModifyContext: IContext
+public struct AttrModifyContext : IContext
 {
     public EventType Type { get; init; }
     public object Sender { get; init; }

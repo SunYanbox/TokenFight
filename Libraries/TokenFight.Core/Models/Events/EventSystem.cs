@@ -6,7 +6,7 @@ using TokenFight.Core.Interfaces.FStream;
 namespace TokenFight.Core.Models.Events;
 
 /// <summary> 游戏事件系统 </summary>
-public class EventSystem(ILocalLog localLog): IEventSystem
+public class EventSystem(ILocalLog localLog) : IEventSystem
 {
     public void Init()
     {

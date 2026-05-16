@@ -5,7 +5,7 @@ using TokenFight.Core.Interfaces.Events;
 namespace TokenFight.Core.Models.Events.Contexts;
 
 /// <summary> 死亡事件上下文 </summary>
-public struct DeathContext: IContext
+public struct DeathContext : IContext
 {
     /// <summary> 构造死亡事件上下文 </summary>
     public DeathContext(IActor actor)

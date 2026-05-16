@@ -17,7 +17,7 @@ public class AgentPlayer(
     ILocalLog localLog,
     IActionManagerSystem actionManagerSystem,
     IActorManagerSystem actorManagerSystem,
-    IActorPositionSystem actorPositionSystem): IAgent
+    IActorPositionSystem actorPositionSystem) : IAgent
 {
     public Random Random { get; init; } = new();
 
