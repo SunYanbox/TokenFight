@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <PackageId>TokenFight.Game</PackageId>
@@ -6,7 +6,7 @@
         <Description>游戏角色, 数据, 副本与显示的实现</Description>
         <ImplicitUsings>enable</ImplicitUsings>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net9.0-windows</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -37,7 +37,6 @@
     <ItemGroup>
         <ProjectReference Include="..\Libraries\TokenFight.Core\TokenFight.Core.csproj"/>
         <ProjectReference Include="..\Libraries\TokenFight.DI\TokenFight.DI.csproj"/>
-        <ProjectReference Include="..\Libraries\TokenFight.UI\TokenFight.UI.csproj"/>
         <ProjectReference Include="..\Libraries\TokenFight.Reflection\TokenFight.Reflection.csproj"/>
     </ItemGroup>
 
