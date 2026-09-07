@@ -5,7 +5,7 @@
         <Description>游戏核心战斗逻辑的实现</Description>
         <ImplicitUsings>enable</ImplicitUsings>
         <OutputType>Library</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
@@ -15,6 +15,7 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1"/>
+        <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.11"/>
     </ItemGroup>
     <ItemGroup>
         <Compile Remove="Databases\Models\Inventory\**"/>

@@ -6,7 +6,7 @@
         <Description>游戏角色, 数据, 副本与显示的实现</Description>
         <ImplicitUsings>enable</ImplicitUsings>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
