@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="Libraries/TokenFight.Core/TokenFight.Core.csproj" />
+  <Project Path="Libraries/TokenFight.DI/TokenFight.DI.csproj" />
+  <Project Path="Libraries/TokenFight.Reflection/TokenFight.Reflection.csproj" />
+  <Project Path="TokenFight.Game/TokenFight.Game.csproj">
+    <Deploy Solution="Release|*" />
+  </Project>
+</Solution>
