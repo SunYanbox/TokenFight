@@ -22,3 +22,5 @@ riderModule.iml
 # Terminal.Gui的教程示例
 Libraries/Terminal.Gui
 Libraries/TokenFight.UI/Examples
+
+skills-lock.json
